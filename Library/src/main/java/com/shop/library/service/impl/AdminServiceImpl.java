@@ -6,6 +6,7 @@ import com.shop.library.repository.AdminRepository;
 import com.shop.library.repository.RoleRepository;
 import com.shop.library.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
