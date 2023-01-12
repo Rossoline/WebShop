@@ -13,7 +13,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository repository;
 
-
     @Override
     public List<Category> findAll() {
         return repository.findAll();
@@ -32,10 +31,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Category category) {
-        Category categoryUpdate = new Category();
-        categoryUpdate.setName(category.getName());
-        categoryUpdate.set_activated(category.is_activated());
-        categoryUpdate.set_deleted(category.is_deleted());
+        Category categoryUpdate = null;
+        try {
+            categoryUpdate = repository.findById(category.getId()).get();
+            categoryUpdate.setName(category.getName());
+            categoryUpdate.set_activated(category.is_activated());
+            categoryUpdate.set_deleted(category.is_deleted());
+        } catch (Exception e) {
+            //TODO change e.printst
+            e.printStackTrace();
+        }
         return repository.save(categoryUpdate);
     }
 
