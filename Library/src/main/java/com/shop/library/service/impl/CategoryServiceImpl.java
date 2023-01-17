@@ -25,8 +25,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getById(Long id) {
-        return repository.getById(id);
+    public Category findById(Long id) {
+        return repository.findById(id).get();
     }
 
     @Override
@@ -55,8 +55,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void enabledById(Long id) {
         Category category = repository.getById(id);
-        category.set_deleted(false);
         category.set_activated(true);
+        category.set_deleted(false);
         repository.save(category);
     }
 }
