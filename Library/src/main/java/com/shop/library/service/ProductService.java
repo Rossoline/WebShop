@@ -9,12 +9,20 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductDto> findAll();
+
     Product save(MultipartFile imageProduct, ProductDto productDto);
-//    Product findById(Long id);
+
+    //    Product findById(Long id);
     Product update(MultipartFile imageProduct, ProductDto productDto);
+
     void deleteById(Long id);
+
     void enableById(Long id);
+
     ProductDto getById(Long id);
+
     Page<Product> pageProduct(int pageNo);
+
+    Page<Product> searchProducts(int pageNo, String keyword);
 
 }

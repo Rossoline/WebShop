@@ -91,6 +91,23 @@ public class ProductController {
         return "update-product";
     }
 
+    @GetMapping("/search-result/{pageNo}")
+    public String searchProducts(@PathVariable("pageNo") int pageNo,
+                                 @RequestParam("keyword") String keyword,
+                                 Model model,
+                                 Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        Page<Product> products = productService.searchProducts(pageNo, keyword);
+        model.addAttribute("title", "Search result");
+        model.addAttribute("products", products);
+        model.addAttribute("size", products.getSize());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", products.getTotalPages());
+        return "result-products";
+    }
+
     @PostMapping("/update-product/{id}")
     public String processUpdate(@PathVariable("id") Long id,
                                 @ModelAttribute("productDto") ProductDto productDto,
