@@ -5,6 +5,9 @@ import com.shop.library.model.Admin;
 import com.shop.library.service.AdminService;
 import com.shop.library.service.impl.AdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +35,12 @@ public class LoginController {
     }
 
     @RequestMapping("/index")
-    public String home(Model model){
+    public String home(Model model) {
         model.addAttribute("title", "Home page");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "redirect:/login";
+        }
         return "index";
     }
 
@@ -49,6 +56,7 @@ public class LoginController {
         model.addAttribute("title", "Forgot password");
         return "forgot-password";
     }
+
     //12:48
     @PostMapping("/register-new")
     public String addAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
@@ -65,14 +73,14 @@ public class LoginController {
             if (admin != null) {
                 model.addAttribute("adminDto", adminDto);
                 System.out.println("admin not null");
-                model.addAttribute("emailError","This email already registered!" );
+                model.addAttribute("emailError", "This email already registered!");
                 return "register";
             }
             if (adminDto.getPassword().equals(adminDto.getRepeatPassword())) {
                 adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
                 adminService.save(adminDto);
                 System.out.println("success");
-                model.addAttribute("success","Register successfully!");
+                model.addAttribute("success", "Register successfully!");
                 model.addAttribute("adminDto", adminDto);
             } else {
                 model.addAttribute("adminDto", adminDto);
