@@ -6,6 +6,9 @@ import com.shop.library.repository.ProductRepository;
 import com.shop.library.service.ProductService;
 import com.shop.library.utils.ImageUpload;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -125,5 +128,12 @@ public class ProductServiceImpl implements ProductService {
         productDto.setActivated(product.is_activated());
         productDto.setDeleted(product.is_deleted());
         return productDto;
+    }
+
+    @Override
+    public Page<Product> pageProduct(int pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        Page<Product> productPages = repository.pageProduct(pageable);
+        return productPages;
     }
 }
