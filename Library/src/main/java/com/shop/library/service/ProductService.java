@@ -10,8 +10,9 @@ public interface ProductService {
     List<ProductDto> findAll();
     Product save(MultipartFile imageProduct, ProductDto productDto);
 //    Product findById(Long id);
-    Product update(ProductDto productDto);
-    Product deleteById(Long id);
-    Product enableById(Long id);
+    Product update(MultipartFile imageProduct, ProductDto productDto);
+    void deleteById(Long id);
+    void enableById(Long id);
+    ProductDto getById(Long id);
 
 }

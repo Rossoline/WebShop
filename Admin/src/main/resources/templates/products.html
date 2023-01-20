@@ -37,11 +37,11 @@
                 <div th:if="${size == 0}">
                     <p>No products in shop</p>
                 </div>
-                <div th:if = "${success}" class="text-center alert alert-success">
-                    <p th:text = "${success}"></p>
+                <div th:if="${success}" class="text-center alert alert-success">
+                    <p th:text="${success}"></p>
                 </div>
-                <div th:if = "${error}" class="text-center alert alert-danger">
-                    <p th:text = "${error}"></p>
+                <div th:if="${error}" class="text-center alert alert-danger">
+                    <p th:text="${error}"></p>
                 </div>
 
                 <a class="btn btn-primary"
@@ -67,9 +67,19 @@
                         <td th:text="${product.category.name}"></td>
                         <td th:text="${product.costPrice}"></td>
                         <td th:text="${product.currentQuantity}"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><img src="" style="height: 40px; width: 40px;"
+                                 th:src="${'data:image/jpeg; base64,' + {product.image}}"></td>
+                        <td><a th:href="@{/update-product/{id} (id = ${product.id})}" class="btn btn-primary">Update</a>
+                        </td>
+                        <td>
+                            <a th:if="${product.activated == false}"
+                               th:href="@{/enabled-product/{id} (id = ${product.id})}"
+                               class="btn btn-warning">Enable</a>
+                            <a th:if="${product.deleted == false}"
+                               th:href="@{/delete-product/{id} (id = ${product.id})}"
+                               class="btn btn-danger">Delete</a>
+                            <a></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

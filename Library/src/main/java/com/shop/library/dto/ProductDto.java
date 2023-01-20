@@ -19,4 +19,5 @@ public class ProductDto {
     private String image;
     private boolean activated;
     private boolean deleted;
+    //TODO create parser for model to DTO and back and use it in ProductService
 }
