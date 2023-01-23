@@ -7,6 +7,7 @@ import com.shop.library.service.ProductService;
 import com.shop.library.utils.ImageUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,21 +27,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> findAll() {
-        List<ProductDto> productDtoList = new ArrayList<>();
         List<Product> products = repository.findAll();
-        for (Product product : products) {
-            ProductDto productDto = new ProductDto();
-            productDto.setId(product.getId());
-            productDto.setName(product.getName());
-            productDto.setDescription(product.getDescription());
-            productDto.setCategory(product.getCategory());
-            productDto.setCostPrice(product.getCostPrice());
-            productDto.setCurrentQuantity(product.getCurrentQuantity());
-            productDto.setImage(product.getImage());
-            productDto.setActivated(product.is_activated());
-            productDto.setDeleted(product.is_deleted());
-            productDtoList.add(productDto);
-        }
+        List<ProductDto> productDtoList = toDto(products);
         return productDtoList;
     }
 
@@ -84,10 +72,10 @@ public class ProductServiceImpl implements ProductService {
             }
             product.setName(productDto.getName());
             product.setDescription(productDto.getDescription());
+            product.setCategory(productDto.getCategory());
             product.setSalePrice(productDto.getSalePrice());
             product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
-            product.setCategory(productDto.getCategory());
             product.set_activated(product.is_activated());
             product.set_deleted(product.is_deleted());
             return repository.save(product);
@@ -122,25 +110,59 @@ public class ProductServiceImpl implements ProductService {
         productDto.setDescription(product.getDescription());
         productDto.setCurrentQuantity(product.getCurrentQuantity());
         productDto.setCategory(product.getCategory());
-        productDto.setCostPrice(product.getCostPrice());
         productDto.setSalePrice(product.getSalePrice());
+        productDto.setCostPrice(product.getCostPrice());
         productDto.setImage(product.getImage());
-        productDto.setActivated(product.is_activated());
         productDto.setDeleted(product.is_deleted());
+        productDto.setActivated(product.is_activated());
         return productDto;
     }
 
     @Override
-    public Page<Product> pageProduct(int pageNo) {
+    public Page<ProductDto> pageProduct(int pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        Page<Product> productPages = repository.pageProduct(pageable);
+        List<ProductDto> products = toDto(repository.findAll());
+        Page<ProductDto> productPages = toPage(products, pageable);
         return productPages;
     }
 
     @Override
-    public Page<Product> searchProducts(int pageNo, String keyword) {
+    public Page<ProductDto> searchProducts(int pageNo, String keyword) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        Page<Product> products = repository.searchProducts(keyword, pageable);
+        List<ProductDto> productDtoList = toDto(repository.searchProductsList(keyword));
+        Page<ProductDto> products = toPage(productDtoList, pageable);
         return products;
+    }
+
+    private Page toPage(List<ProductDto> list, Pageable pageable) {
+        //TODO Whats mean all this?
+        if (pageable.getOffset() >= list.size()) {
+            return Page.empty();
+        }
+        int startIndenx = (int) pageable.getOffset();
+        int endIndex = ((pageable.getOffset() + pageable.getPageSize()) > list.size())
+                ? list.size()
+                : (int) (pageable.getOffset() + pageable.getPageSize());
+        List sublist = list.subList(startIndenx, endIndex);
+        return new PageImpl(sublist, pageable, list.size());
+    }
+
+    private List<ProductDto> toDto(List<Product> products) {
+        List<ProductDto> productDtoList = new ArrayList<>();
+        for (Product product : products) {
+            ProductDto productDto = new ProductDto();
+            productDto.setId(product.getId());
+            productDto.setName(product.getName());
+            productDto.setDescription(product.getDescription());
+            productDto.setCurrentQuantity(product.getCurrentQuantity());
+            productDto.setCategory(product.getCategory());
+            productDto.setCostPrice(product.getCostPrice());
+            productDto.setSalePrice(product.getSalePrice());
+            productDto.setImage(product.getImage());
+            productDto.setActivated(product.is_activated());
+            productDto.setDeleted(product.is_deleted());
+            productDtoList.add(productDto);
+        }
+        return productDtoList;
     }
 }
