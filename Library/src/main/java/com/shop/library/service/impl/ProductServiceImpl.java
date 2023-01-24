@@ -72,12 +72,10 @@ public class ProductServiceImpl implements ProductService {
             }
             product.setName(productDto.getName());
             product.setDescription(productDto.getDescription());
-            product.setCategory(productDto.getCategory());
             product.setSalePrice(productDto.getSalePrice());
             product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
-            product.set_activated(product.is_activated());
-            product.set_deleted(product.is_deleted());
+            product.setCategory(productDto.getCategory());
             return repository.save(product);
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDto> pageProduct(int pageNo) {
+    public Page<ProductDto> pageProducts(int pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         List<ProductDto> products = toDto(repository.findAll());
         Page<ProductDto> productPages = toPage(products, pageable);
@@ -136,31 +134,31 @@ public class ProductServiceImpl implements ProductService {
 
     private Page toPage(List<ProductDto> list, Pageable pageable) {
         //TODO Whats mean all this?
-        if (pageable.getOffset() >= list.size()) {
+        if(pageable.getOffset() >= list.size()){
             return Page.empty();
         }
-        int startIndenx = (int) pageable.getOffset();
+        int startIndex = (int) pageable.getOffset();
         int endIndex = ((pageable.getOffset() + pageable.getPageSize()) > list.size())
                 ? list.size()
                 : (int) (pageable.getOffset() + pageable.getPageSize());
-        List sublist = list.subList(startIndenx, endIndex);
-        return new PageImpl(sublist, pageable, list.size());
+        List subList = list.subList(startIndex, endIndex);
+        return new PageImpl(subList, pageable, list.size());
     }
 
     private List<ProductDto> toDto(List<Product> products) {
         List<ProductDto> productDtoList = new ArrayList<>();
-        for (Product product : products) {
+        for(Product product : products){
             ProductDto productDto = new ProductDto();
             productDto.setId(product.getId());
             productDto.setName(product.getName());
             productDto.setDescription(product.getDescription());
             productDto.setCurrentQuantity(product.getCurrentQuantity());
             productDto.setCategory(product.getCategory());
-            productDto.setCostPrice(product.getCostPrice());
             productDto.setSalePrice(product.getSalePrice());
+            productDto.setCostPrice(product.getCostPrice());
             productDto.setImage(product.getImage());
-            productDto.setActivated(product.is_activated());
             productDto.setDeleted(product.is_deleted());
+            productDto.setActivated(product.is_activated());
             productDtoList.add(productDto);
         }
         return productDtoList;

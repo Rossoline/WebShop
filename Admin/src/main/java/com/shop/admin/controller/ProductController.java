@@ -2,7 +2,6 @@ package com.shop.admin.controller;
 
 import com.shop.library.dto.ProductDto;
 import com.shop.library.model.Category;
-import com.shop.library.model.Product;
 import com.shop.library.service.CategoryService;
 import com.shop.library.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +41,30 @@ public class ProductController {
         if (principal == null) {
             return "redirect:/login";
         }
-        Page<ProductDto> products = productService.pageProduct(pageNo);
+        Page<ProductDto> products = productService.pageProducts(pageNo);
         model.addAttribute("title", "Manage Product");
         model.addAttribute("size", products.getSize());
         model.addAttribute("totalPages", products.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("products", products);
         return "products";
+    }
+
+    @GetMapping("/search-result/{pageNo}")
+    public String searchProducts(@PathVariable("pageNo") int pageNo,
+                                 @RequestParam("keyword") String keyword,
+                                 Model model,
+                                 Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        Page<ProductDto> products = productService.searchProducts(pageNo, keyword);
+        model.addAttribute("title", "Search result");
+        model.addAttribute("products", products);
+        model.addAttribute("size", products.getSize());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", products.getTotalPages());
+        return "result-products";
     }
 
     @GetMapping("/add-product")
@@ -73,7 +89,7 @@ public class ProductController {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to add!");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 
     @GetMapping("/update-product/{id}")
@@ -91,23 +107,6 @@ public class ProductController {
         return "update-product";
     }
 
-    @GetMapping("/search-result/{pageNo}")
-    public String searchProducts(@PathVariable("pageNo") int pageNo,
-                                 @RequestParam("keyword") String keyword,
-                                 Model model,
-                                 Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        Page<ProductDto> products = productService.searchProducts(pageNo, keyword);
-        model.addAttribute("title", "Search result");
-        model.addAttribute("products", products);
-        model.addAttribute("size", products.getSize());
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", products.getTotalPages());
-        return "result-products";
-    }
-
     @PostMapping("/update-product/{id}")
     public String processUpdate(@PathVariable("id") Long id,
                                 @ModelAttribute("productDto") ProductDto productDto,
@@ -116,35 +115,36 @@ public class ProductController {
         try {
             productService.update(imageProduct, productDto);
             attributes.addFlashAttribute("success", "Update successfully!");
-
         } catch (Exception e) {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to update!");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 
-    @RequestMapping(value = "/enabled-product/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String enabledProduct(@PathVariable("id") Long id, RedirectAttributes attributes) {
+    @RequestMapping(value = "/enable-product/{id}", method = {RequestMethod.PUT , RequestMethod.GET})
+    public String enabledProduct(@PathVariable("id")Long id, RedirectAttributes attributes){
+        //TODO make pageNo back to page with model where i change it ("wrong redirect")
         try {
             productService.enableById(id);
-            attributes.addFlashAttribute("success", "Product enabled!");
-        } catch (Exception e) {
+            attributes.addFlashAttribute("success", "Enabled successfully!");
+        }catch (Exception e){
             e.printStackTrace();
-            attributes.addFlashAttribute("error", "Failed to enable!");
+            attributes.addFlashAttribute("error", "Failed to enabled!");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 
     @RequestMapping(value = "/delete-product/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String deleteProduct(@PathVariable("id") Long id, RedirectAttributes attributes) {
+    public String deletedProduct(@PathVariable("id") Long id, RedirectAttributes attributes){
+        //TODO make pageNo back to page with model where i change it ("wrong redirect")
         try {
             productService.deleteById(id);
-            attributes.addFlashAttribute("success", "Product deleted!");
-        } catch (Exception e) {
+            attributes.addFlashAttribute("success", "Deleted successfully!");
+        }catch (Exception e){
             e.printStackTrace();
-            attributes.addFlashAttribute("error", "Failed to delete!");
+            attributes.addFlashAttribute("error", "Failed to deleted");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 }
