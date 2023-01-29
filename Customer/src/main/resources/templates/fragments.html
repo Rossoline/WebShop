@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
-<head>
+<head th:fragment="head">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Site Metas -->
     <title>Menu</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <!-- Site Icons -->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- Site CSS -->
@@ -29,9 +25,8 @@
 </head>
 
 <body>
-
 <!-- Start Main Top -->
-<div class="main-top">
+<div class="main-top" th:fragment="main-top">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -87,7 +82,7 @@
 <!-- End Main Top -->
 
 <!-- Start header -->
-<header class="main-header">
+<header class="main-header" th:fragment="main-header">
     <!-- Start Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
         <div class="container">
@@ -173,7 +168,7 @@
 <!-- End header -->
 
 <!-- Start Top Search -->
-<div class="top-search">
+<div class="top-search" th:fragment="top-search">
     <div class="container">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
@@ -185,7 +180,7 @@
 <!-- End Top Search -->
 
 <!-- Start Slider -->
-<div class="all-title-box">
+<div class="all-title-box" th:fragment="slider">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -200,6 +195,51 @@
 </div>
 <!-- End Slider -->
 
+<!-- Start Feed  -->
+<div class="instagram-box" th:fragment = "instagram-box">
+    <div class="main-instagram owl-carousel owl-theme">
+        <div class="item">
+            <div class="ins-inner-box">
+                <a href="index.html"><img src="images/Fish 01 - Fish Tacos.jpg" alt=""/></a>
+
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <img src="images/instagram-img-02.jpg" alt=""/>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <a href="index.html"><img src="images/Fish 04 - Red Pepper & Parmesan Tilapia.jpg" alt=""/></a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <a href="index.html"><img src="images/Fish 05 - Almond-Topped Fish.jpg" alt=""/></a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <a href="index.html"><img src="images/Shrimp 03 - Shrimp Tostadas with Avocado Salsa.jpg" alt=""/></a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <a href="index.html"><img src="images/Shrimp 08 - Grilled Shrimp and Chorizo Appetizers.jpg"
+                                          alt=""/></a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <a href="index.html"><img src="images/Octopus 06 - Red Wine–Braised Baby Octopus with Black Olives.jpg"
+                                          alt=""/></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End Feed  -->
 
 <!-- Start Footer  -->
 <footer th:fragment="footer">
@@ -245,8 +285,8 @@
 </footer>
 <!-- End Footer  -->
 
+<!-- ALL JS FILES -->
 <div th:fragment="script">
-    <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
