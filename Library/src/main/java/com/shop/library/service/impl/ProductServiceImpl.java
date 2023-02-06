@@ -163,4 +163,14 @@ public class ProductServiceImpl implements ProductService {
         }
         return productDtoList;
     }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return repository.getAllProducts();
+    }
+
+    @Override
+    public List<Product> listViewProducts() {
+        return repository.listViewProducts();
+    }
 }
