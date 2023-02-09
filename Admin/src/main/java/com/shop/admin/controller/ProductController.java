@@ -83,6 +83,8 @@ public class ProductController {
                               @RequestParam("imageProduct") MultipartFile imageProduct,
                               RedirectAttributes attributes) {
         try {
+            productDto.setActivated(true);
+            productDto.setDeleted(false);
             productService.save(imageProduct, productDto);
             attributes.addFlashAttribute("success", "Add successfully");
         } catch (Exception e) {

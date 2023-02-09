@@ -67,6 +67,7 @@
                                  th:src = "*{'data:image/jpeg;base64,' + {product.image}}"></td>
                         <td><a th:href="@{/update-product/{id} (id = ${product.id})}" class="btn btn-primary">Update</a></td>
                         <td>
+<!--                            TODO check isActivated() or activated-->
                             <a th:if = "${product.isActivated() == false}"
                                th:href="@{/enable-product/{id} (id = ${product.id})}" class="btn btn-warning">Enable</a>
                             <a th:if = "${product.deleted == false}"

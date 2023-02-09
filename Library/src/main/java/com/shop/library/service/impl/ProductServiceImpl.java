@@ -5,7 +5,6 @@ import com.shop.library.model.Product;
 import com.shop.library.repository.ProductRepository;
 import com.shop.library.service.ProductService;
 import com.shop.library.utils.ImageUpload;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -19,17 +18,19 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    @Autowired
-    private ProductRepository repository;
+    private final ProductRepository repository;
 
-    @Autowired
-    private ImageUpload imageUpload;
+    private final ImageUpload imageUpload;
+
+    public ProductServiceImpl(ProductRepository repository, ImageUpload imageUpload) {
+        this.repository = repository;
+        this.imageUpload = imageUpload;
+    }
 
     @Override
     public List<ProductDto> findAll() {
         List<Product> products = repository.findAll();
-        List<ProductDto> productDtoList = toDto(products);
-        return productDtoList;
+        return toDtoList(products);
     }
 
     @Override
@@ -76,6 +77,8 @@ public class ProductServiceImpl implements ProductService {
             product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
             product.setCategory(productDto.getCategory());
+            product.set_activated(true);
+            product.set_deleted(false);
             return repository.save(product);
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,6 +105,45 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto getById(Long id) {
         Product product = repository.getById(id);
+        return this.toDto(product);
+    }
+
+    @Override
+    public Page<ProductDto> pageProducts(int pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        List<ProductDto> products = toDtoList(repository.findAll());
+        return (Page<ProductDto>) toPage(products, pageable);
+    }
+
+    @Override
+    public Page<ProductDto> searchProducts(int pageNo, String keyword) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        List<ProductDto> productDtoList = toDtoList(repository.searchProductsList(keyword));
+        return (Page<ProductDto>) toPage(productDtoList, pageable);
+    }
+
+    private Page toPage(List<ProductDto> list, Pageable pageable) {
+        //TODO Whats mean all this?
+        if (pageable.getOffset() >= list.size()) {
+            return Page.empty();
+        }
+        int startIndex = (int) pageable.getOffset();
+        int endIndex = ((pageable.getOffset() + pageable.getPageSize()) > list.size())
+                ? list.size()
+                : (int) (pageable.getOffset() + pageable.getPageSize());
+        List subList = list.subList(startIndex, endIndex);
+        return new PageImpl(subList, pageable, list.size());
+    }
+
+    private List<ProductDto> toDtoList(List<Product> products) {
+        List<ProductDto> productDtoList = new ArrayList<>();
+        for (Product product : products) {
+            productDtoList.add(this.toDto(product));
+        }
+        return productDtoList;
+    }
+
+    private ProductDto toDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
         productDto.setName(product.getName());
@@ -117,54 +159,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDto> pageProducts(int pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
-        List<ProductDto> products = toDto(repository.findAll());
-        Page<ProductDto> productPages = toPage(products, pageable);
-        return productPages;
-    }
-
-    @Override
-    public Page<ProductDto> searchProducts(int pageNo, String keyword) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
-        List<ProductDto> productDtoList = toDto(repository.searchProductsList(keyword));
-        Page<ProductDto> products = toPage(productDtoList, pageable);
-        return products;
-    }
-
-    private Page toPage(List<ProductDto> list, Pageable pageable) {
-        //TODO Whats mean all this?
-        if(pageable.getOffset() >= list.size()){
-            return Page.empty();
-        }
-        int startIndex = (int) pageable.getOffset();
-        int endIndex = ((pageable.getOffset() + pageable.getPageSize()) > list.size())
-                ? list.size()
-                : (int) (pageable.getOffset() + pageable.getPageSize());
-        List subList = list.subList(startIndex, endIndex);
-        return new PageImpl(subList, pageable, list.size());
-    }
-
-    private List<ProductDto> toDto(List<Product> products) {
-        List<ProductDto> productDtoList = new ArrayList<>();
-        for(Product product : products){
-            ProductDto productDto = new ProductDto();
-            productDto.setId(product.getId());
-            productDto.setName(product.getName());
-            productDto.setDescription(product.getDescription());
-            productDto.setCurrentQuantity(product.getCurrentQuantity());
-            productDto.setCategory(product.getCategory());
-            productDto.setSalePrice(product.getSalePrice());
-            productDto.setCostPrice(product.getCostPrice());
-            productDto.setImage(product.getImage());
-            productDto.setDeleted(product.is_deleted());
-            productDto.setActivated(product.is_activated());
-            productDtoList.add(productDto);
-        }
-        return productDtoList;
-    }
-
-    @Override
     public List<Product> getAllProducts() {
         return repository.getAllProducts();
     }
@@ -172,5 +166,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> listViewProducts() {
         return repository.listViewProducts();
+    }
+
+    @Override
+    public Product getProductById(Long id) {
+        return repository.getById(id);
+    }
+
+    @Override
+    public List<Product> getRelatedProducts(Long categoryId) {
+        return repository.getRelatedProducts(categoryId);
     }
 }
