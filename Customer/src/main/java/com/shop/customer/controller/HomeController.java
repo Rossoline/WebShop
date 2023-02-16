@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -26,7 +27,9 @@ public class HomeController {
     @GetMapping("/home")
     public String index(Model model){
         List<Category> categories = categoryService.findAll();
-        List<ProductDto> productDtos = productService.findAll();
+        List<ProductDto> productDtos = productService.findAll().stream()
+                .filter(ProductDto::isActivated)
+                .collect(Collectors.toList());
         model.addAttribute("categories", categories);
         model.addAttribute("products", productDtos);
         return "index";
