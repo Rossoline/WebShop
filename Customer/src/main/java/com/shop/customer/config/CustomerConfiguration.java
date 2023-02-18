@@ -52,8 +52,7 @@ public class CustomerConfiguration extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/logout?logout")
+                .logoutSuccessUrl("/login?logout")
                 .permitAll();
-
     }
 }
