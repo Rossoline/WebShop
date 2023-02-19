@@ -40,11 +40,15 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-box">
                     <select id="" class="selectpicker show-tick form-control" data-placeholder="Sign In"
-                    onchange="location = this.value;">
+                            onchange="location = this.value;">
                         <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
-                        <option th:if="${session.username == null}" value="http://localhost:8020/shop/login">Sign In</option>
-                        <option th:if="${session.username != null}" value="http://localhost:8020/shop/logout">Log out</option>
-                        <option th:if="${session.username == null}" value="http://localhost:8020/shop/register">Register</option>
+                        <option th:if="${session.username == null}" value="http://localhost:8020/shop/login">Sign In
+                        </option>
+                        <option th:if="${session.username != null}" value="http://localhost:8020/shop/logout">Log out
+                        </option>
+                        <option th:if="${session.username == null}" value="http://localhost:8020/shop/register">
+                            Register
+                        </option>
                     </select>
                 </div>
                 <div class="text-slid-box">
@@ -53,9 +57,9 @@
                             <li>
                                 <i class="fab fa-opencart"></i> Off 5% for new members
                             </li>
-<!--                            <li>-->
-<!--                                <i class="fab fa-opencart"></i> 10% off Entire Purchase Promo code: OceanPrime-->
-<!--                            </li>-->
+                            <!--                            <li>-->
+                            <!--                                <i class="fab fa-opencart"></i> 10% off Entire Purchase Promo code: OceanPrime-->
+                            <!--                            </li>-->
                         </ul>
                     </div>
                 </div>
@@ -92,7 +96,7 @@
                             <li><a href="product-detail.html">Product Detail</a></li>
                             <li><a href="cart.html">Cart</a></li>
                             <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="my-account.html">My Account</a></li>
+                            <li><a th:href="@{/account}">My Account</a></li>
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
@@ -107,7 +111,9 @@
                     <li class="side-menu">
                         <a th:href="@{/cart}">
                             <i class="fa fa-shopping-bag"></i>
-                            <span class="badge">3</span>
+                            <span class="badge" th:text="${session.totalItems} == null
+                            ? '0' : ${session.totalItems}">
+                            </span>
                             <p>My Cart</p>
                         </a>
                     </li>
@@ -121,19 +127,22 @@
             <li class="cart-box">
                 <ul class="cart-list">
                     <li>
-                        <a href="#" class="photo"><img th:src="@{/images/Lobster 02 - Lobster rolls.jpg}" class="cart-thumb"
+                        <a href="#" class="photo"><img th:src="@{/images/Lobster 02 - Lobster rolls.jpg}"
+                                                       class="cart-thumb"
                                                        alt=""/></a>
                         <h6><a href="#">Lobster rolls </a></h6>
                         <p>1 - <span class="price">$80.00</span></p>
                     </li>
                     <li>
-                        <a href="#" class="photo"><img th:src="@{/images/Octopus 05 - Octopus with Black Bean Pear Sauce.jpg}"
-                                                       class="cart-thumb" alt=""/></a>
+                        <a href="#" class="photo"><img
+                                th:src="@{/images/Octopus 05 - Octopus with Black Bean Pear Sauce.jpg}"
+                                class="cart-thumb" alt=""/></a>
                         <h6><a href="#">Octopus with Black Bean</a></h6>
                         <p>1 - <span class="price">$60.00</span></p>
                     </li>
                     <li>
-                        <a href="#" class="photo"><img th:src="@{/images/Crab 02 - Crab Toast.jpg}" class="cart-thumb" alt=""/></a>
+                        <a href="#" class="photo"><img th:src="@{/images/Crab 02 - Crab Toast.jpg}" class="cart-thumb"
+                                                       alt=""/></a>
                         <h6><a href="#">Crab Toast</a></h6>
                         <p>1 - <span class="price">$40.00</span></p>
                     </li>
@@ -156,7 +165,7 @@
         <div class="toolbar-sorter-right">
             <span>Sort by </span>
             <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD"
-            onchange="location = this.value;">
+                    onchange="location = this.value;">
                 <option data-display="Select">Nothing</option>
                 <option value="http://localhost:8020/shop/high-price">High Price → High Price</option>
                 <option value="http://localhost:8020/shop/low-price">Low Price → High Price</option>
@@ -211,7 +220,7 @@
 <!-- End Slider -->
 
 <!-- Start Feed  -->
-<div class="instagram-box" th:fragment = "instagram-box">
+<div class="instagram-box" th:fragment="instagram-box">
     <div class="main-instagram owl-carousel owl-theme">
         <div class="item">
             <div class="ins-inner-box">

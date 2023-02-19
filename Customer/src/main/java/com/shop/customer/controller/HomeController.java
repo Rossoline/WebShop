@@ -2,7 +2,10 @@ package com.shop.customer.controller;
 
 import com.shop.library.dto.ProductDto;
 import com.shop.library.model.Category;
+import com.shop.library.model.Customer;
+import com.shop.library.model.ShoppingCart;
 import com.shop.library.service.CategoryService;
+import com.shop.library.service.CustomerService;
 import com.shop.library.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,8 @@ public class HomeController {
     private ProductService productService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CustomerService customerService;
 
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
     public String home(Model model,
@@ -28,6 +33,9 @@ public class HomeController {
                        HttpSession session) {
         if (principal != null) {
             session.setAttribute("username", principal.getName());
+            Customer customer = customerService.findByUsername(principal.getName());
+            ShoppingCart cart = customer.getShoppingCart();
+            session.setAttribute("totalItems", cart.getTotalItems());
         }else{
             session.removeAttribute("username");
         }

@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 @Controller
@@ -20,12 +20,11 @@ public class CartController {
     private CustomerService customerService;
     @Autowired
     private ShoppingCartService cartService;
-
     @Autowired
     private ProductService productService;
 
     @GetMapping("/cart")
-    public String cart(Model model, Principal principal) {
+    public String cart(Model model, Principal principal, HttpSession session) {
         if (principal == null) {
             return "redirect:/login";
         }
@@ -35,6 +34,8 @@ public class CartController {
         if (shoppingCart == null) {
             model.addAttribute("check", "No item in your cart");
         }
+        session.setAttribute("totalItems", shoppingCart.getTotalItems());
+        model.addAttribute("subTotal", shoppingCart.getTotalPrice());
         model.addAttribute("shoppingCart", shoppingCart);
         return "cart";
     }
@@ -51,7 +52,6 @@ public class CartController {
         Product product = productService.getProductById(productId);
         String userName = principal.getName();
         Customer customer = customerService.findByUsername(userName);
-
         ShoppingCart cart = cartService.addItemToCart(product, quantity, customer);
         return "redirect:" + request.getHeader("Referer");
     }

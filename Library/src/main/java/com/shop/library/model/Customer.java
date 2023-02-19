@@ -24,17 +24,15 @@ public class Customer {
     @Size(min = 3, max = 15, message = "Last name should have 3-15 characters")
     private String lastName;
     private String userName;
-    private String country;
     @Column(name = "phone_number")
     private String phoneNumber;
-    private String address;
     private String password;
+    @Column(name = "city")
+    private String city;
+    private String address;
     @Lob
     @Column(name = "image", columnDefinition = "MEDIUMBLOB")
     private String image;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "city_id", referencedColumnName = "city_id")
-    private City city;
     @OneToOne(mappedBy = "customer")
     private ShoppingCart shoppingCart;
     @OneToMany(mappedBy = "customer")
