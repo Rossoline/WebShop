@@ -530,7 +530,7 @@
     }
 }
  .arrow::before{
-     font-family: 'FontAwesome';
+     font-family: 'FontAwesome', serif;
      content: "\f0d7";
      margin-left: 5px;
      margin-top: 2px;
@@ -2065,7 +2065,7 @@ button[disabled] {
 .order-date{
     border-right: 1px solid #000000;
 }
-.price-pr{
+.order-status{
     border-right: 1px solid #000000;
     border-left: 1px solid #000000;
 }

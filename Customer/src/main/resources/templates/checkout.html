@@ -75,7 +75,7 @@
                                     <a href="product-detail.html" th:text="${item.product.name}"></a>
                                     <div class="small text-muted">Price: [[${item.product.costPrice}]] $
                                         <span class="mx-2">|</span> Qty: [[${item.quantity}]]
-                                        <span class="mx-2">|</span> Subtotal: [[${cart.totalPrice}]] $
+                                        <span class="mx-2">|</span> Subtotal: [[${item.product.costPrice} * ${item.quantity}]] $
                                     </div>
                                 </div>
                             </div>
@@ -93,23 +93,19 @@
                         </div>
                         <hr class="my-1">
                         <div class="d-flex">
-                            <h4>Sub Total</h4>
-                            <div class="ml-auto font-weight-bold" th:text="${cart.totalPrice} + ' $'"></div>
-                        </div>
-                        <div class="d-flex">
                             <h4>Shipping Cost</h4>
                             <div class="ml-auto font-weight-bold"> Free</div>
                         </div>
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Grand Total</h5>
-                            <div class="ml-auto h5"> $173</div>
+                            <div class="ml-auto h5" th:text="${cart.totalPrice} + ' $'"></div>
                         </div>
                         <hr>
                     </div>
                 </div>
                 <div class="col-12 d-flex shopping-box">
-                    <a th:href="@{/order}" class="ml-auto btn hvr-hover">Place Order</a></div>
+                    <a th:href="@{/save-order}" class="ml-auto btn hvr-hover">Place Order</a></div>
             </div>
         </div>
     </div>

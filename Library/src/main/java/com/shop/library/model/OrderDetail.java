@@ -18,7 +18,7 @@ public class OrderDetail {
     private int quantity;
     private double totalPrice;
     private double unitPrice;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
     @OneToOne(fetch = FetchType.LAZY)
