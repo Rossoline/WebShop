@@ -1,6 +1,7 @@
 package com.shop.customer.controller;
 
 import com.shop.library.model.Customer;
+import com.shop.library.model.ShoppingCart;
 import com.shop.library.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,16 @@ public class OrderController {
             model.addAttribute("customer", customer);
             model.addAttribute("error", "You must fill your phone number!");
             return "account";
+        }else{
+            model.addAttribute("customer",customer);
+            ShoppingCart cart = customer.getShoppingCart();
+            model.addAttribute("cart", cart);
         }
         return "checkout";
+    }
+
+    @GetMapping("/order")
+    public String order(){
+        return "order";
     }
 }
