@@ -14,7 +14,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class AdminConfiguration extends WebSecurityConfigurerAdapter {
-
     @Bean
     public UserDetailsService userDetailsService(){
         return new AdminServiceConfig();
@@ -30,7 +29,6 @@ public class AdminConfiguration extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
-    //14:14
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

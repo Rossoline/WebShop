@@ -12,11 +12,17 @@
     <artifactId>Admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Admin</name>
-    <description>Admin</description>
+    <description>Admin application</description>
     <properties>
         <java.version>11</java.version>
     </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>com.shop.library</groupId>
+            <artifactId>Library</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -36,11 +42,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.shop.library</groupId>
-            <artifactId>Library</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
