@@ -9,9 +9,9 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>Library</module>
-        <module>Admin</module>
-        <module>Customer</module>
+        <module>library</module>
+        <module>admin</module>
+        <module>customer</module>
     </modules>
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

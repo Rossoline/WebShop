@@ -33,7 +33,7 @@
                 <div class="our-link">
                     <ul>
                         <li><a href="#"> Call US : +380-97-631-00-93</a></li>
-                        <li><a href="#"><i class="fas fa-location-arrow"></i> Address: Kyev, Darnitca</a></li>
+                        <li><a href="#"><i class="fas fa-location-arrow"></i> Address: Kyiv, Darnitca</a></li>
                     </ul>
                 </div>
             </div>
@@ -42,11 +42,11 @@
                     <select id="" class="selectpicker show-tick form-control" data-placeholder="Sign In"
                             onchange="location = this.value;">
                         <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
-                        <option th:if="${session.username == null}" value="http://localhost:8020/shop/login">Sign In
+                        <option th:if="${session.username == null}" value="http://localhost:8024/shop/login">Sign In
                         </option>
-                        <option th:if="${session.username != null}" value="http://localhost:8020/shop/logout">Log out
+                        <option th:if="${session.username != null}" value="http://localhost:8024/shop/logout">Log out
                         </option>
-                        <option th:if="${session.username == null}" value="http://localhost:8020/shop/register">
+                        <option th:if="${session.username == null}" value="http://localhost:8024/shop/register">
                             Register
                         </option>
                     </select>

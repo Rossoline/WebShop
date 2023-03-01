@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.shop.admin</groupId>
-    <artifactId>Admin</artifactId>
+    <artifactId>admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Admin</name>
     <description>Admin application</description>
@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.shop.library</groupId>
-            <artifactId>Library</artifactId>
+            <artifactId>library</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

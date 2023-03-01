@@ -70,7 +70,7 @@
                             <h3>Shopping cart</h3>
                         </div>
                         <div class="rounded p-2 bg-light">
-                            <div class="media mb-2 border-bottom" th:each="item: ${cart.cartItem}">
+                            <div class="media mb-2 border-bottom" th:each="item: ${cart.cartItems}">
                                 <div class="media-body">
                                     <a href="product-detail.html" th:text="${item.product.name}"></a>
                                     <div class="small text-muted">Price: [[${item.product.costPrice}]] $
