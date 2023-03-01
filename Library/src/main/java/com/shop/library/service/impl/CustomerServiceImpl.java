@@ -2,6 +2,7 @@ package com.shop.library.service.impl;
 
 import com.shop.library.dto.CustomerDto;
 import com.shop.library.model.Customer;
+import com.shop.library.model.Role;
 import com.shop.library.model.ShoppingCart;
 import com.shop.library.repository.CustomerRepository;
 import com.shop.library.repository.RoleRepository;
@@ -27,12 +28,13 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setLastName(customerDto.getLastName());
         customer.setUserName(customerDto.getUserName());
         customer.setPassword(customerDto.getPassword());
-        customer.setRoles(Arrays.asList(repository.findByName("CUSTOMER")));
+        customer.setRole(Role.CUSTOMER);
         ShoppingCart cart = new ShoppingCart();
         cart.setCustomer(customer);
         customerRepository.save(customer);
         shoppingCartRepository.save(cart);
         return toDto(customer);
+
     }
 
     @Override
