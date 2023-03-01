@@ -5,6 +5,9 @@ import com.shop.library.model.Product;
 import com.shop.library.repository.ProductRepository;
 import com.shop.library.service.ProductService;
 import com.shop.library.utils.ImageUpload;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -12,14 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
-
     private final ImageUpload imageUpload;
 
     public ProductServiceImpl(ProductRepository repository, ImageUpload imageUpload) {

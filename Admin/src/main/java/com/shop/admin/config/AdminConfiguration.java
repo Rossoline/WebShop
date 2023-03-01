@@ -18,10 +18,12 @@ public class AdminConfiguration extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService(){
         return new AdminServiceConfig();
     }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -31,12 +33,12 @@ public class AdminConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests().antMatchers("/*").permitAll()
                 .antMatchers("/admin/*")
                 .hasAuthority("ADMIN")

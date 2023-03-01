@@ -5,25 +5,26 @@ import com.shop.library.model.Admin;
 import com.shop.library.repository.AdminRepository;
 import com.shop.library.repository.RoleRepository;
 import com.shop.library.service.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AdminServiceImpl implements AdminService {
-    @Autowired
-    private AdminRepository adminRepository;
-    @Autowired
-    private RoleRepository roleRepository;
+    private final AdminRepository adminRepository;
+    private final RoleRepository roleRepository;
+
+    public AdminServiceImpl(AdminRepository adminRepository, RoleRepository roleRepository){
+        this.adminRepository = adminRepository;
+        this.roleRepository = roleRepository;
+    }
+
     @Override
-    public Admin findByUsername(String userName) {
+    public Admin findByUsername(String userName){
         return adminRepository.findByUserName(userName);
     }
 
     @Override
-    public Admin save(AdminDto adminDto) {
+    public Admin save(AdminDto adminDto){
         Admin admin = new Admin();
         admin.setFirstName(adminDto.getFirstName());
         admin.setLastName(adminDto.getLastName());
