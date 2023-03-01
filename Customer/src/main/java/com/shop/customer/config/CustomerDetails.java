@@ -1,53 +1,51 @@
 package com.shop.customer.config;
 
 import com.shop.library.model.Customer;
-import com.shop.library.model.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.shop.library.model.Role3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomerDetails implements UserDetails {
     private Customer customer;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities(){
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : customer.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
+        authorities.add(new SimpleGrantedAuthority(Role3.CUSTOMER.toString()));
         return authorities;
     }
 
     @Override
-    public String getPassword() {
+    public String getPassword(){
         return customer.getPassword();
     }
 
     @Override
-    public String getUsername() {
+    public String getUsername(){
         return customer.getUserName();
     }
 
     @Override
-    public boolean isAccountNonExpired() {
+    public boolean isAccountNonExpired(){
         return true;
     }
 
     @Override
-    public boolean isAccountNonLocked() {
+    public boolean isAccountNonLocked(){
         return true;
     }
 
     @Override
-    public boolean isCredentialsNonExpired() {
+    public boolean isCredentialsNonExpired(){
         return true;
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isEnabled(){
         return true;
     }
 }

@@ -2,12 +2,12 @@ package com.shop.library.service.impl;
 
 import com.shop.library.dto.CustomerDto;
 import com.shop.library.model.Customer;
+import com.shop.library.model.Role3;
 import com.shop.library.repository.CustomerRepository;
 import com.shop.library.repository.RoleRepository;
 import com.shop.library.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Arrays;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setLastName(customerDto.getLastName());
         customer.setUserName(customerDto.getUserName());
         customer.setPassword(customerDto.getPassword());
-        customer.setRoles(Arrays.asList(repository.findByName("CUSTOMER")));
+        customer.setRoles(Role3.CUSTOMER);
         Customer customerSave = customerRepository.save(customer);
         return toDto(customerSave);
     }

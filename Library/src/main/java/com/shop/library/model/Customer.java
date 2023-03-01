@@ -1,18 +1,14 @@
 package com.shop.library.model;
 
-import java.util.Collection;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -51,9 +47,6 @@ public class Customer {
     private ShoppingCart shoppingCart;
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "customers_roles",
-            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-    private Collection<Role> roles;
+    @Enumerated(EnumType.STRING)
+    private Role3 roles;
 }

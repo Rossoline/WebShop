@@ -20,7 +20,6 @@ public class Order {
     private Date orderDate;
     private Date deliveryDate;
     private double totalPrice;
-    private double shippingFee;
     private String orderStatus;
     private String notes;
     @ManyToOne(fetch = FetchType.EAGER)
