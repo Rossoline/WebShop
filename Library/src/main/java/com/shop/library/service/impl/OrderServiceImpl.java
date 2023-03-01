@@ -9,33 +9,38 @@ import com.shop.library.repository.OrderDetailRepository;
 import com.shop.library.repository.OrderRepository;
 import com.shop.library.repository.ShoppingCartRepository;
 import com.shop.library.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    @Autowired
-    private OrderDetailRepository orderDetailRepository;
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private ShoppingCartRepository cartRepository;
-    @Autowired
-    private CartItemRepository cartItemRepository;
+    private final OrderDetailRepository orderDetailRepository;
+    private final OrderRepository orderRepository;
+    private final ShoppingCartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
+
+    public OrderServiceImpl(OrderDetailRepository orderDetailRepository,
+                            OrderRepository orderRepository,
+                            ShoppingCartRepository cartRepository,
+                            CartItemRepository cartItemRepository){
+        this.orderDetailRepository = orderDetailRepository;
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
+    }
 
     @Override
-    public void save(ShoppingCart cart) {
+    public void save(ShoppingCart cart){
         Order order = new Order();
         order.setOrderStatus("PENDING");
         order.setOrderDate(new Date());
         order.setCustomer(cart.getCustomer());
         order.setTotalPrice(cart.getTotalPrice());
         List<OrderDetail> orderDetailList = new ArrayList<>();
-        for(CartItem item: cart.getCartItem()){
+        for(CartItem item : cart.getCartItems()){
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrder(order);
             orderDetail.setQuantity(item.getQuantity());
@@ -46,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
             cartItemRepository.delete(item);
         }
         order.setOrderDetailList(orderDetailList);
-        cart.setCartItem(new HashSet<>());
+        cart.setCartItems(new HashSet<>());
         cart.setTotalItems(0);
         cart.setTotalPrice(0);
         cartRepository.save(cart);
@@ -54,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void acceptOrder(Long id) {
+    public void acceptOrder(Long id){
         Order order = orderRepository.getById(id);
         order.setDeliveryDate(new Date());
         order.setOrderStatus("SHIPPING");
@@ -62,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void cancelOrder(Long id) {
+    public void cancelOrder(Long id){
         orderRepository.deleteById(id);
     }
 }

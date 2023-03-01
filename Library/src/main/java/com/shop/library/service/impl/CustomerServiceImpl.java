@@ -2,12 +2,14 @@ package com.shop.library.service.impl;
 
 import com.shop.library.dto.CustomerDto;
 import com.shop.library.model.Customer;
+import com.shop.library.model.ShoppingCart;
 import com.shop.library.repository.CustomerRepository;
 import com.shop.library.repository.RoleRepository;
+import com.shop.library.repository.ShoppingCartRepository;
 import com.shop.library.service.CustomerService;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Arrays;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -15,6 +17,8 @@ public class CustomerServiceImpl implements CustomerService {
     private RoleRepository repository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
     @Override
     public CustomerDto save(CustomerDto customerDto) {
@@ -24,8 +28,11 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setUserName(customerDto.getUserName());
         customer.setPassword(customerDto.getPassword());
         customer.setRoles(Arrays.asList(repository.findByName("CUSTOMER")));
-        Customer customerSave = customerRepository.save(customer);
-        return toDto(customerSave);
+        ShoppingCart cart = new ShoppingCart();
+        cart.setCustomer(customer);
+        customerRepository.save(customer);
+        shoppingCartRepository.save(cart);
+        return toDto(customer);
     }
 
     @Override

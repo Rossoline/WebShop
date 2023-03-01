@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
     @Override
-    public OrderDetail save(OrderDetail orderDetail) {
+    public OrderDetail save(OrderDetail orderDetail){
         return null;
     }
 }
