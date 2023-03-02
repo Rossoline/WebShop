@@ -4,7 +4,6 @@ import com.shop.library.model.Category;
 import com.shop.library.service.CategoryService;
 import java.security.Principal;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +17,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class CategoryController {
-    @Autowired
-    private  CategoryService categoryService;
+    private final CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService){
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/categories")
     public String categories(Model model, Principal principal){
@@ -41,7 +43,8 @@ public class CategoryController {
             attributes.addFlashAttribute("success", "Added successfully");
         }catch(DataIntegrityViolationException e){
             e.printStackTrace();
-            attributes.addFlashAttribute("failed", "Failed to add because duplicate name");
+            attributes.addFlashAttribute("failed",
+                    "Failed to add because duplicate name");
         }catch(Exception e){
             e.printStackTrace();
             attributes.addFlashAttribute("failed", "Error server");
@@ -49,7 +52,8 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/findById", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/findById",
+            method = {RequestMethod.PUT, RequestMethod.GET})
     @ResponseBody
     public Category findById(Long id){
         return categoryService.findById(id);
@@ -64,7 +68,8 @@ public class CategoryController {
         }catch(DataIntegrityViolationException e){
             //TODO change printStackTrace
             e.printStackTrace();
-            attributes.addFlashAttribute("failed", "Failed to update, because duplicate name!");
+            attributes.addFlashAttribute("failed",
+                    "Failed to update, because duplicate name!");
         }catch(Exception e){
             e.printStackTrace();
             attributes.addFlashAttribute("failed", "Server error!");
@@ -72,7 +77,8 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/delete-category", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/delete-category",
+            method = {RequestMethod.PUT, RequestMethod.GET})
     public String delete(Long id, RedirectAttributes attributes){
         try{
             categoryService.deleteById(id);

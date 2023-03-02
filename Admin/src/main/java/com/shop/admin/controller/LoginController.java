@@ -4,7 +4,6 @@ import com.shop.library.dto.AdminDto;
 import com.shop.library.model.Admin;
 import com.shop.library.service.AdminService;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LoginController {
-    @Autowired
-    private AdminService adminService;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private final AdminService adminService;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public LoginController(AdminService adminService,
+                           BCryptPasswordEncoder passwordEncoder){
+        this.adminService = adminService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/login")
     public String loginForm(Model model){
@@ -68,20 +71,17 @@ public class LoginController {
             Admin admin = adminService.findByUsername(username);
             if(admin != null){
                 model.addAttribute("adminDto", adminDto);
-                System.out.println("admin not null");
                 model.addAttribute("emailError", "This email already registered!");
                 return "register";
             }
             if(adminDto.getPassword().equals(adminDto.getRepeatPassword())){
                 adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
                 adminService.save(adminDto);
-                System.out.println("Admin registered with login " + adminDto.getUsername());
                 model.addAttribute("success", "Register successfully!");
                 model.addAttribute("adminDto", adminDto);
             }else{
                 model.addAttribute("adminDto", adminDto);
                 model.addAttribute("passwordError", "Wrong repeat password!");
-                System.out.println("Passwords not the same");
                 return "register";
             }
         }catch(Exception e){

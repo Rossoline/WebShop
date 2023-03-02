@@ -54,10 +54,10 @@
                                class="btn btn-primary">Update</a>
                         </td>
                         <td>
-                            <a th:if="${category.status.toString()} == 'ACTIVATED'"
+                            <a th:if="${category.getStatus().toString()} == 'ACTIVATED'"
                                th:href="@{/delete-category/(id = ${category.id})}"
                                class="btn btn-warning">Delete</a>
-                            <a th:if="${category.status.toString()} == 'DELETED'"
+                            <a th:if="${category.getStatus().toString()} == 'DELETED'"
                                th:href="@{/enable-category/(id = ${category.id})}"
                                class="btn btn-primary">Enable</a>
                         </td>
