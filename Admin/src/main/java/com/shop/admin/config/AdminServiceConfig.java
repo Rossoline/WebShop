@@ -1,8 +1,9 @@
 package com.shop.admin.config;
 
 import com.shop.library.model.Admin;
+import com.shop.library.model.Role;
 import com.shop.library.repository.AdminRepository;
-import java.util.stream.Collectors;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -23,8 +24,6 @@ public class AdminServiceConfig implements UserDetailsService {
         return new User(
                 admin.getUserName(),
                 admin.getPassword(),
-                admin.getRoles().stream()
-                        .map(role -> new SimpleGrantedAuthority(role.getName()))
-                        .collect(Collectors.toList()));
+                List.of(new SimpleGrantedAuthority(Role.ADMIN.toString())));
     }
 }

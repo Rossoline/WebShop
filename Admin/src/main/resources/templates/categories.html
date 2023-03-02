@@ -15,14 +15,11 @@
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
         <!-- Main Content -->
         <div id="content">
-
             <!-- Topbar -->
             <nav th:replace="fragments::topbar"></nav>
             <!-- End of Topbar -->
-
             <!-- Begin Page Content -->
             <div class="container-fluid">
                 <!-- Begin Heading -->
@@ -57,10 +54,10 @@
                                class="btn btn-primary">Update</a>
                         </td>
                         <td>
-                            <a th:if="${category.is_activated} == true"
+                            <a th:if="${category.status.toString()} == 'ACTIVATED'"
                                th:href="@{/delete-category/(id = ${category.id})}"
                                class="btn btn-warning">Delete</a>
-                            <a th:if="${category.is_deleted} == true"
+                            <a th:if="${category.status.toString()} == 'DELETED'"
                                th:href="@{/enable-category/(id = ${category.id})}"
                                class="btn btn-primary">Enable</a>
                         </td>
@@ -68,7 +65,6 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
         <!-- End of Main Content -->
         <!-- Footer -->

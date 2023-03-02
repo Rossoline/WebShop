@@ -1,6 +1,7 @@
 package com.shop.library.service.impl;
 
 import com.shop.library.dto.ProductDto;
+import com.shop.library.model.Activation;
 import com.shop.library.model.Product;
 import com.shop.library.repository.ProductRepository;
 import com.shop.library.service.ProductService;
@@ -48,8 +49,7 @@ public class ProductServiceImpl implements ProductService {
             product.setCategory(productDto.getCategory());
             product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
-            product.set_activated(true);
-            product.set_deleted(false);
+            product.setStatus(Activation.ACTIVATED);
             return repository.save(product);
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,8 +75,7 @@ public class ProductServiceImpl implements ProductService {
             product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
             product.setCategory(productDto.getCategory());
-            product.set_activated(true);
-            product.set_deleted(false);
+            product.setStatus(productDto.getStatus());
             return repository.save(product);
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,16 +86,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteById(Long id) {
         Product product = repository.getById(id);
-        product.set_deleted(true);
-        product.set_activated(false);
+        product.setStatus(Activation.DELETED);
         repository.save(product);
     }
 
     @Override
     public void enableById(Long id) {
         Product product = repository.getById(id);
-        product.set_deleted(false);
-        product.set_activated(true);
+        product.setStatus(Activation.ACTIVATED);
         repository.save(product);
     }
 
@@ -151,8 +148,7 @@ public class ProductServiceImpl implements ProductService {
         productDto.setSalePrice(product.getSalePrice());
         productDto.setCostPrice(product.getCostPrice());
         productDto.setImage(product.getImage());
-        productDto.setDeleted(product.is_deleted());
-        productDto.setActivated(product.is_activated());
+        productDto.setStatus(product.getStatus());
         return productDto;
     }
 
