@@ -3,6 +3,7 @@ package com.shop.library.service.impl;
 import com.shop.library.model.CartItem;
 import com.shop.library.model.Order;
 import com.shop.library.model.OrderDetail;
+import com.shop.library.model.OrderStatus;
 import com.shop.library.model.ShoppingCart;
 import com.shop.library.repository.CartItemRepository;
 import com.shop.library.repository.OrderDetailRepository;
@@ -35,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void save(ShoppingCart cart){
         Order order = new Order();
-        order.setOrderStatus("PENDING");
+        order.setOrderStatus(OrderStatus.APPROVAL);
         order.setOrderDate(new Date());
         order.setCustomer(cart.getCustomer());
         order.setTotalPrice(cart.getTotalPrice());
@@ -62,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
     public void acceptOrder(Long id){
         Order order = orderRepository.getById(id);
         order.setDeliveryDate(new Date());
-        order.setOrderStatus("SHIPPING");
+        order.setOrderStatus(OrderStatus.DELIVERY);
         orderRepository.save(order);
     }
 

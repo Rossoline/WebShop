@@ -7,17 +7,20 @@ import com.shop.library.service.CustomerService;
 import com.shop.library.service.OrderService;
 import java.security.Principal;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class OrderController {
-    @Autowired
-    private CustomerService customerService;
-    @Autowired
-    private OrderService orderService;
+    private final CustomerService customerService;
+    private final OrderService orderService;
+
+    public OrderController(CustomerService customerService,
+                           OrderService orderService){
+        this.customerService = customerService;
+        this.orderService = orderService;
+    }
 
     @GetMapping("/checkout")
     public String checkout(Model model, Principal principal){

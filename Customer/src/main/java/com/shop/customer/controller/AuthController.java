@@ -4,7 +4,6 @@ import com.shop.library.dto.CustomerDto;
 import com.shop.library.model.Customer;
 import com.shop.library.service.CustomerService;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class AuthController {
-    @Autowired
-    private CustomerService customerService;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private final CustomerService customerService;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public AuthController(CustomerService customerService,
+                          BCryptPasswordEncoder passwordEncoder){
+        this.customerService = customerService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(){
