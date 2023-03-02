@@ -2,30 +2,37 @@ package com.shop.library.service.impl;
 
 import com.shop.library.dto.CustomerDto;
 import com.shop.library.model.Customer;
-import com.shop.library.model.Role3;
+import com.shop.library.model.Role;
+import com.shop.library.model.ShoppingCart;
 import com.shop.library.repository.CustomerRepository;
-import com.shop.library.repository.RoleRepository;
+import com.shop.library.repository.ShoppingCartRepository;
 import com.shop.library.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-    @Autowired
-    private RoleRepository repository;
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository,
+                               ShoppingCartRepository shoppingCartRepository){
+        this.customerRepository = customerRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
+    }
 
     @Override
-    public CustomerDto save(CustomerDto customerDto) {
+    public CustomerDto save(CustomerDto customerDto){
         Customer customer = new Customer();
         customer.setFirstName(customerDto.getFirstName());
         customer.setLastName(customerDto.getLastName());
         customer.setUserName(customerDto.getUserName());
         customer.setPassword(customerDto.getPassword());
-        customer.setRoles(Role3.CUSTOMER);
-        Customer customerSave = customerRepository.save(customer);
-        return toDto(customerSave);
+        customer.setRole(Role.CUSTOMER);
+        ShoppingCart cart = new ShoppingCart();
+        cart.setCustomer(customer);
+        customerRepository.save(customer);
+        shoppingCartRepository.save(cart);
+        return toDto(customer);
     }
 
     @Override
