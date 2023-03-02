@@ -1,7 +1,7 @@
 package com.shop.admin.controller;
 
 import com.shop.library.dto.ProductDto;
-import com.shop.library.model.Activation;
+import com.shop.library.model.Status;
 import com.shop.library.model.Category;
 import com.shop.library.service.CategoryService;
 import com.shop.library.service.ProductService;
@@ -89,7 +89,7 @@ public class ProductController {
                               @RequestParam("imageProduct") MultipartFile imageProduct,
                               RedirectAttributes attributes){
         try{
-            productDto.setStatus(Activation.ACTIVATED);
+            productDto.setStatus(Status.ACTIVATED);
             productService.save(imageProduct, productDto);
             attributes.addFlashAttribute("success", "Add successfully");
         }catch(Exception e){

@@ -25,10 +25,10 @@ public class Category {
     private Long id;
     private String name;
     @Enumerated(EnumType.STRING)
-    private Activation status;
+    private Status status;
 
     public Category(String name){
         this.name = name;
-        this.status = Activation.ACTIVATED;
+        this.status = Status.ACTIVATED;
     }
 }

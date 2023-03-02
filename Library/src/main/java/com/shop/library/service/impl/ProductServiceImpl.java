@@ -1,7 +1,7 @@
 package com.shop.library.service.impl;
 
 import com.shop.library.dto.ProductDto;
-import com.shop.library.model.Activation;
+import com.shop.library.model.Status;
 import com.shop.library.model.Product;
 import com.shop.library.repository.ProductRepository;
 import com.shop.library.service.ProductService;
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
             product.setCategory(productDto.getCategory());
             product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
-            product.setStatus(Activation.ACTIVATED);
+            product.setStatus(Status.ACTIVATED);
             return repository.save(product);
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,14 +86,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteById(Long id) {
         Product product = repository.getById(id);
-        product.setStatus(Activation.DELETED);
+        product.setStatus(Status.DELETED);
         repository.save(product);
     }
 
     @Override
     public void enableById(Long id) {
         Product product = repository.getById(id);
-        product.setStatus(Activation.ACTIVATED);
+        product.setStatus(Status.ACTIVATED);
         repository.save(product);
     }
 

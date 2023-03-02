@@ -1,6 +1,6 @@
 package com.shop.library.dto;
 
-import com.shop.library.model.Activation;
+import com.shop.library.model.Status;
 import com.shop.library.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +18,6 @@ public class ProductDto {
     private int currentQuantity;
     private Category category;
     private String image;
-    private Activation status;
+    private Status status;
     //TODO create parser for model to DTO and back and use it in ProductService
 }
