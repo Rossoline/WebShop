@@ -1,7 +1,7 @@
 package com.shop.customer.config;
 
 import com.shop.library.model.Customer;
-import com.shop.library.model.Role3;
+import com.shop.library.model.Role;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
