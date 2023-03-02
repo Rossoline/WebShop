@@ -2,6 +2,8 @@ package com.shop.library.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,12 +24,11 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
     private String name;
-    private boolean is_deleted;
-    private boolean is_activated;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    public Category(String name) {
+    public Category(String name){
         this.name = name;
-        this.is_activated = true;
-        this.is_deleted = false;
+        this.status = Status.ACTIVATED;
     }
 }

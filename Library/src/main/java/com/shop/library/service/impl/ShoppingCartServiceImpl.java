@@ -25,6 +25,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart addItemToCart(Product product, int quantity, Customer customer){
         ShoppingCart cart = customer.getShoppingCart();
+//        cart.getCartItems().stream().map(CartItem :: getQuantity).count();
+//        cart.getCartItems().stream().map(CartItem :: getTotalPrice).count();
         if(cart == null){
             cart = new ShoppingCart();
         }

@@ -1,6 +1,7 @@
 package com.shop.library.service.impl;
 
 import com.shop.library.dto.CategoryDto;
+import com.shop.library.model.Status;
 import com.shop.library.model.Category;
 import com.shop.library.repository.CategoryRepository;
 import com.shop.library.service.CategoryService;
@@ -37,8 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
         try{
             categoryUpdate = repository.findById(category.getId()).get();
             categoryUpdate.setName(category.getName());
-            categoryUpdate.set_activated(category.is_activated());
-            categoryUpdate.set_deleted(category.is_deleted());
+            categoryUpdate.setStatus(category.getStatus());
         }catch(Exception e){
             //TODO change e.printst
             e.printStackTrace();
@@ -49,16 +49,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteById(Long id){
         Category category = repository.getById(id);
-        category.set_deleted(true);
-        category.set_activated(false);
+        category.setStatus(Status.DELETED);
         repository.save(category);
     }
 
     @Override
-    public void enabledById(Long id){
+    public void enableById(Long id){
         Category category = repository.getById(id);
-        category.set_activated(true);
-        category.set_deleted(false);
+        category.setStatus(Status.ACTIVATED);
         repository.save(category);
     }
 
@@ -67,7 +65,6 @@ public class CategoryServiceImpl implements CategoryService {
         return repository.findAllByActivated();
     }
 
-    /* Customer */
     @Override
     public List<CategoryDto> getCategoryAndProduct(){
         return repository.getCategoryAndProduct();

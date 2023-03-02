@@ -58,8 +58,7 @@ public class CategoryController {
     @GetMapping("/update-category")
     public String update(Category category, RedirectAttributes attributes){
         try{
-            category.set_deleted(categoryService.findById(category.getId()).is_deleted());
-            category.set_activated(categoryService.findById(category.getId()).is_activated());
+            category.setStatus(categoryService.findById(category.getId()).getStatus());
             categoryService.update(category);
             attributes.addFlashAttribute("success", "Update successfully!");
         }catch(DataIntegrityViolationException e){
@@ -88,7 +87,7 @@ public class CategoryController {
     @RequestMapping(value = "/enable-category", method = {RequestMethod.PUT, RequestMethod.GET})
     public String enabledById(Long id, RedirectAttributes attributes){
         try{
-            categoryService.enabledById(id);
+            categoryService.enableById(id);
             attributes.addFlashAttribute("success", "Enabled successfully!");
         }catch(Exception e){
             e.printStackTrace();
