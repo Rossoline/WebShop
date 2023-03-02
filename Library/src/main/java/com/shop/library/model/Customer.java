@@ -9,16 +9,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import java.util.Collection;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -34,12 +49,16 @@ public class Customer {
     @Size(min = 3, max = 15, message = "Last name should have 3-15 characters")
     private String lastName;
     private String userName;
-    @Column(name = "phone_number")
-    private String phoneNumber;
     private String password;
+    @Column(name = "phone_number")
+    @Builder.Default
+    private String phoneNumber = "";
     @Column(name = "city")
-    private String city;
-    private String address;
+    @Builder.Default
+    private String city = "";
+    @Column(name = "address")
+    @Builder.Default
+    private String address = "";
     @Lob
     @Column(name = "image", columnDefinition = "MEDIUMBLOB")
     private String image;
