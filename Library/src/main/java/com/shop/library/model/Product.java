@@ -40,5 +40,5 @@ public class Product {
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private ActivationStatus status;
 }

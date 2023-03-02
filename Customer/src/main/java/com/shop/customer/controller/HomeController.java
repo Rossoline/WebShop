@@ -4,7 +4,7 @@ import com.shop.library.dto.ProductDto;
 import com.shop.library.model.Category;
 import com.shop.library.model.Customer;
 import com.shop.library.model.ShoppingCart;
-import com.shop.library.model.Status;
+import com.shop.library.model.ActivationStatus;
 import com.shop.library.service.CategoryService;
 import com.shop.library.service.CustomerService;
 import com.shop.library.service.ProductService;
@@ -51,7 +51,7 @@ public class HomeController {
     public String index(Model model){
         List<Category> categories = categoryService.findAll();
         List<ProductDto> productDtos = productService.findAll().stream()
-                .filter(p -> p.getStatus() == Status.ACTIVATED)
+                .filter(p -> p.getStatus() == ActivationStatus.ACTIVATED)
                 .collect(Collectors.toList());
         model.addAttribute("categories", categories);
         model.addAttribute("products", productDtos);

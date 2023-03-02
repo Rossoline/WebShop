@@ -1,5 +1,5 @@
 package com.shop.library.model;
 
-public enum Status {
+public enum ActivationStatus {
     ACTIVATED, DELETED;
 }
