@@ -2,23 +2,28 @@ package com.shop.admin.controller;
 
 import com.shop.library.model.Category;
 import com.shop.library.service.CategoryService;
+import java.security.Principal;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class CategoryController {
     @Autowired
-    private CategoryService categoryService;
+    private  CategoryService categoryService;
 
     @GetMapping("/categories")
-    public String categories(Model model, Principal principal) {
-        if (principal == null) {
+    public String categories(Model model, Principal principal){
+        if(principal == null){
             return "redirect:/login";
         }
         List<Category> categories = categoryService.findAll();
@@ -30,14 +35,14 @@ public class CategoryController {
     }
 
     @PostMapping("/add-category")
-    public String add(@ModelAttribute("categoryNew") Category category, RedirectAttributes attributes) {
-        try {
+    public String add(@ModelAttribute("categoryNew") Category category, RedirectAttributes attributes){
+        try{
             categoryService.save(category);
             attributes.addFlashAttribute("success", "Added successfully");
-        } catch (DataIntegrityViolationException e) {
+        }catch(DataIntegrityViolationException e){
             e.printStackTrace();
             attributes.addFlashAttribute("failed", "Failed to add because duplicate name");
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
             attributes.addFlashAttribute("failed", "Error server");
         }
@@ -46,22 +51,22 @@ public class CategoryController {
 
     @RequestMapping(value = "/findById", method = {RequestMethod.PUT, RequestMethod.GET})
     @ResponseBody
-    public Category findById(Long id) {
+    public Category findById(Long id){
         return categoryService.findById(id);
     }
 
     @GetMapping("/update-category")
-    public String update(Category category, RedirectAttributes attributes) {
-        try {
+    public String update(Category category, RedirectAttributes attributes){
+        try{
             category.set_deleted(categoryService.findById(category.getId()).is_deleted());
             category.set_activated(categoryService.findById(category.getId()).is_activated());
             categoryService.update(category);
             attributes.addFlashAttribute("success", "Update successfully!");
-        } catch (DataIntegrityViolationException e) {
+        }catch(DataIntegrityViolationException e){
             //TODO change printStackTrace
             e.printStackTrace();
             attributes.addFlashAttribute("failed", "Failed to update, because duplicate name!");
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
             attributes.addFlashAttribute("failed", "Server error!");
         }
@@ -69,11 +74,11 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/delete-category", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String delete(Long id, RedirectAttributes attributes) {
-        try {
+    public String delete(Long id, RedirectAttributes attributes){
+        try{
             categoryService.deleteById(id);
             attributes.addFlashAttribute("success", "Deleted successfully!");
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
             attributes.addFlashAttribute("fail", "Failed to update!");
         }
@@ -81,11 +86,11 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/enable-category", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String enabledById(Long id, RedirectAttributes attributes) {
-        try {
+    public String enabledById(Long id, RedirectAttributes attributes){
+        try{
             categoryService.enabledById(id);
             attributes.addFlashAttribute("success", "Enabled successfully!");
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
             attributes.addFlashAttribute("fail", "Failed to enable!");
         }

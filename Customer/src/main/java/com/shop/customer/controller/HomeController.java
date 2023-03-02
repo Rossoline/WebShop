@@ -7,16 +7,16 @@ import com.shop.library.model.ShoppingCart;
 import com.shop.library.service.CategoryService;
 import com.shop.library.service.CustomerService;
 import com.shop.library.service.ProductService;
+import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import javax.servlet.http.HttpSession;
-import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -30,8 +30,8 @@ public class HomeController {
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
     public String home(Model model,
                        Principal principal,
-                       HttpSession session) {
-        if (principal != null) {
+                       HttpSession session){
+        if(principal != null){
             session.setAttribute("username", principal.getName());
             Customer customer = customerService.findByUsername(principal.getName());
             ShoppingCart cart = customer.getShoppingCart();
@@ -43,10 +43,10 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String index(Model model) {
+    public String index(Model model){
         List<Category> categories = categoryService.findAll();
         List<ProductDto> productDtos = productService.findAll().stream()
-                .filter(ProductDto::isActivated)
+                .filter(ProductDto :: isActivated)
                 .collect(Collectors.toList());
         model.addAttribute("categories", categories);
         model.addAttribute("products", productDtos);

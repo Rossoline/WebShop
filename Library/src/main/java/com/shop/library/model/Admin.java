@@ -1,10 +1,18 @@
 package com.shop.library.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.*;
-import java.util.Collection;
 
 @Data
 @NoArgsConstructor
@@ -16,18 +24,15 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "admin_id")
     private Long id;
+    @Size(min = 3, max = 15, message = "First name should have 3-15 characters")
     private String firstName;
+    @Size(min = 3, max = 15, message = "Last name should have 3-15 characters")
     private String lastName;
     private String userName;
     private String password;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "admins_roles",
-            joinColumns = @JoinColumn(name = "admin_id",
-                    referencedColumnName = "admin_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id",
-                    referencedColumnName = "role_id"))
-    private Collection<Role> roles;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

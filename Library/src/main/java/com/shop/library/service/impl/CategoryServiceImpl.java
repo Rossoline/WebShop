@@ -4,41 +4,42 @@ import com.shop.library.dto.CategoryDto;
 import com.shop.library.model.Category;
 import com.shop.library.repository.CategoryRepository;
 import com.shop.library.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    private CategoryRepository repository;
+    private final CategoryRepository repository;
+
+    public CategoryServiceImpl(CategoryRepository repository){
+        this.repository = repository;
+    }
 
     @Override
-    public List<Category> findAll() {
+    public List<Category> findAll(){
         return repository.findAll();
     }
 
     @Override
-    public Category save(Category category) {
+    public Category save(Category category){
         Category categorySave = new Category(category.getName());
         return repository.save(categorySave);
     }
 
     @Override
-    public Category findById(Long id) {
+    public Category findById(Long id){
         return repository.findById(id).get();
     }
 
     @Override
-    public Category update(Category category) {
+    public Category update(Category category){
         Category categoryUpdate = null;
-        try {
+        try{
             categoryUpdate = repository.findById(category.getId()).get();
             categoryUpdate.setName(category.getName());
             categoryUpdate.set_activated(category.is_activated());
             categoryUpdate.set_deleted(category.is_deleted());
-        } catch (Exception e) {
+        }catch(Exception e){
             //TODO change e.printst
             e.printStackTrace();
         }
@@ -46,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id){
         Category category = repository.getById(id);
         category.set_deleted(true);
         category.set_activated(false);
@@ -54,7 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void enabledById(Long id) {
+    public void enabledById(Long id){
         Category category = repository.getById(id);
         category.set_activated(true);
         category.set_deleted(false);
@@ -62,14 +63,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAllByActivated() {
+    public List<Category> findAllByActivated(){
         return repository.findAllByActivated();
     }
 
     /* Customer */
-
     @Override
-    public List<CategoryDto> getCategoryAndProduct() {
+    public List<CategoryDto> getCategoryAndProduct(){
         return repository.getCategoryAndProduct();
     }
 }

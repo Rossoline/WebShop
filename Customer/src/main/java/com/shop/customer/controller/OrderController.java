@@ -5,12 +5,12 @@ import com.shop.library.model.Order;
 import com.shop.library.model.ShoppingCart;
 import com.shop.library.service.CustomerService;
 import com.shop.library.service.OrderService;
+import java.security.Principal;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class OrderController {
@@ -31,7 +31,7 @@ public class OrderController {
             model.addAttribute("error", "You must fill your phone number!");
             return "account";
         }else{
-            model.addAttribute("customer",customer);
+            model.addAttribute("customer", customer);
             ShoppingCart cart = customer.getShoppingCart();
             model.addAttribute("cart", cart);
         }

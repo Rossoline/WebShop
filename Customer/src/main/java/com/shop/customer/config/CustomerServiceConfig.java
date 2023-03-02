@@ -9,7 +9,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomerServiceConfig implements UserDetailsService {
     @Autowired
     private CustomerRepository customerRepository;
@@ -22,6 +24,6 @@ public class CustomerServiceConfig implements UserDetailsService {
         }
         return new User(customer.getUserName(),
                 customer.getPassword(),
-                List.of(new SimpleGrantedAuthority(customer.getRoles().toString())));
+                List.of(new SimpleGrantedAuthority(customer.getRole().toString())));
     }
 }
