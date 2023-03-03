@@ -25,8 +25,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart addItemToCart(Product product, int quantity, Customer customer){
         ShoppingCart cart = customer.getShoppingCart();
-//        cart.getCartItems().stream().map(CartItem :: getQuantity).count();
-//        cart.getCartItems().stream().map(CartItem :: getTotalPrice).count();
         if(cart == null){
             cart = new ShoppingCart();
         }
@@ -37,9 +35,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             if(cartItem == null){
                 cartItem = new CartItem();
                 cartItem.setProduct(product);
-                cartItem.setTotalPrice(quantity * product.getCostPrice());
                 cartItem.setQuantity(quantity);
-                cartItem.setCart(cart);
                 cartItems.add(cartItem);
                 itemRepository.save(cartItem);
             }
@@ -47,21 +43,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             if(cartItem == null){
                 cartItem = new CartItem();
                 cartItem.setProduct(product);
-                cartItem.setTotalPrice(quantity * product.getCostPrice());
                 cartItem.setQuantity(quantity);
-                cartItem.setCart(cart);
                 cartItems.add(cartItem);
                 itemRepository.save(cartItem);
             }else{
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                cartItem.setTotalPrice(cartItem.getTotalPrice() + quantity * product.getCostPrice());
                 itemRepository.save(cartItem);
             }
         }
         cart.setCartItems(cartItems);
-        cart.setTotalPrice(totalPrices(cart.getCartItems()));
-        cart.setTotalItems(totalItems(cart.getCartItems()));
-        cart.setCustomer(customer);
         return cartRepository.save(cart);
     }
 
@@ -71,12 +61,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Set<CartItem> cartItems = cart.getCartItems();
         CartItem item = findCartItem(cartItems, product.getId());
         item.setQuantity(quantity);
-        item.setTotalPrice(quantity * product.getCostPrice());
         itemRepository.save(item);
         int totalItems = totalItems(cartItems);
         double totalPrice = totalPrices(cartItems);
-        cart.setTotalItems(totalItems);
-        cart.setTotalPrice(totalPrice);
         return cartRepository.save(cart);
     }
 
@@ -90,8 +77,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         double totalPrice = totalPrices(cartItems);
         int totalItems = totalItems(cartItems);
         cart.setCartItems(cartItems);
-        cart.setTotalItems(totalItems);
-        cart.setTotalPrice(totalPrice);
         return cartRepository.save(cart);
     }
 
@@ -118,9 +103,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private double totalPrices(Set<CartItem> cartItems){
         double totalPrice = 0.0;
-        for(CartItem item : cartItems){
-            totalPrice += item.getTotalPrice();
-        }
         return totalPrice;
     }
 }

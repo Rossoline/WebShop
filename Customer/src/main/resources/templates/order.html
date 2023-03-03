@@ -60,12 +60,6 @@
                                 <td class="order-date">
                                     <span><b th:text="${order.orderDate}"></b></span>
                                 </td>
-                                <td class="name-pr" th:if="${order.deliveryDate != null}">
-                                    <p href="#" th:text="${order.deliveryDate}"></p>
-                                </td>
-                                <td class="name-pr" th:if="${order.deliveryDate == null}">
-                                    <p>Waiting for approve</p>
-                                </td>
                                 <td class="order-status">
                                     <p th:text="${order.orderStatus}"></p>
                                 </td>

@@ -23,16 +23,16 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto save(CustomerDto customerDto){
         Customer customer = new Customer();
+        ShoppingCart cart = new ShoppingCart();
         customer.setFirstName(customerDto.getFirstName());
         customer.setLastName(customerDto.getLastName());
         customer.setUserName(customerDto.getUserName());
         customer.setPassword(customerDto.getPassword());
         customer.setRole(Role.CUSTOMER);
-        ShoppingCart cart = new ShoppingCart();
-        cart.setCustomer(customer);
-        customerRepository.save(customer);
+        customer.setShoppingCart(cart);
         shoppingCartRepository.save(cart);
-        return toDto(customer);
+        customerRepository.save(customer);
+        return  toDto(customer);
     }
 
     @Override

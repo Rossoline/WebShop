@@ -19,5 +19,4 @@ public class ProductDto {
     private Category category;
     private String image;
     private ActivationStatus status;
-    //TODO create parser for model to DTO and back and use it in ProductService
 }

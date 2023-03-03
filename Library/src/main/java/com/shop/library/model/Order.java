@@ -1,8 +1,7 @@
 package com.shop.library.model;
 
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,15 +28,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<CartItem> cartItems;
     private Date orderDate;
-    private Date deliveryDate;
-    private double totalPrice;
+    private String notes;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    private String notes;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    @OneToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    private List<OrderDetail> orderDetailList;
 }

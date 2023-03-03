@@ -5,23 +5,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import java.util.Collection;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -38,7 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "customers",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"username", "image", "phone_number"}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {"username", "phone_number"}))
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,12 +47,11 @@ public class Customer {
     @Column(name = "address")
     @Builder.Default
     private String address = "";
-    @Lob
-    @Column(name = "image", columnDefinition = "MEDIUMBLOB")
-    private String image;
-    @OneToOne(mappedBy = "customer")
+    @JoinColumn(name = "cart_id")
+    @OneToOne(fetch = FetchType.EAGER)
     private ShoppingCart shoppingCart;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id", referencedColumnName = "customer_id")
     private List<Order> orders;
     @Enumerated(EnumType.STRING)
     private Role role;
