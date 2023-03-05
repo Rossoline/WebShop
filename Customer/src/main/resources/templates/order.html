@@ -48,7 +48,6 @@
                             <thead>
                             <tr>
                                 <th class="order-date">Order Date</th>
-                                <th>Delivery Date</th>
                                 <th class="order-status">Order Status</th>
                                 <th class="total-pr">Total Price</th>
                                 <!--                                <th class="total-pr">Payment Method</th>-->
@@ -58,13 +57,13 @@
                             <tbody>
                             <tr th:each="order : ${orders}">
                                 <td class="order-date">
-                                    <span><b th:text="${order.orderDate}"></b></span>
+                                    <span><b th:text="${order.getOrderDate().toString()}"></b></span>
                                 </td>
                                 <td class="order-status">
-                                    <p th:text="${order.orderStatus}"></p>
+                                    <p th:text="${order.getOrderStatus().toString()}"></p>
                                 </td>
                                 <td class="total-pr">
-                                    <p th:text="${order.totalPrice} + '$'"></p>
+                                    <p th:text="${orderService.totalPrice(order)} + '$'"></p>
                                 </td>
                                 <!--                                <td>-->
                                 <!--                                    <button class="button-cancel">Cancel</button>-->

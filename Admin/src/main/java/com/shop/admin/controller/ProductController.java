@@ -1,8 +1,8 @@
 package com.shop.admin.controller;
 
 import com.shop.library.dto.ProductDto;
-import com.shop.library.model.ActivationStatus;
 import com.shop.library.model.Category;
+import com.shop.library.model.enums.ActivationStatus;
 import com.shop.library.service.CategoryService;
 import com.shop.library.service.ProductService;
 import java.security.Principal;

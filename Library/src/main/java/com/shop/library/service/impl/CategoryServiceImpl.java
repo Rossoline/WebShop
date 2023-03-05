@@ -1,8 +1,8 @@
 package com.shop.library.service.impl;
 
 import com.shop.library.dto.CategoryDto;
-import com.shop.library.model.ActivationStatus;
 import com.shop.library.model.Category;
+import com.shop.library.model.enums.ActivationStatus;
 import com.shop.library.repository.CategoryRepository;
 import com.shop.library.service.CategoryService;
 import java.util.List;

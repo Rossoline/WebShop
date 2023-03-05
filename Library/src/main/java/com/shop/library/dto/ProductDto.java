@@ -1,7 +1,7 @@
 package com.shop.library.dto;
 
-import com.shop.library.model.ActivationStatus;
 import com.shop.library.model.Category;
+import com.shop.library.model.enums.ActivationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

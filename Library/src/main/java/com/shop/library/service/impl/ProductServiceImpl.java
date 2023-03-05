@@ -1,8 +1,8 @@
 package com.shop.library.service.impl;
 
 import com.shop.library.dto.ProductDto;
-import com.shop.library.model.ActivationStatus;
 import com.shop.library.model.Product;
+import com.shop.library.model.enums.ActivationStatus;
 import com.shop.library.repository.ProductRepository;
 import com.shop.library.service.ProductService;
 import com.shop.library.utils.ImageUpload;
@@ -71,7 +71,6 @@ public class ProductServiceImpl implements ProductService {
             }
             product.setName(productDto.getName());
             product.setDescription(productDto.getDescription());
-            product.setSalePrice(productDto.getSalePrice());
             product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
             product.setCategory(productDto.getCategory());
@@ -145,7 +144,6 @@ public class ProductServiceImpl implements ProductService {
         productDto.setDescription(product.getDescription());
         productDto.setCurrentQuantity(product.getCurrentQuantity());
         productDto.setCategory(product.getCategory());
-        productDto.setSalePrice(product.getSalePrice());
         productDto.setCostPrice(product.getCostPrice());
         productDto.setImage(product.getImage());
         productDto.setStatus(product.getStatus());

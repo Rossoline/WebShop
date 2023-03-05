@@ -5,6 +5,7 @@ import com.shop.library.model.Order;
 import com.shop.library.model.ShoppingCart;
 import com.shop.library.service.CustomerService;
 import com.shop.library.service.OrderService;
+import com.shop.library.service.ShoppingCartService;
 import java.security.Principal;
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -14,11 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class OrderController {
     private final CustomerService customerService;
+    private final ShoppingCartService shoppingCartService;
     private final OrderService orderService;
 
     public OrderController(CustomerService customerService,
+                           ShoppingCartService shoppingCartService,
                            OrderService orderService){
         this.customerService = customerService;
+        this.shoppingCartService = shoppingCartService;
         this.orderService = orderService;
     }
 
@@ -35,6 +39,7 @@ public class OrderController {
             return "account";
         }else{
             model.addAttribute("customer", customer);
+            model.addAttribute("service", shoppingCartService);
             ShoppingCart cart = customer.getShoppingCart();
             model.addAttribute("cart", cart);
         }
@@ -49,6 +54,7 @@ public class OrderController {
         String userName = principal.getName();
         Customer customer = customerService.findByUsername(userName);
         List<Order> orderList = customer.getOrders();
+        model.addAttribute("orderService", orderService);
         model.addAttribute("orders", orderList);
         return "order";
     }
@@ -60,8 +66,9 @@ public class OrderController {
         }
         String userName = principal.getName();
         Customer customer = customerService.findByUsername(userName);
-        ShoppingCart cart = customer.getShoppingCart();
-        orderService.save(cart);
+        ShoppingCart shoppingCart = customer.getShoppingCart();
+        orderService.save(shoppingCart);
+        shoppingCartService.saveEmpty(shoppingCart);
         return "redirect:/order";
     }
 }

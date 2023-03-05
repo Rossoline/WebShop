@@ -1,7 +1,7 @@
 package com.shop.admin.config;
 
 import com.shop.library.model.Admin;
-import com.shop.library.model.Role;
+import com.shop.library.model.enums.Role;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

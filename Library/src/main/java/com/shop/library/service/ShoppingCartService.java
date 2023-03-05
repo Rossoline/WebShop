@@ -5,9 +5,15 @@ import com.shop.library.model.Product;
 import com.shop.library.model.ShoppingCart;
 
 public interface ShoppingCartService {
-    ShoppingCart addItemToCart(Product product, int quantity, Customer customer);
+    ShoppingCart save(ShoppingCart shoppingCart);
+
+    void saveEmpty(ShoppingCart shoppingCart);
+
+    void addItemToCart(Product product, int quantity, Customer customer);
 
     ShoppingCart updateItemCart(Product product, int quantity, Customer customer);
 
     ShoppingCart deleteItemFromCart(Product product, Customer customer);
+
+    Double totalPrice(ShoppingCart shoppingCart);
 }

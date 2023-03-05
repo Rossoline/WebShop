@@ -22,8 +22,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         this.cartRepository = cartRepository;
     }
 
+    @Override public ShoppingCart save(ShoppingCart shoppingCart){
+        return cartRepository.save(shoppingCart);
+    }
+
+    @Override public void saveEmpty(ShoppingCart shoppingCart){
+        Set<CartItem> cartItems = new HashSet<>();
+        shoppingCart.setCartItems(cartItems);
+        cartRepository.save(shoppingCart);
+    }
+
     @Override
-    public ShoppingCart addItemToCart(Product product, int quantity, Customer customer){
+    public void addItemToCart(Product product, int quantity, Customer customer){
         ShoppingCart cart = customer.getShoppingCart();
         if(cart == null){
             cart = new ShoppingCart();
@@ -34,6 +44,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             cartItems = new HashSet<>();
             if(cartItem == null){
                 cartItem = new CartItem();
+                cartItem.setCart(cart);
                 cartItem.setProduct(product);
                 cartItem.setQuantity(quantity);
                 cartItems.add(cartItem);
@@ -44,6 +55,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 cartItem = new CartItem();
                 cartItem.setProduct(product);
                 cartItem.setQuantity(quantity);
+                cartItem.setCart(cart);
                 cartItems.add(cartItem);
                 itemRepository.save(cartItem);
             }else{
@@ -52,7 +64,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             }
         }
         cart.setCartItems(cartItems);
-        return cartRepository.save(cart);
+        cart.setCustomer(customer);
+        cartRepository.save(cart);
     }
 
     @Override
@@ -62,8 +75,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         CartItem item = findCartItem(cartItems, product.getId());
         item.setQuantity(quantity);
         itemRepository.save(item);
-        int totalItems = totalItems(cartItems);
-        double totalPrice = totalPrices(cartItems);
         return cartRepository.save(cart);
     }
 
@@ -74,10 +85,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         CartItem item = findCartItem(cartItems, product.getId());
         cartItems.remove(item);
         itemRepository.delete(item);
-        double totalPrice = totalPrices(cartItems);
-        int totalItems = totalItems(cartItems);
         cart.setCartItems(cartItems);
         return cartRepository.save(cart);
+    }
+
+    @Override
+    public Double totalPrice(ShoppingCart shoppingCart){
+        return shoppingCart.getCartItems().stream()
+                .map(c -> c.getQuantity() * c.getProduct().getCostPrice())
+                .mapToDouble(Double :: doubleValue).sum();
     }
 
     private CartItem findCartItem(Set<CartItem> cartItems, Long productId){
@@ -91,18 +107,5 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             }
         }
         return cartItem;
-    }
-
-    private int totalItems(Set<CartItem> cartItems){
-        int totalItems = 0;
-        for(CartItem item : cartItems){
-            totalItems += item.getQuantity();
-        }
-        return totalItems;
-    }
-
-    private double totalPrices(Set<CartItem> cartItems){
-        double totalPrice = 0.0;
-        return totalPrice;
     }
 }

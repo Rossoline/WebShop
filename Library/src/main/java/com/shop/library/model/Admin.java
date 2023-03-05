@@ -1,5 +1,6 @@
 package com.shop.library.model;
 
+import com.shop.library.model.enums.Role;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

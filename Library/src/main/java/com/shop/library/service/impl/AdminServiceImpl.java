@@ -2,7 +2,7 @@ package com.shop.library.service.impl;
 
 import com.shop.library.dto.AdminDto;
 import com.shop.library.model.Admin;
-import com.shop.library.model.Role;
+import com.shop.library.model.enums.Role;
 import com.shop.library.repository.AdminRepository;
 import com.shop.library.service.AdminService;
 import org.springframework.stereotype.Service;

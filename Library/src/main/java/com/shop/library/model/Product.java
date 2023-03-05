@@ -1,5 +1,6 @@
 package com.shop.library.model;
 
+import com.shop.library.model.enums.ActivationStatus;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +32,6 @@ public class Product {
     private String name;
     private String description;
     private double costPrice;
-    private double salePrice;
     private int currentQuantity;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")

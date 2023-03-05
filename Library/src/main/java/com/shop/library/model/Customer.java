@@ -1,11 +1,12 @@
 package com.shop.library.model;
 
+import com.shop.library.model.enums.Role;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "customers",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"username", "phone_number"}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {"userName", "phone_number"}))
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,12 +48,11 @@ public class Customer {
     @Column(name = "address")
     @Builder.Default
     private String address = "";
-    @JoinColumn(name = "cart_id")
-    @OneToOne(fetch = FetchType.EAGER)
-    private ShoppingCart shoppingCart;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id", referencedColumnName = "customer_id")
-    private List<Order> orders;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @JoinColumn(name = "shopping_cart_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private ShoppingCart shoppingCart;
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
 }

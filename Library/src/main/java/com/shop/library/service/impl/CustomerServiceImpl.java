@@ -2,22 +2,22 @@ package com.shop.library.service.impl;
 
 import com.shop.library.dto.CustomerDto;
 import com.shop.library.model.Customer;
-import com.shop.library.model.Role;
 import com.shop.library.model.ShoppingCart;
+import com.shop.library.model.enums.Role;
 import com.shop.library.repository.CustomerRepository;
-import com.shop.library.repository.ShoppingCartRepository;
 import com.shop.library.service.CustomerService;
+import com.shop.library.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
-    private final ShoppingCartRepository shoppingCartRepository;
+    private final ShoppingCartService shoppingCartService;
 
     public CustomerServiceImpl(CustomerRepository customerRepository,
-                               ShoppingCartRepository shoppingCartRepository){
+                               ShoppingCartService shoppingCartService){
         this.customerRepository = customerRepository;
-        this.shoppingCartRepository = shoppingCartRepository;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @Override
@@ -30,9 +30,10 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPassword(customerDto.getPassword());
         customer.setRole(Role.CUSTOMER);
         customer.setShoppingCart(cart);
-        shoppingCartRepository.save(cart);
+        cart.setCustomer(customer);
         customerRepository.save(customer);
-        return  toDto(customer);
+        shoppingCartService.save(cart);
+        return customerDto;
     }
 
     @Override
@@ -47,14 +48,5 @@ public class CustomerServiceImpl implements CustomerService {
         customerForSave.setCity(customer.getCity());
         customerForSave.setPhoneNumber(customer.getPhoneNumber());
         return customerRepository.save(customerForSave);
-    }
-
-    private CustomerDto toDto(Customer customer){
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setFirstName(customer.getFirstName());
-        customerDto.setLastName(customer.getLastName());
-        customerDto.setUserName(customer.getUserName());
-        customerDto.setPassword(customer.getPassword());
-        return customerDto;
     }
 }
