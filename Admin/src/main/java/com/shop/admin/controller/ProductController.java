@@ -7,7 +7,6 @@ import com.shop.library.service.CategoryService;
 import com.shop.library.service.ProductService;
 import java.security.Principal;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +22,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProductController {
-    @Autowired
-    private  ProductService productService;
-    @Autowired
-    private  CategoryService categoryService;
+    private final ProductService productService;
+    private final CategoryService categoryService;
+
+    public ProductController(ProductService productService,
+                             CategoryService categoryService){
+        this.productService = productService;
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/products")
     public String products(Model model, Principal principal){
@@ -93,8 +96,8 @@ public class ProductController {
             productService.save(imageProduct, productDto);
             attributes.addFlashAttribute("success", "Add successfully");
         }catch(Exception e){
-            e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to add!");
+            throw new RuntimeException(e);
         }
         return "redirect:/products/0";
     }
@@ -123,34 +126,36 @@ public class ProductController {
             productService.update(imageProduct, productDto);
             attributes.addFlashAttribute("success", "Update successfully!");
         }catch(Exception e){
-            e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to update!");
+            throw new RuntimeException(e);
         }
         return "redirect:/products/0";
     }
 
-    @RequestMapping(value = "/enable-product/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String enabledProduct(@PathVariable("id") Long id, RedirectAttributes attributes){
-        //TODO make pageNo back to page with model where i change it ("wrong redirect")
+    @RequestMapping(value = "/enable-product/{id}",
+            method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enabledProduct(@PathVariable("id") Long id,
+                                 RedirectAttributes attributes){
         try{
             productService.enableById(id);
             attributes.addFlashAttribute("success", "Enabled successfully!");
         }catch(Exception e){
-            e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to enabled!");
+            throw new RuntimeException(e);
         }
         return "redirect:/products/0";
     }
 
-    @RequestMapping(value = "/delete-product/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String deletedProduct(@PathVariable("id") Long id, RedirectAttributes attributes){
-        //TODO make pageNo back to page with model where i change it ("wrong redirect")
+    @RequestMapping(value = "/delete-product/{id}",
+            method = {RequestMethod.PUT, RequestMethod.GET})
+    public String deletedProduct(@PathVariable("id") Long id,
+                                 RedirectAttributes attributes){
         try{
             productService.deleteById(id);
             attributes.addFlashAttribute("success", "Deleted successfully!");
         }catch(Exception e){
-            e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to deleted");
+            throw new RuntimeException(e);
         }
         return "redirect:/products/0";
     }

@@ -34,14 +34,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Category category){
-        Category categoryUpdate = null;
+        Category categoryUpdate;
         try{
             categoryUpdate = repository.findById(category.getId()).get();
             categoryUpdate.setName(category.getName());
             categoryUpdate.setStatus(category.getStatus());
         }catch(Exception e){
-            //TODO change e.printst
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return repository.save(categoryUpdate);
     }

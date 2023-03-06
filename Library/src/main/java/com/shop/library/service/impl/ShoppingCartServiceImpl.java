@@ -4,8 +4,8 @@ import com.shop.library.model.CartItem;
 import com.shop.library.model.Customer;
 import com.shop.library.model.Product;
 import com.shop.library.model.ShoppingCart;
-import com.shop.library.repository.CartItemRepository;
 import com.shop.library.repository.ShoppingCartRepository;
+import com.shop.library.service.CartItemService;
 import com.shop.library.service.ShoppingCartService;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    private final CartItemRepository itemRepository;
+    private final CartItemService cartItemService;
     private final ShoppingCartRepository cartRepository;
 
-    public ShoppingCartServiceImpl(CartItemRepository itemRepository,
+    public ShoppingCartServiceImpl(CartItemService cartItemService,
                                    ShoppingCartRepository cartRepository){
-        this.itemRepository = itemRepository;
+        this.cartItemService = cartItemService;
         this.cartRepository = cartRepository;
     }
 
@@ -35,37 +35,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void addItemToCart(Product product, int quantity, Customer customer){
         ShoppingCart cart = customer.getShoppingCart();
-        if(cart == null){
-            cart = new ShoppingCart();
+        if(cart.getCartItems().stream()
+                .noneMatch(c -> c.getProduct().getId().equals(product.getId()))){
+            Set<CartItem> cartItems = cart.getCartItems();
+            CartItem cartItem = new CartItem();
+            cartItem.setProduct(product);
+            cartItem.setQuantity(quantity);
+            cartItems.add(cartItem);
+            cart.setCartItems(cartItems);
+            cartItemService.save(cartItem);
+            cartRepository.save(cart);
         }
-        Set<CartItem> cartItems = cart.getCartItems();
-        CartItem cartItem = findCartItem(cartItems, product.getId());
-        if(cartItems == null){
-            cartItems = new HashSet<>();
-            if(cartItem == null){
-                cartItem = new CartItem();
-                cartItem.setCart(cart);
-                cartItem.setProduct(product);
-                cartItem.setQuantity(quantity);
-                cartItems.add(cartItem);
-                itemRepository.save(cartItem);
-            }
-        }else{
-            if(cartItem == null){
-                cartItem = new CartItem();
-                cartItem.setProduct(product);
-                cartItem.setQuantity(quantity);
-                cartItem.setCart(cart);
-                cartItems.add(cartItem);
-                itemRepository.save(cartItem);
-            }else{
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                itemRepository.save(cartItem);
-            }
-        }
-        cart.setCartItems(cartItems);
-        cart.setCustomer(customer);
-        cartRepository.save(cart);
     }
 
     @Override
@@ -74,7 +54,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Set<CartItem> cartItems = cart.getCartItems();
         CartItem item = findCartItem(cartItems, product.getId());
         item.setQuantity(quantity);
-        itemRepository.save(item);
+        cartItemService.save(item);
         return cartRepository.save(cart);
     }
 
@@ -84,7 +64,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Set<CartItem> cartItems = cart.getCartItems();
         CartItem item = findCartItem(cartItems, product.getId());
         cartItems.remove(item);
-        itemRepository.delete(item);
         cart.setCartItems(cartItems);
         return cartRepository.save(cart);
     }

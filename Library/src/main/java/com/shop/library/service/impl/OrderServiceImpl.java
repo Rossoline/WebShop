@@ -1,11 +1,11 @@
 package com.shop.library.service.impl;
 
 import com.shop.library.model.CartItem;
-import com.shop.library.model.Customer;
 import com.shop.library.model.Order;
 import com.shop.library.model.ShoppingCart;
 import com.shop.library.model.enums.OrderStatus;
 import com.shop.library.repository.OrderRepository;
+import com.shop.library.service.CustomerService;
 import com.shop.library.service.OrderService;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,22 +14,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+    private final CustomerService customerService;
     private final OrderRepository orderRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository){
+    public OrderServiceImpl(CustomerService customerService, OrderRepository orderRepository){
+        this.customerService = customerService;
         this.orderRepository = orderRepository;
     }
 
-    //TODO add notes for customer
     @Override
     public void save(ShoppingCart cart){
         Order order = new Order();
-        Customer customer = cart.getCustomer();
         Set<CartItem> cartItemSet = new HashSet<>(cart.getCartItems());
         order.setOrderDate(new Date());
         order.setOrderStatus(OrderStatus.APPROVAL);
         order.setNotes("");
-        order.setCustomer(customer);
+        order.setCustomer(customerService.findCustomerByCart(cart));
         order.setCartItems(cartItemSet);
         orderRepository.save(order);
     }

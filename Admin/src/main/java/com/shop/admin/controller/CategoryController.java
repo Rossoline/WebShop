@@ -37,17 +37,18 @@ public class CategoryController {
     }
 
     @PostMapping("/add-category")
-    public String add(@ModelAttribute("categoryNew") Category category, RedirectAttributes attributes){
+    public String add(@ModelAttribute("categoryNew") Category category,
+                      RedirectAttributes attributes){
         try{
             categoryService.save(category);
             attributes.addFlashAttribute("success", "Added successfully");
         }catch(DataIntegrityViolationException e){
-            e.printStackTrace();
             attributes.addFlashAttribute("failed",
-                    "Failed to add because duplicate name");
+                    "Failed to add, because duplicate name");
+            throw new DataIntegrityViolationException("Failed to add, because duplicate name!" + e);
         }catch(Exception e){
-            e.printStackTrace();
             attributes.addFlashAttribute("failed", "Error server");
+            throw new RuntimeException(e);
         }
         return "redirect:/categories";
     }
@@ -64,15 +65,15 @@ public class CategoryController {
         try{
             category.setStatus(categoryService.findById(category.getId()).getStatus());
             categoryService.update(category);
-            attributes.addFlashAttribute("success", "Update successfully!");
+            attributes.addFlashAttribute("success",
+                    "Update successfully!");
         }catch(DataIntegrityViolationException e){
-            //TODO change printStackTrace
-            e.printStackTrace();
             attributes.addFlashAttribute("failed",
                     "Failed to update, because duplicate name!");
+            throw new DataIntegrityViolationException("Failed to update, because duplicate name!" + e);
         }catch(Exception e){
-            e.printStackTrace();
             attributes.addFlashAttribute("failed", "Server error!");
+            throw new RuntimeException(e);
         }
         return "redirect:/categories";
     }
@@ -82,10 +83,12 @@ public class CategoryController {
     public String delete(Long id, RedirectAttributes attributes){
         try{
             categoryService.deleteById(id);
-            attributes.addFlashAttribute("success", "Deleted successfully!");
+            attributes.addFlashAttribute("success",
+                    "Deleted successfully!");
         }catch(Exception e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("fail", "Failed to update!");
+            attributes.addFlashAttribute("fail",
+                    "Failed to update!");
+            throw new RuntimeException(e);
         }
         return "redirect:/categories";
     }
@@ -94,10 +97,12 @@ public class CategoryController {
     public String enabledById(Long id, RedirectAttributes attributes){
         try{
             categoryService.enableById(id);
-            attributes.addFlashAttribute("success", "Enabled successfully!");
+            attributes.addFlashAttribute("success",
+                    "Enabled successfully!");
         }catch(Exception e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("fail", "Failed to enable!");
+            attributes.addFlashAttribute("fail",
+                    "Failed to enable!");
+            throw new RuntimeException(e);
         }
         return "redirect:/categories";
     }

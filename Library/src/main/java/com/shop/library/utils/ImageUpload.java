@@ -16,12 +16,12 @@ public class ImageUpload {
         boolean isUpload = false;
         try {
             Files.copy(imageProduct.getInputStream(),
-                    Paths.get(Path.of(UPLOAD_FOLDER).toAbsolutePath() + File.separator, imageProduct.getOriginalFilename()),
+                    Paths.get(Path.of(UPLOAD_FOLDER).toAbsolutePath()
+                            + File.separator, imageProduct.getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
             isUpload = true;
         } catch (Exception e) {
-            //TODO change printStackTrace
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return isUpload;
     }
@@ -32,7 +32,7 @@ public class ImageUpload {
             File file = new File(UPLOAD_FOLDER + "\\" + imageProduct.getOriginalFilename());
             isExisted = file.exists();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return isExisted;
     }

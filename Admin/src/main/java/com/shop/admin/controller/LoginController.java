@@ -85,8 +85,8 @@ public class LoginController {
                 return "register";
             }
         }catch(Exception e){
-            e.printStackTrace();
             model.addAttribute("errors", "Server problem!");
+            throw new RuntimeException(e);
         }
         return "register";
     }

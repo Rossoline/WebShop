@@ -34,8 +34,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
-    public String home(Model model,
-                       Principal principal,
+    public String home(Principal principal,
                        HttpSession session){
         if(principal != null){
             session.setAttribute("username", principal.getName());

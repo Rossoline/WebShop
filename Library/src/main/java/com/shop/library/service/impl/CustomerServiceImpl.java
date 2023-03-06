@@ -3,37 +3,33 @@ package com.shop.library.service.impl;
 import com.shop.library.dto.CustomerDto;
 import com.shop.library.model.Customer;
 import com.shop.library.model.ShoppingCart;
-import com.shop.library.model.enums.Role;
 import com.shop.library.repository.CustomerRepository;
 import com.shop.library.service.CustomerService;
 import com.shop.library.service.ShoppingCartService;
+import com.shop.library.service.mapper.CustomerMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
+    private final CustomerMapper customerMapper;
     private final ShoppingCartService shoppingCartService;
 
     public CustomerServiceImpl(CustomerRepository customerRepository,
+                               CustomerMapper customerMapper,
                                ShoppingCartService shoppingCartService){
         this.customerRepository = customerRepository;
+        this.customerMapper = customerMapper;
         this.shoppingCartService = shoppingCartService;
     }
 
     @Override
-    public CustomerDto save(CustomerDto customerDto){
-        Customer customer = new Customer();
+    public Customer save(CustomerDto customerDto){
         ShoppingCart cart = new ShoppingCart();
-        customer.setFirstName(customerDto.getFirstName());
-        customer.setLastName(customerDto.getLastName());
-        customer.setUserName(customerDto.getUserName());
-        customer.setPassword(customerDto.getPassword());
-        customer.setRole(Role.CUSTOMER);
+        Customer customer = customerMapper.mapToModel(customerDto);
         customer.setShoppingCart(cart);
-        cart.setCustomer(customer);
-        customerRepository.save(customer);
         shoppingCartService.save(cart);
-        return customerDto;
+        return customerRepository.save(customer);
     }
 
     @Override
@@ -48,5 +44,9 @@ public class CustomerServiceImpl implements CustomerService {
         customerForSave.setCity(customer.getCity());
         customerForSave.setPhoneNumber(customer.getPhoneNumber());
         return customerRepository.save(customerForSave);
+    }
+
+    @Override public Customer findCustomerByCart(ShoppingCart cart){
+        return customerRepository.findCustomerByShoppingCart(cart);
     }
 }
