@@ -72,10 +72,10 @@
                         <div class="rounded p-2 bg-light">
                             <div class="media mb-2 border-bottom" th:each="item: ${cart.cartItems}">
                                 <div class="media-body">
-                                    <a href="product-detail.html" th:text="${item.product.name}"></a>
-                                    <div class="small text-muted">Price: [[${item.product.costPrice}]] $
-                                        <span class="mx-2">|</span> Qty: [[${item.quantity}]]
-                                        <span class="mx-2">|</span> Subtotal: [[${item.product.costPrice} * ${item.quantity}]] $
+                                    <a href="product-detail.html" th:text="${item.getProduct().getName()}"></a>
+                                    <div class="small text-muted">Price: [[${item.getProduct().getCostPrice()}]] $
+                                        <span class="mx-2">|</span> Qty: [[${item.getQuantity()}]]
+                                        <span class="mx-2">|</span> Subtotal: [[${item.getProduct().getCostPrice()} * ${item.getQuantity()}]] $
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Grand Total</h5>
-                            <div class="ml-auto h5" th:text="${cart.totalPrice} + ' $'"></div>
+                            <div class="ml-auto h5" th:text="${service.totalPrice(cart)} + ' $'"></div>
                         </div>
                         <hr>
                     </div>

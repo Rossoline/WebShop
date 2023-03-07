@@ -42,8 +42,7 @@ public class CartController {
         if (shoppingCart == null) {
             model.addAttribute("check", "No item in your cart");
         }
-        session.setAttribute("totalItems", shoppingCart.getTotalItems());
-        model.addAttribute("subTotal", shoppingCart.getTotalPrice());
+        model.addAttribute("subTotal",cartService.totalPrice(shoppingCart));
         model.addAttribute("shoppingCart", shoppingCart);
         return "cart";
     }
@@ -60,7 +59,7 @@ public class CartController {
         Product product = productService.getProductById(productId);
         String userName = principal.getName();
         Customer customer = customerService.findByUsername(userName);
-        ShoppingCart cart = cartService.addItemToCart(product, quantity, customer);
+        cartService.addItemToCart(product, quantity, customer);
         return "redirect:" + request.getHeader("Referer");
     }
 

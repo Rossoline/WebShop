@@ -1,8 +1,8 @@
 package com.shop.library.service.impl;
 
 import com.shop.library.dto.CategoryDto;
-import com.shop.library.model.ActivationStatus;
 import com.shop.library.model.Category;
+import com.shop.library.model.enums.ActivationStatus;
 import com.shop.library.repository.CategoryRepository;
 import com.shop.library.service.CategoryService;
 import java.util.List;
@@ -34,14 +34,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Category category){
-        Category categoryUpdate = null;
+        Category categoryUpdate;
         try{
             categoryUpdate = repository.findById(category.getId()).get();
             categoryUpdate.setName(category.getName());
             categoryUpdate.setStatus(category.getStatus());
         }catch(Exception e){
-            //TODO change e.printst
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return repository.save(categoryUpdate);
     }

@@ -173,8 +173,8 @@
             <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD"
                     onchange="location = this.value;">
                 <option data-display="Select">Nothing</option>
-                <option value="http://localhost:8020/shop/high-price">High Price → High Price</option>
-                <option value="http://localhost:8020/shop/low-price">Low Price → High Price</option>
+                <option th:href="@{/high-price}">High Price → High Price</option>
+                <option value="http://localhost:8024/shop/low-price">Low Price → High Price</option>
                 <option value="4">Best Selling</option>
             </select>
         </div>
@@ -242,28 +242,6 @@
         <div class="item">
             <div class="ins-inner-box">
                 <a href="index.html"><img src="/images/Fish 04 - Red Pepper & Parmesan Tilapia.jpg" alt=""/></a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img src="images/Fish 05 - Almond-Topped Fish.jpg" alt=""/></a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img src="images/Shrimp 03 - Shrimp Tostadas with Avocado Salsa.jpg" alt=""/></a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img src="images/Shrimp 08 - Grilled Shrimp and Chorizo Appetizers.jpg"
-                                          alt=""/></a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img src="images/Octopus 06 - Red Wine–Braised Baby Octopus with Black Olives.jpg"
-                                          alt=""/></a>
             </div>
         </div>
     </div>

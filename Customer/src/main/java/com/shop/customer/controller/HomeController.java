@@ -1,10 +1,11 @@
 package com.shop.customer.controller;
 
 import com.shop.library.dto.ProductDto;
+import com.shop.library.model.CartItem;
 import com.shop.library.model.Category;
 import com.shop.library.model.Customer;
 import com.shop.library.model.ShoppingCart;
-import com.shop.library.model.ActivationStatus;
+import com.shop.library.model.enums.ActivationStatus;
 import com.shop.library.service.CategoryService;
 import com.shop.library.service.CustomerService;
 import com.shop.library.service.ProductService;
@@ -33,14 +34,13 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
-    public String home(Model model,
-                       Principal principal,
+    public String home(Principal principal,
                        HttpSession session){
         if(principal != null){
             session.setAttribute("username", principal.getName());
             Customer customer = customerService.findByUsername(principal.getName());
             ShoppingCart cart = customer.getShoppingCart();
-            session.setAttribute("totalItems", cart.getTotalItems());
+            session.setAttribute("totalItems", cart.getCartItems().stream().map(CartItem :: getQuantity).count());
         }else{
             session.removeAttribute("username");
         }

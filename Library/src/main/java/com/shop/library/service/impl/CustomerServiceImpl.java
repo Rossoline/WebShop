@@ -2,37 +2,34 @@ package com.shop.library.service.impl;
 
 import com.shop.library.dto.CustomerDto;
 import com.shop.library.model.Customer;
-import com.shop.library.model.Role;
 import com.shop.library.model.ShoppingCart;
 import com.shop.library.repository.CustomerRepository;
-import com.shop.library.repository.ShoppingCartRepository;
 import com.shop.library.service.CustomerService;
+import com.shop.library.service.ShoppingCartService;
+import com.shop.library.service.mapper.CustomerMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
-    private final ShoppingCartRepository shoppingCartRepository;
+    private final CustomerMapper customerMapper;
+    private final ShoppingCartService shoppingCartService;
 
     public CustomerServiceImpl(CustomerRepository customerRepository,
-                               ShoppingCartRepository shoppingCartRepository){
+                               CustomerMapper customerMapper,
+                               ShoppingCartService shoppingCartService){
         this.customerRepository = customerRepository;
-        this.shoppingCartRepository = shoppingCartRepository;
+        this.customerMapper = customerMapper;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @Override
-    public CustomerDto save(CustomerDto customerDto){
-        Customer customer = new Customer();
-        customer.setFirstName(customerDto.getFirstName());
-        customer.setLastName(customerDto.getLastName());
-        customer.setUserName(customerDto.getUserName());
-        customer.setPassword(customerDto.getPassword());
-        customer.setRole(Role.CUSTOMER);
+    public Customer save(CustomerDto customerDto){
         ShoppingCart cart = new ShoppingCart();
-        cart.setCustomer(customer);
-        customerRepository.save(customer);
-        shoppingCartRepository.save(cart);
-        return toDto(customer);
+        Customer customer = customerMapper.mapToModel(customerDto);
+        customer.setShoppingCart(cart);
+        shoppingCartService.save(cart);
+        return customerRepository.save(customer);
     }
 
     @Override
@@ -49,12 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(customerForSave);
     }
 
-    private CustomerDto toDto(Customer customer){
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setFirstName(customer.getFirstName());
-        customerDto.setLastName(customer.getLastName());
-        customerDto.setUserName(customer.getUserName());
-        customerDto.setPassword(customer.getPassword());
-        return customerDto;
+    @Override public Customer findCustomerByCart(ShoppingCart cart){
+        return customerRepository.findCustomerByShoppingCart(cart);
     }
 }

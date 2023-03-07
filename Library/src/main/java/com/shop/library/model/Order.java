@@ -1,8 +1,8 @@
 package com.shop.library.model;
 
+import com.shop.library.model.enums.OrderStatus;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -30,14 +30,12 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
     private Date orderDate;
-    private Date deliveryDate;
-    private double totalPrice;
+    private String notes;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    private String notes;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    private List<OrderDetail> orderDetailList;
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<CartItem> cartItems;
 }
