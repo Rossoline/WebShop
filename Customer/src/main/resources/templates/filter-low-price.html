@@ -120,8 +120,8 @@
                         <div class="list-group list-group-collapse list-group-sm list-group-tree"
                              id="list-group-men"
                              data-children=".sub-men" th:each="categoryDto : ${categoryDtoList}">
-                            <a th:href="@{/products-in-category/{id}(id = ${categoryDto.categoryId})}"
-                               class="list-group-item list-group-item-action">[[${categoryDto.categoryName}]]
+                            <a th:href="@{/products-in-category/{id}(id = ${categoryDto.id})}"
+                               class="list-group-item list-group-item-action">[[${categoryDto.name}]]
                                 <small class="text-muted"> ([[${categoryDto.quantityOfProducts}]])</small></a>
                         </div>
                     </div>

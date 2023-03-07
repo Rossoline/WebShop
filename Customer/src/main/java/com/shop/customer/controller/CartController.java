@@ -63,7 +63,8 @@ public class CartController {
         return "redirect:" + request.getHeader("Referer");
     }
 
-    @RequestMapping(value = "/update-cart", method = RequestMethod.POST, params = "action=update")
+    @RequestMapping(value = "/update-cart",
+            method = RequestMethod.POST, params = "action=update")
     public String updateCart(@RequestParam("quantity") int quantity,
                              @RequestParam("id") Long productId,
                              Model model,
@@ -80,7 +81,8 @@ public class CartController {
         }
     }
 
-    @RequestMapping(value = "/update-cart", method = RequestMethod.POST, params = "action=delete")
+    @RequestMapping(value = "/update-cart",
+            method = RequestMethod.POST, params = "action=delete")
     public String deleteItemFromCart(@RequestParam("id") Long productId,
                                      Model model,
                                      Principal principal) {

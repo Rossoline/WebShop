@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -156,5 +157,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> filterLowPrice(){
         return repository.filterLowerPrice();
+    }
+
+    @Override public List<Product> sort(Sort sort){
+        return repository.findAll(sort);
     }
 }

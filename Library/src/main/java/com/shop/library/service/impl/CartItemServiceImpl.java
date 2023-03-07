@@ -5,9 +5,6 @@ import com.shop.library.repository.CartItemRepository;
 import com.shop.library.repository.OrderRepository;
 import com.shop.library.repository.ShoppingCartRepository;
 import com.shop.library.service.CartItemService;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,23 +29,5 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override public void delete(CartItem cartItem){
         cartItemRepository.delete(cartItem);
-    }
-
-    @Override public void deleteNotUsed(){
-        List<Long> cartItemsInOrdersAndCarts = new ArrayList<>();
-        shoppingCartService.findAll()
-                .forEach(c -> c.getCartItems()
-                        .forEach(cartItem -> cartItemsInOrdersAndCarts
-                                .add(cartItem.getId())));
-        orderService.findAll()
-                .forEach(c -> c.getCartItems()
-                        .forEach(cartItem -> cartItemsInOrdersAndCarts
-                                .add(cartItem.getId())));
-        List<CartItem> cartItemsNotInOrdersAndCarts = cartItemRepository.findAll()
-                .stream()
-                .filter(c -> !cartItemsInOrdersAndCarts
-                        .contains(c.getId()))
-                .collect(Collectors.toList());
-        cartItemRepository.deleteAll(cartItemsNotInOrdersAndCarts);
     }
 }

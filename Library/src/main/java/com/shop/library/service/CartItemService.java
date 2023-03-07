@@ -6,5 +6,4 @@ public interface CartItemService {
     CartItem save(CartItem cartItem);
 
     void delete(CartItem cartItem);
-    void deleteNotUsed();
 }
