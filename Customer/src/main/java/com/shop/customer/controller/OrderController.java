@@ -3,6 +3,7 @@ package com.shop.customer.controller;
 import com.shop.library.model.Customer;
 import com.shop.library.model.Order;
 import com.shop.library.model.ShoppingCart;
+import com.shop.library.service.CartItemService;
 import com.shop.library.service.CustomerService;
 import com.shop.library.service.OrderService;
 import com.shop.library.service.ShoppingCartService;
@@ -17,13 +18,16 @@ public class OrderController {
     private final CustomerService customerService;
     private final ShoppingCartService shoppingCartService;
     private final OrderService orderService;
+    private final CartItemService cartItemService;
 
     public OrderController(CustomerService customerService,
                            ShoppingCartService shoppingCartService,
-                           OrderService orderService){
+                           OrderService orderService,
+                           CartItemService cartItemService){
         this.customerService = customerService;
         this.shoppingCartService = shoppingCartService;
         this.orderService = orderService;
+        this.cartItemService = cartItemService;
     }
 
     @GetMapping("/checkout")
@@ -69,6 +73,7 @@ public class OrderController {
         ShoppingCart shoppingCart = customer.getShoppingCart();
         orderService.save(shoppingCart);
         shoppingCartService.saveEmpty(shoppingCart);
+        cartItemService.deleteNotUsed();
         return "redirect:/order";
     }
 }

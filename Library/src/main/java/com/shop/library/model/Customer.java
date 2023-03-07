@@ -2,7 +2,6 @@ package com.shop.library.model;
 
 import com.shop.library.model.enums.Role;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -50,8 +49,8 @@ public class Customer {
     private String address = "";
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToOne
     @JoinColumn(name = "shopping_cart_id")
-    @OneToOne(cascade = CascadeType.ALL)
     private ShoppingCart shoppingCart;
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;

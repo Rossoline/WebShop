@@ -9,6 +9,7 @@ import com.shop.library.service.CustomerService;
 import com.shop.library.service.OrderService;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,10 @@ public class OrderServiceImpl implements OrderService {
         order.setCustomer(customerService.findCustomerByCart(cart));
         order.setCartItems(cartItemSet);
         orderRepository.save(order);
+    }
+
+    @Override public List<Order> findAll(){
+        return orderRepository.findAll();
     }
 
     @Override public Double totalPrice(Order order){

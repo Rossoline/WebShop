@@ -8,6 +8,7 @@ import com.shop.library.repository.ShoppingCartRepository;
 import com.shop.library.service.CartItemService;
 import com.shop.library.service.ShoppingCartService;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +74,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCart.getCartItems().stream()
                 .map(c -> c.getQuantity() * c.getProduct().getCostPrice())
                 .mapToDouble(Double :: doubleValue).sum();
+    }
+
+    @Override public List<ShoppingCart> findAll(){
+        return cartRepository.findAll();
     }
 
     private CartItem findCartItem(Set<CartItem> cartItems, Long productId){
