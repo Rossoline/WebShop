@@ -66,6 +66,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         CartItem item = findCartItem(cartItems, product.getId());
         cartItems.remove(item);
         cart.setCartItems(cartItems);
+        cartItemService.delete(item);
         return cartRepository.save(cart);
     }
 

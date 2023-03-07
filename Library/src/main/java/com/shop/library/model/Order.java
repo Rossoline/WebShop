@@ -33,9 +33,9 @@ public class Order {
     private String notes;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     private Set<CartItem> cartItems;
 }

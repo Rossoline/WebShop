@@ -4,6 +4,7 @@ import com.shop.library.dto.ProductDto;
 import com.shop.library.model.Product;
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductService {
@@ -36,4 +37,6 @@ public interface ProductService {
     List<Product> filterHighPrice();
 
     List<Product> filterLowPrice();
+
+    List<Product> sort(Sort sort);
 }

@@ -173,8 +173,8 @@
             <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD"
                     onchange="location = this.value;">
                 <option data-display="Select">Nothing</option>
-                <option th:href="@{/high-price}">High Price → High Price</option>
-                <option value="http://localhost:8024/shop/low-price">Low Price → High Price</option>
+                <option value="http://localhost:8024/shop/sorted-high">High Price → Low Price</option>
+                <option value="http://localhost:8024/shop/sorted-low">Low Price → High Price</option>
                 <option value="4">Best Selling</option>
             </select>
         </div>

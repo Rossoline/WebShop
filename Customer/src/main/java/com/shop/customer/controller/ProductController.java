@@ -6,10 +6,12 @@ import com.shop.library.model.Product;
 import com.shop.library.service.CategoryService;
 import com.shop.library.service.ProductService;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProductController {
@@ -54,25 +56,27 @@ public class ProductController {
         return "products-in-category";
     }
 
-    @GetMapping("/high-price")
-    public String filterHighPrice(Model model){
-        List<Category> categories = categoryService.findAllByActivated();
-        List<CategoryDto> categoryDtoList = categoryService.getCategoryAndProduct();
-        List<Product> products = productService.filterHighPrice();
-        model.addAttribute("categoryDtoList", categoryDtoList);
-        model.addAttribute("products", products);
-        model.addAttribute("categories", categories);
+    @GetMapping("/sorted-high")
+    public String highPrice(@RequestParam(defaultValue = "desc") String sort, Model model){
+        sortByPrice(sort, model);
         return "filter-high-price";
     }
 
-    @GetMapping("/low-price")
-    public String filterLowPrice(Model model){
+    @GetMapping("/sorted-low")
+    public String lowPrice(@RequestParam(defaultValue = "asc") String sort, Model model){
+        sortByPrice(sort, model);
+        return "filter-low-price";
+    }
+
+    private void sortByPrice(@RequestParam(defaultValue = "asc") String sort,
+                             Model model){
+        Sort.Direction direction = sort.equalsIgnoreCase("asc")
+                ? Sort.Direction.ASC : Sort.Direction.DESC;
         List<Category> categories = categoryService.findAllByActivated();
         List<CategoryDto> categoryDtoList = categoryService.getCategoryAndProduct();
-        List<Product> products = productService.filterLowPrice();
+        List<Product> products = productService.sort(Sort.by(direction, "costPrice"));
         model.addAttribute("categoryDtoList", categoryDtoList);
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
-        return "filter-low-price";
     }
 }

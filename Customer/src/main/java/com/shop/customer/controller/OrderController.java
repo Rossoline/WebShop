@@ -73,7 +73,6 @@ public class OrderController {
         ShoppingCart shoppingCart = customer.getShoppingCart();
         orderService.save(shoppingCart);
         shoppingCartService.saveEmpty(shoppingCart);
-        cartItemService.deleteNotUsed();
         return "redirect:/order";
     }
 }
