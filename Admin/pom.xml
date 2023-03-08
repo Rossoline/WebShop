@@ -8,18 +8,16 @@
         <version>2.6.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.shop.admin</groupId>
+    <groupId>com.shop</groupId>
     <artifactId>admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Admin</name>
-    <description>Admin application</description>
+    <packaging>pom</packaging>
     <properties>
         <java.version>11</java.version>
     </properties>
-
     <dependencies>
         <dependency>
-            <groupId>com.shop.library</groupId>
+            <groupId>com.shop</groupId>
             <artifactId>library</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -66,7 +64,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -119,5 +116,4 @@
             </releases>
         </pluginRepository>
     </pluginRepositories>
-
 </project>
