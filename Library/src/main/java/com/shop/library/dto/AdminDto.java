@@ -9,12 +9,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminDto {
-    @Size(min = 2, max = 10, message = "Invalid first name! (2-10 characters)")
+    private static final int NAME_MIN_LENGTH = 3;
+    private static final int NAME_MAX_LENGTH = 15;
+    private static final int PASSWORD_MIN_LENGTH = 5;
+    private static final int PASSWORD_MAX_LENGTH = 15;
+    @Size(min = NAME_MIN_LENGTH, max = NAME_MAX_LENGTH,
+            message = "Invalid first name! (3-15 characters)")
     private String firstName;
-    @Size(min = 2, max = 15, message = "Invalid last name! (2-15 characters)")
+    @Size(min = NAME_MIN_LENGTH, max = NAME_MAX_LENGTH,
+            message = "Invalid last name! (3-15 characters)")
     private String lastName;
     private String username;
-    @Size(min = 5, max = 15, message = "Invalid password! (5-15 characters)")
+    @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH,
+            message = "Invalid password! (5-15 characters)")
     private String password;
     private String repeatPassword;
 }

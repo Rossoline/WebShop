@@ -12,7 +12,7 @@
     <groupId>com.shop</groupId>
     <artifactId>customer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <properties>
         <java.version>11</java.version>
     </properties>
