@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public class AdminServiceConfig implements UserDetailsService {
+public class AdminDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private AdminRepository adminRepository;
 

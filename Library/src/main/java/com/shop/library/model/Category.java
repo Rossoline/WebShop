@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(name = "categories",
+        uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private ActivationStatus status;
 
-    public Category(String name){
+    public Category(String name) {
         this.name = name;
         this.status = ActivationStatus.ACTIVATED;
     }

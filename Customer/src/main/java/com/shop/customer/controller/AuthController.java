@@ -44,20 +44,8 @@ public class AuthController {
             if(result.hasErrors()){
                 model.addAttribute("customerDto", customerDto);
                 return "register";
-            }
-            Customer customer = customerService.findByUsername(customerDto.getUserName());
-            if(customer != null){
-                model.addAttribute("username", "Username have been already registered!");
-                model.addAttribute("customerDto", customerDto);
+            }else if(checkRegister(customerDto, model)){
                 return "register";
-            }
-            if(customerDto.getPassword().equals(customerDto.getRepeatPassword())){
-                customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
-                customerService.save(customerDto);
-                model.addAttribute("success", "Register successfully!");
-            }else{
-                model.addAttribute("password", "Password is not the same!");
-                model.addAttribute("customerDto", customerDto);
             }
         }catch(Exception e){
             model.addAttribute("error", "Problem on server!");
@@ -65,5 +53,25 @@ public class AuthController {
             throw new RuntimeException(e);
         }
         return "register";
+    }
+
+    private boolean checkRegister(CustomerDto customerDto, Model model){
+        Customer customer = customerService.findByUsername(customerDto.getUserName());
+        boolean noErrors = true;
+        if(customer != null){
+            model.addAttribute("username", "Username have been already registered!");
+            model.addAttribute("customerDto", customerDto);
+            noErrors = false;
+        }
+        else if(!customerDto.getPassword().equals(customerDto.getRepeatPassword())){
+            model.addAttribute("password", "Password is not the same!");
+            model.addAttribute("customerDto", customerDto);
+            noErrors = false;
+        }else{
+            customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
+            customerService.save(customerDto);
+            model.addAttribute("success", "Register successfully!");
+        }
+        return  noErrors;
     }
 }

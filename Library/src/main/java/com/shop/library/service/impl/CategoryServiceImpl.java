@@ -1,19 +1,23 @@
 package com.shop.library.service.impl;
 
-import com.shop.library.dto.CategoryDto;
 import com.shop.library.model.Category;
 import com.shop.library.model.enums.ActivationStatus;
 import com.shop.library.repository.CategoryRepository;
 import com.shop.library.service.CategoryService;
+import com.shop.library.service.mapper.CategoryMapper;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
+    private final CategoryMapper categoryMapper;
 
-    public CategoryServiceImpl(CategoryRepository repository){
+    public CategoryServiceImpl(CategoryRepository repository,
+                               CategoryMapper categoryMapper){
         this.repository = repository;
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
@@ -65,7 +69,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> getCategoryAndProduct(){
-        return repository.getCategoryAndProduct();
+    public List<Category> getCategoryAndProduct(){
+        List<Category> categories = new ArrayList<>();
+        repository.getCategoryAndProduct()
+                .forEach(categoryDto -> categories.add(categoryMapper.mapToModel(categoryDto)));
+        return categories;
     }
 }

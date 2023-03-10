@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,16 +26,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "customers",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"userName", "phone_number"}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_name", "phone_number"}))
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Long id;
-    @Size(min = 3, max = 15, message = "First name should have 3-15 characters")
     private String firstName;
-    @Size(min = 3, max = 15, message = "Last name should have 3-15 characters")
     private String lastName;
+    @Column(name = "user_name")
     private String userName;
     private String password;
     @Column(name = "phone_number")

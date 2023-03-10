@@ -159,7 +159,8 @@ public class ProductServiceImpl implements ProductService {
         return repository.filterLowerPrice();
     }
 
-    @Override public List<Product> sort(Sort sort){
+    @Override
+    public List<Product> sort(Sort sort){
         return repository.findAll(sort);
     }
 }
