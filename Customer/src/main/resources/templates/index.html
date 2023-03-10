@@ -72,7 +72,7 @@
             <!--                </div>-->
             <!--            </div>-->
             <div class="col-lg-3 col-md-6 special-grid" th:each="product : ${products}"
-                 th:if="${product.category.name == category.name}">
+                 th:if="${product.getCategoryDto().getName() == category.name}">
                 <form th:action="@{/add-to-cart}" method="post">
                     <div class="products-single fix">
                         <div class="box-img-hover">

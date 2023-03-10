@@ -7,6 +7,7 @@ import com.shop.library.model.enums.OrderStatus;
 import com.shop.library.repository.OrderRepository;
 import com.shop.library.service.CustomerService;
 import com.shop.library.service.OrderService;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -29,20 +30,22 @@ public class OrderServiceImpl implements OrderService {
         Set<CartItem> cartItemSet = new HashSet<>(cart.getCartItems());
         order.setOrderDate(new Date());
         order.setOrderStatus(OrderStatus.APPROVAL);
-        order.setNotes("");
         order.setCustomer(customerService.findCustomerByCart(cart));
         order.setCartItems(cartItemSet);
         orderRepository.save(order);
     }
 
-    @Override public List<Order> findAll(){
+    @Override
+    public List<Order> findAll(){
         return orderRepository.findAll();
     }
 
-    @Override public Double totalPrice(Order order){
-        return order.getCartItems().stream()
-                .map(c -> c.getQuantity() * c.getProduct().getCostPrice())
-                .mapToDouble(Double :: doubleValue).sum();
+    @Override
+    public BigDecimal totalPrice(Order order){
+        return  order.getCartItems().stream()
+                .map(c -> c.getProduct().getCostPrice()
+                        .multiply(BigDecimal.valueOf(c.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override

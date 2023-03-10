@@ -10,6 +10,13 @@ public class ProductMapper implements
         RequestDtoMapper<ProductDto, Product>,
         ResponseDtoMapper<ProductDto, Product> {
 
+private final CategoryMapper categoryMapper;
+
+    public ProductMapper(CategoryMapper categoryMapper){
+        this.categoryMapper = categoryMapper;
+    }
+
+
     @Override
     public Product mapToModel(ProductDto productDto){
         Product product = new Product();
@@ -18,7 +25,7 @@ public class ProductMapper implements
         product.setDescription(productDto.getDescription());
         product.setCostPrice(productDto.getCostPrice());
         product.setCurrentQuantity(productDto.getCurrentQuantity());
-        product.setCategory(productDto.getCategory());
+        product.setCategory(categoryMapper.mapToModel(productDto.getCategoryDto()));
         product.setStatus(ActivationStatus.ACTIVATED);
         return product;
     }
@@ -29,7 +36,7 @@ public class ProductMapper implements
         productDto.setName(product.getName());
         productDto.setDescription(product.getDescription());
         productDto.setCurrentQuantity(product.getCurrentQuantity());
-        productDto.setCategory(product.getCategory());
+        productDto.setCategoryDto(categoryMapper.mapToDto(product.getCategory()));
         productDto.setCostPrice(product.getCostPrice());
         productDto.setImage(product.getImage());
         productDto.setStatus(product.getStatus());

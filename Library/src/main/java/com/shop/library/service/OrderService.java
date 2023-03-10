@@ -2,6 +2,7 @@ package com.shop.library.service;
 
 import com.shop.library.model.Order;
 import com.shop.library.model.ShoppingCart;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface OrderService {
@@ -9,7 +10,7 @@ public interface OrderService {
 
     List<Order> findAll();
 
-    Double totalPrice(Order order);
+    BigDecimal totalPrice(Order order);
 
     void acceptOrder(Long id);
 

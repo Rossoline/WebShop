@@ -7,6 +7,7 @@ import com.shop.library.model.ShoppingCart;
 import com.shop.library.repository.ShoppingCartRepository;
 import com.shop.library.service.CartItemService;
 import com.shop.library.service.ShoppingCartService;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,11 +24,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         this.cartRepository = cartRepository;
     }
 
-    @Override public ShoppingCart save(ShoppingCart shoppingCart){
+    @Override
+    public ShoppingCart save(ShoppingCart shoppingCart){
         return cartRepository.save(shoppingCart);
     }
 
-    @Override public void saveEmpty(ShoppingCart shoppingCart){
+    @Override
+    public void saveEmpty(ShoppingCart shoppingCart){
         Set<CartItem> cartItems = new HashSet<>();
         shoppingCart.setCartItems(cartItems);
         cartRepository.save(shoppingCart);
@@ -71,13 +74,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Double totalPrice(ShoppingCart shoppingCart){
+    public BigDecimal totalPrice(ShoppingCart shoppingCart){
         return shoppingCart.getCartItems().stream()
-                .map(c -> c.getQuantity() * c.getProduct().getCostPrice())
-                .mapToDouble(Double :: doubleValue).sum();
+                .map(c -> BigDecimal.valueOf(c.getQuantity())
+                        .multiply(c.getProduct().getCostPrice()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    @Override public List<ShoppingCart> findAll(){
+    @Override
+    public List<ShoppingCart> findAll(){
         return cartRepository.findAll();
     }
 

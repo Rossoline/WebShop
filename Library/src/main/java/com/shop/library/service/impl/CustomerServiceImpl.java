@@ -46,7 +46,8 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(customerForSave);
     }
 
-    @Override public Customer findCustomerByCart(ShoppingCart cart){
+    @Override
+    public Customer findCustomerByCart(ShoppingCart cart){
         return customerRepository.findCustomerByShoppingCart(cart);
     }
 }

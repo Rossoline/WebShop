@@ -1,6 +1,7 @@
 package com.shop.library.model;
 
 import com.shop.library.model.enums.ActivationStatus;
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -30,7 +31,7 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private double costPrice;
+    private BigDecimal costPrice;
     private int currentQuantity;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")

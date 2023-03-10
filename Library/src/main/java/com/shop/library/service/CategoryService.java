@@ -1,6 +1,5 @@
 package com.shop.library.service;
 
-import com.shop.library.dto.CategoryDto;
 import com.shop.library.model.Category;
 import java.util.List;
 
@@ -19,5 +18,5 @@ public interface CategoryService {
 
     List<Category> findAllByActivated();
 
-    List<CategoryDto> getCategoryAndProduct();
+    List<Category> getCategoryAndProduct();
 }

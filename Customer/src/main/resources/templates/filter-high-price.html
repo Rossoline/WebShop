@@ -114,7 +114,7 @@
                              data-children=".sub-men" th:each="categoryDto : ${categoryDtoList}">
                             <a th:href="@{/products-in-category/{id}(id = ${categoryDto.id})}"
                                class="list-group-item list-group-item-action">[[${categoryDto.name}]]
-                                <small class="text-muted"> ([[${categoryDto.quantityOfProducts}]])</small></a>
+                                <small class="text-muted"> ([[${size}]])</small></a>
                         </div>
                     </div>
                     <div class="filter-price-left">

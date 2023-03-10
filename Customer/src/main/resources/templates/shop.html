@@ -116,7 +116,7 @@
                              data-children=".sub-men" th:each="category : ${categories}">
                             <a th:href="@{/products-in-category/{id}(id = ${category.id})}"
                                class="list-group-item list-group-item-action">[[${category.name}]]
-                                <small class="text-muted"> ([[${category.quantityOfProducts}]])</small>
+                                <small class="text-muted"> ([[${size}]])</small>
                             </a>
                         </div>
                     </div>

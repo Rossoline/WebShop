@@ -1,5 +1,6 @@
 package com.shop.library.dto;
 
+import com.shop.library.model.enums.ActivationStatus;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,5 +13,5 @@ public class CategoryDto {
     @Id
     private Long id;
     private String name;
-    private Long quantityOfProducts;
+    private ActivationStatus activationStatus;
 }

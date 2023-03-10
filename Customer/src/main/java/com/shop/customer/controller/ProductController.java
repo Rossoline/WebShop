@@ -1,6 +1,5 @@
 package com.shop.customer.controller;
 
-import com.shop.library.dto.CategoryDto;
 import com.shop.library.model.Category;
 import com.shop.library.model.Product;
 import com.shop.library.service.CategoryService;
@@ -26,12 +25,13 @@ public class ProductController {
 
     @GetMapping("/products")
     public String products(Model model){
-        List<CategoryDto> categoryDtoList = categoryService.getCategoryAndProduct();
+        List<Category> categoryList = categoryService.getCategoryAndProduct();
         List<Product> products = productService.getAllProducts();
         List<Product> listViewProducts = productService.listViewProducts();
-        model.addAttribute("categories", categoryDtoList);
+        model.addAttribute("categories", categoryList);
         model.addAttribute("viewProducts", listViewProducts);
         model.addAttribute("products", products);
+        model.addAttribute("size", products.size());
         return "shop";
     }
 
@@ -48,11 +48,12 @@ public class ProductController {
     @GetMapping("/products-in-category/{id}")
     public String getProductsInCategory(@PathVariable("id") Long categoryId, Model model){
         Category category = categoryService.findById(categoryId);
-        List<CategoryDto> categories = categoryService.getCategoryAndProduct();
+        List<Category> categories = categoryService.getCategoryAndProduct();
         List<Product> products = productService.getProductsInCategory(categoryId);
         model.addAttribute("category", category);
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
+        model.addAttribute("size", products.size());
         return "products-in-category";
     }
 
@@ -73,9 +74,10 @@ public class ProductController {
         Sort.Direction direction = sort.equalsIgnoreCase("asc")
                 ? Sort.Direction.ASC : Sort.Direction.DESC;
         List<Category> categories = categoryService.findAllByActivated();
-        List<CategoryDto> categoryDtoList = categoryService.getCategoryAndProduct();
+        List<Category> categoryList = categoryService.getCategoryAndProduct();
         List<Product> products = productService.sort(Sort.by(direction, "costPrice"));
-        model.addAttribute("categoryDtoList", categoryDtoList);
+        model.addAttribute("size", products.size());
+        model.addAttribute("categoryDtoList", categoryList);
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
     }
