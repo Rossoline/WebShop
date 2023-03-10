@@ -56,7 +56,6 @@ public class LoginController {
         return "forgot-password";
     }
 
-    //12:48
     @PostMapping("/register-new")
     public String addAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
                            BindingResult result,
@@ -67,21 +66,9 @@ public class LoginController {
                 result.toString();
                 return "register";
             }
-            String username = adminDto.getUsername();
-            Admin admin = adminService.findByUsername(username);
-            if(admin != null){
-                model.addAttribute("adminDto", adminDto);
-                model.addAttribute("emailError", "This email already registered!");
-                return "register";
-            }
-            if(adminDto.getPassword().equals(adminDto.getRepeatPassword())){
-                adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
-                adminService.save(adminDto);
-                model.addAttribute("success", "Register successfully!");
-                model.addAttribute("adminDto", adminDto);
-            }else{
-                model.addAttribute("adminDto", adminDto);
-                model.addAttribute("passwordError", "Wrong repeat password!");
+            checkRegister(model, adminDto);
+            if(model.containsAttribute("passwordError") ||
+                    model.containsAttribute("emailError")){
                 return "register";
             }
         }catch(Exception e){
@@ -89,5 +76,22 @@ public class LoginController {
             throw new RuntimeException(e);
         }
         return "register";
+    }
+
+    private void checkRegister(Model model, AdminDto adminDto){
+        String username = adminDto.getUsername();
+        Admin admin = adminService.findByUsername(username);
+        if(admin != null){
+            model.addAttribute("adminDto", adminDto);
+            model.addAttribute("emailError", "This email already registered!");
+        }else if(adminDto.getPassword().equals(adminDto.getRepeatPassword())){
+            adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
+            adminService.save(adminDto);
+            model.addAttribute("success", "Register successfully!");
+            model.addAttribute("adminDto", adminDto);
+        }else{
+            model.addAttribute("adminDto", adminDto);
+            model.addAttribute("passwordError", "Wrong repeat password!");
+        }
     }
 }

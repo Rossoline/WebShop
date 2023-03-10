@@ -1,4 +1,4 @@
-package com.shop.admin.config;
+package com.shop.customer.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,41 +13,40 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class AdminConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
-    public UserDetailsService userDetailsService(){
-        return new AdminServiceConfig();
+    public UserDetailsService userDetailsService() {
+        return new CustomerDetailsServiceImpl();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
+    public DaoAuthenticationProvider provider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService());
         provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserDetailsService(userDetailsService());
         return provider;
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.authenticationProvider(daoAuthenticationProvider());
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(provider());
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests().antMatchers("/*").permitAll()
-                .antMatchers("/admin/*")
-                .hasAuthority("ADMIN")
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/*").permitAll()
+                .antMatchers("/customer/*").hasAuthority("CUSTOMER")
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/do-login")
                 .defaultSuccessUrl("/index")
-                .permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
