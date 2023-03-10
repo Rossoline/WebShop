@@ -63,12 +63,8 @@ public class LoginController {
         try{
             if(result.hasErrors()){
                 model.addAttribute("adminDto", adminDto);
-                result.toString();
                 return "register";
-            }
-            checkRegister(model, adminDto);
-            if(model.containsAttribute("passwordError") ||
-                    model.containsAttribute("emailError")){
+            }else if(checkRegister(model, adminDto)){
                 return "register";
             }
         }catch(Exception e){
@@ -78,20 +74,23 @@ public class LoginController {
         return "register";
     }
 
-    private void checkRegister(Model model, AdminDto adminDto){
-        String username = adminDto.getUsername();
-        Admin admin = adminService.findByUsername(username);
+    private boolean checkRegister(Model model, AdminDto adminDto){
+        Admin admin = adminService.findByUsername(adminDto.getUsername());
+        boolean noErrors = true;
         if(admin != null){
             model.addAttribute("adminDto", adminDto);
             model.addAttribute("emailError", "This email already registered!");
-        }else if(adminDto.getPassword().equals(adminDto.getRepeatPassword())){
+            noErrors = false;
+        }else if(!adminDto.getPassword().equals(adminDto.getRepeatPassword())){
+            model.addAttribute("adminDto", adminDto);
+            model.addAttribute("passwordError", "Wrong repeat password!");
+            noErrors = false;
+        }else{
             adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
             adminService.save(adminDto);
             model.addAttribute("success", "Register successfully!");
             model.addAttribute("adminDto", adminDto);
-        }else{
-            model.addAttribute("adminDto", adminDto);
-            model.addAttribute("passwordError", "Wrong repeat password!");
         }
+        return noErrors;
     }
 }
