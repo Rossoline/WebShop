@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return repository.save(product);
         }catch(Exception e){
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in save product: ", e);
         }
     }
 
@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return repository.save(product);
         }catch(Exception e){
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in update product: ", e);
         }
     }
 

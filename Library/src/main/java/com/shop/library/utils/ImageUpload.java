@@ -25,7 +25,7 @@ public class ImageUpload {
                     StandardCopyOption.REPLACE_EXISTING);
             isUpload = true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in upload Image for product: ", e);
         }
         return isUpload;
     }
@@ -36,7 +36,7 @@ public class ImageUpload {
             File file = new File(UPLOAD_FOLDER + separator + imageProduct.getOriginalFilename());
             isExisted = file.exists();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in check product image: ", e);
         }
         return isExisted;
     }
