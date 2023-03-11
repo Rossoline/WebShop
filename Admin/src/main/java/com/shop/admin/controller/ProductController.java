@@ -97,7 +97,7 @@ public class ProductController {
             attributes.addFlashAttribute("success", "Add successfully");
         }catch(Exception e){
             attributes.addFlashAttribute("error", "Failed to add!");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in save product: ", e);
         }
         return "redirect:/products/0";
     }
@@ -127,7 +127,7 @@ public class ProductController {
             attributes.addFlashAttribute("success", "Update successfully!");
         }catch(Exception e){
             attributes.addFlashAttribute("error", "Failed to update!");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in update product: ", e);
         }
         return "redirect:/products/0";
     }
@@ -141,7 +141,7 @@ public class ProductController {
             attributes.addFlashAttribute("success", "Enabled successfully!");
         }catch(Exception e){
             attributes.addFlashAttribute("error", "Failed to enabled!");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in enable product: ", e);
         }
         return "redirect:/products/0";
     }
@@ -155,7 +155,7 @@ public class ProductController {
             attributes.addFlashAttribute("success", "Deleted successfully!");
         }catch(Exception e){
             attributes.addFlashAttribute("error", "Failed to deleted");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in deactivate product: ", e);
         }
         return "redirect:/products/0";
     }

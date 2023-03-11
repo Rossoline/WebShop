@@ -1,11 +1,8 @@
 package com.shop.library.model;
 
-import com.shop.library.model.enums.Role;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,16 +24,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "customers",
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_name", "phone_number"}))
-public class Customer {
+public class Customer extends User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Long id;
-    private String firstName;
-    private String lastName;
-    @Column(name = "user_name")
-    private String userName;
-    private String password;
     @Column(name = "phone_number")
     @Builder.Default
     private String phoneNumber = "";
@@ -46,8 +38,6 @@ public class Customer {
     @Column(name = "address")
     @Builder.Default
     private String address = "";
-    @Enumerated(EnumType.STRING)
-    private Role role;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shopping_cart_id")
     private ShoppingCart shoppingCart;

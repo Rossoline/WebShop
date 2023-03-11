@@ -48,7 +48,7 @@ public class CategoryController {
             throw new DataIntegrityViolationException("Failed to add, because duplicate name!" + e);
         }catch(Exception e){
             attributes.addFlashAttribute("failed", "Error server");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in add category: ", e);
         }
         return "redirect:/categories";
     }
@@ -73,7 +73,7 @@ public class CategoryController {
             throw new DataIntegrityViolationException("Failed to update, because duplicate name!" + e);
         }catch(Exception e){
             attributes.addFlashAttribute("failed", "Server error!");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in update category: ", e);
         }
         return "redirect:/categories";
     }
@@ -88,7 +88,7 @@ public class CategoryController {
         }catch(Exception e){
             attributes.addFlashAttribute("fail",
                     "Failed to update!");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in delete category: ", e);
         }
         return "redirect:/categories";
     }
@@ -102,7 +102,7 @@ public class CategoryController {
         }catch(Exception e){
             attributes.addFlashAttribute("fail",
                     "Failed to enable!");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in enabledById category: ", e);
         }
         return "redirect:/categories";
     }
