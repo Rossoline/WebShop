@@ -3,6 +3,8 @@ package com.shop.admin.controller;
 import com.shop.library.dto.AdminDto;
 import com.shop.library.model.Admin;
 import com.shop.library.service.AdminService;
+import java.security.Principal;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,12 +35,18 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping("/index")
-    public String home(Model model){
+    @RequestMapping(value = {"/index", "/"})
+    public String home(Model model, Principal principal,
+                       HttpSession session){
         model.addAttribute("title", "Home page");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null || authentication instanceof AnonymousAuthenticationToken){
             return "redirect:/login";
+        }
+        else if(principal != null){
+            session.setAttribute("username", principal.getName());
+        }else{
+            session.removeAttribute("username");
         }
         return "index";
     }

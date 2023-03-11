@@ -1,10 +1,7 @@
 package com.shop.library.model;
 
-import com.shop.library.model.enums.Role;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,18 +16,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "admins")
-public class Admin {
+public class Admin extends User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "admin_id")
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String userName;
-    private String password;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+
 }
