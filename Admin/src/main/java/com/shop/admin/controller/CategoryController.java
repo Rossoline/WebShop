@@ -19,13 +19,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService){
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/categories")
-    public String categories(Model model, Principal principal){
-        if(principal == null){
+    @GetMapping ("/categories")
+    public String categories(Model model, Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         List<Category> categories = categoryService.findAll();
@@ -36,72 +36,64 @@ public class CategoryController {
         return "categories";
     }
 
-    @PostMapping("/add-category")
-    public String add(@ModelAttribute("categoryNew") Category category,
-                      RedirectAttributes attributes){
-        try{
+    @PostMapping ("/add-category")
+    public String add(@ModelAttribute ("categoryNew") Category category,
+                      RedirectAttributes attributes) {
+        try {
             categoryService.save(category);
             attributes.addFlashAttribute("success", "Added successfully");
-        }catch(DataIntegrityViolationException e){
-            attributes.addFlashAttribute("failed",
-                    "Failed to add, because duplicate name");
+        } catch (DataIntegrityViolationException e) {
+            attributes.addFlashAttribute("failed", "Failed to add, because duplicate name");
             throw new DataIntegrityViolationException("Failed to add, because duplicate name!" + e);
-        }catch(Exception e){
+        } catch (Exception e) {
             attributes.addFlashAttribute("failed", "Error server");
             throw new RuntimeException("Server error in add category: ", e);
         }
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/findById",
-            method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping (value = "/findById", method = {RequestMethod.PUT, RequestMethod.GET})
     @ResponseBody
-    public Category findById(Long id){
+    public Category findById(Long id) {
         return categoryService.findById(id);
     }
 
-    @GetMapping("/update-category")
-    public String update(Category category, RedirectAttributes attributes){
-        try{
+    @GetMapping ("/update-category")
+    public String update(Category category, RedirectAttributes attributes) {
+        try {
             category.setStatus(categoryService.findById(category.getId()).getStatus());
             categoryService.update(category);
-            attributes.addFlashAttribute("success",
-                    "Update successfully!");
-        }catch(DataIntegrityViolationException e){
-            attributes.addFlashAttribute("failed",
-                    "Failed to update, because duplicate name!");
-            throw new DataIntegrityViolationException("Failed to update, because duplicate name!" + e);
-        }catch(Exception e){
+            attributes.addFlashAttribute("success", "Update successfully!");
+        } catch (DataIntegrityViolationException e) {
+            attributes.addFlashAttribute("failed", "Failed to update, because duplicate name!");
+            throw new DataIntegrityViolationException(
+                    "Failed to update, because duplicate name!" + e);
+        } catch (Exception e) {
             attributes.addFlashAttribute("failed", "Server error!");
             throw new RuntimeException("Server error in update category: ", e);
         }
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/delete-category",
-            method = {RequestMethod.PUT, RequestMethod.GET})
-    public String delete(Long id, RedirectAttributes attributes){
-        try{
+    @RequestMapping (value = "/delete-category", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String delete(Long id, RedirectAttributes attributes) {
+        try {
             categoryService.deleteById(id);
-            attributes.addFlashAttribute("success",
-                    "Deleted successfully!");
-        }catch(Exception e){
-            attributes.addFlashAttribute("fail",
-                    "Failed to update!");
+            attributes.addFlashAttribute("success", "Deleted successfully!");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("fail", "Failed to update!");
             throw new RuntimeException("Server error in delete category: ", e);
         }
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/enable-category", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String enabledById(Long id, RedirectAttributes attributes){
-        try{
+    @RequestMapping (value = "/enable-category", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enabledById(Long id, RedirectAttributes attributes) {
+        try {
             categoryService.enableById(id);
-            attributes.addFlashAttribute("success",
-                    "Enabled successfully!");
-        }catch(Exception e){
-            attributes.addFlashAttribute("fail",
-                    "Failed to enable!");
+            attributes.addFlashAttribute("success", "Enabled successfully!");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("fail", "Failed to enable!");
             throw new RuntimeException("Server error in enabledById category: ", e);
         }
         return "redirect:/categories";

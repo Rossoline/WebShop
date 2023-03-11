@@ -11,40 +11,41 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class AdminDetails implements UserDetails {
     private Admin admin;
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(Role.ADMIN.toString()));
         return authorities;
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return admin.getPassword();
     }
 
     @Override
-    public String getUsername(){
+    public String getUsername() {
         return admin.getUserName();
     }
 
     @Override
-    public boolean isAccountNonExpired(){
+    public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
-    public boolean isAccountNonLocked(){
+    public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
-    public boolean isCredentialsNonExpired(){
+    public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
-    public boolean isEnabled(){
+    public boolean isEnabled() {
         return true;
     }
 }

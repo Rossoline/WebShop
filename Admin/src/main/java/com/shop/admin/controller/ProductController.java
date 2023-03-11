@@ -25,15 +25,14 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
 
-    public ProductController(ProductService productService,
-                             CategoryService categoryService){
+    public ProductController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/products")
-    public String products(Model model, Principal principal){
-        if(principal == null){
+    @GetMapping ("/products")
+    public String products(Model model, Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         List<ProductDto> productDtoList = productService.findAll();
@@ -43,11 +42,10 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping("/products/{pageNo}")
-    public String productsPage(@PathVariable("pageNo") int pageNo,
-                               Model model,
-                               Principal principal){
-        if(principal == null){
+    @GetMapping ("/products/{pageNo}")
+    public String productsPage(@PathVariable ("pageNo") int pageNo, Model model,
+                               Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         Page<ProductDto> products = productService.pageProducts(pageNo);
@@ -59,12 +57,11 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping("/search-result/{pageNo}")
-    public String searchProducts(@PathVariable("pageNo") int pageNo,
-                                 @RequestParam("keyword") String keyword,
-                                 Model model,
-                                 Principal principal){
-        if(principal == null){
+    @GetMapping ("/search-result/{pageNo}")
+    public String searchProducts(@PathVariable ("pageNo") int pageNo,
+                                 @RequestParam ("keyword") String keyword, Model model,
+                                 Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         Page<ProductDto> products = productService.searchProducts(pageNo, keyword);
@@ -76,9 +73,9 @@ public class ProductController {
         return "result-products";
     }
 
-    @GetMapping("/add-product")
-    public String addProductForm(Model model, Principal principal){
-        if(principal == null){
+    @GetMapping ("/add-product")
+    public String addProductForm(Model model, Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         List<Category> categories = categoryService.findAllByActivated();
@@ -87,26 +84,25 @@ public class ProductController {
         return "/add-product";
     }
 
-    @PostMapping("/save-product")
-    public String saveProduct(@ModelAttribute("product") ProductDto productDto,
-                              @RequestParam("imageProduct") MultipartFile imageProduct,
-                              RedirectAttributes attributes){
-        try{
+    @PostMapping ("/save-product")
+    public String saveProduct(@ModelAttribute ("product") ProductDto productDto,
+                              @RequestParam ("imageProduct") MultipartFile imageProduct,
+                              RedirectAttributes attributes) {
+        try {
             productDto.setStatus(ActivationStatus.ACTIVATED);
             productService.save(imageProduct, productDto);
             attributes.addFlashAttribute("success", "Add successfully");
-        }catch(Exception e){
+        } catch (Exception e) {
             attributes.addFlashAttribute("error", "Failed to add!");
             throw new RuntimeException("Server error in save product: ", e);
         }
         return "redirect:/products/0";
     }
 
-    @GetMapping("/update-product/{id}")
-    public String updateProductForm(@PathVariable("id") Long id,
-                                    Model model,
-                                    Principal principal){
-        if(principal == null){
+    @GetMapping ("/update-product/{id}")
+    public String updateProductForm(@PathVariable ("id") Long id, Model model,
+                                    Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         model.addAttribute("title", "Update products");
@@ -117,43 +113,41 @@ public class ProductController {
         return "update-product";
     }
 
-    @PostMapping("/update-product/{id}")
-    public String processUpdate(@PathVariable("id") Long id,
-                                @ModelAttribute("productDto") ProductDto productDto,
-                                @RequestParam("imageProduct") MultipartFile imageProduct,
-                                RedirectAttributes attributes){
-        try{
+    @PostMapping ("/update-product/{id}")
+    public String processUpdate(@PathVariable ("id") Long id,
+                                @ModelAttribute ("productDto") ProductDto productDto,
+                                @RequestParam ("imageProduct") MultipartFile imageProduct,
+                                RedirectAttributes attributes) {
+        try {
             productService.update(imageProduct, productDto);
             attributes.addFlashAttribute("success", "Update successfully!");
-        }catch(Exception e){
+        } catch (Exception e) {
             attributes.addFlashAttribute("error", "Failed to update!");
             throw new RuntimeException("Server error in update product: ", e);
         }
         return "redirect:/products/0";
     }
 
-    @RequestMapping(value = "/enable-product/{id}",
+    @RequestMapping (value = "/enable-product/{id}",
             method = {RequestMethod.PUT, RequestMethod.GET})
-    public String enabledProduct(@PathVariable("id") Long id,
-                                 RedirectAttributes attributes){
-        try{
+    public String enabledProduct(@PathVariable ("id") Long id, RedirectAttributes attributes) {
+        try {
             productService.enableById(id);
             attributes.addFlashAttribute("success", "Enabled successfully!");
-        }catch(Exception e){
+        } catch (Exception e) {
             attributes.addFlashAttribute("error", "Failed to enabled!");
             throw new RuntimeException("Server error in enable product: ", e);
         }
         return "redirect:/products/0";
     }
 
-    @RequestMapping(value = "/delete-product/{id}",
+    @RequestMapping (value = "/delete-product/{id}",
             method = {RequestMethod.PUT, RequestMethod.GET})
-    public String deletedProduct(@PathVariable("id") Long id,
-                                 RedirectAttributes attributes){
-        try{
+    public String deletedProduct(@PathVariable ("id") Long id, RedirectAttributes attributes) {
+        try {
             productService.deleteById(id);
             attributes.addFlashAttribute("success", "Deleted successfully!");
-        }catch(Exception e){
+        } catch (Exception e) {
             attributes.addFlashAttribute("error", "Failed to deleted");
             throw new RuntimeException("Server error in deactivate product: ", e);
         }

@@ -23,77 +23,73 @@ public class LoginController {
     private final AdminService adminService;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public LoginController(AdminService adminService,
-                           BCryptPasswordEncoder passwordEncoder){
+    public LoginController(AdminService adminService, BCryptPasswordEncoder passwordEncoder) {
         this.adminService = adminService;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/login")
-    public String loginForm(Model model){
+    @GetMapping ("/login")
+    public String loginForm(Model model) {
         model.addAttribute("title", "Login");
         return "login";
     }
 
-    @RequestMapping(value = {"/index", "/"})
-    public String home(Model model, Principal principal,
-                       HttpSession session){
+    @RequestMapping (value = {"/index", "/"})
+    public String home(Model model, Principal principal, HttpSession session) {
         model.addAttribute("title", "Home page");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null || authentication instanceof AnonymousAuthenticationToken){
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "redirect:/login";
-        }
-        else if(principal != null){
+        } else if (principal != null) {
             session.setAttribute("username", principal.getName());
-        }else{
+        } else {
             session.removeAttribute("username");
         }
         return "index";
     }
 
-    @GetMapping("/register")
-    public String register(Model model){
+    @GetMapping ("/register")
+    public String register(Model model) {
         model.addAttribute("title", "Register");
         model.addAttribute("adminDto", new AdminDto());
         return "register";
     }
 
-    @GetMapping("/forgot-password")
-    public String forgotPassword(Model model){
+    @GetMapping ("/forgot-password")
+    public String forgotPassword(Model model) {
         model.addAttribute("title", "Forgot password");
         return "forgot-password";
     }
 
-    @PostMapping("/register-new")
-    public String addAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
-                           BindingResult result,
-                           Model model){
-        try{
-            if(result.hasErrors()){
+    @PostMapping ("/register-new")
+    public String addAdmin(@Valid @ModelAttribute ("adminDto") AdminDto adminDto,
+                           BindingResult result, Model model) {
+        try {
+            if (result.hasErrors()) {
                 model.addAttribute("adminDto", adminDto);
                 return "register";
-            }else if(checkRegister(model, adminDto)){
+            } else if (checkRegister(model, adminDto)) {
                 return "register";
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             model.addAttribute("errors", "Server problem!");
             throw new RuntimeException("Server error in register new admin: ", e);
         }
         return "register";
     }
 
-    private boolean checkRegister(Model model, AdminDto adminDto){
+    private boolean checkRegister(Model model, AdminDto adminDto) {
         Admin admin = adminService.findByUsername(adminDto.getUsername());
         boolean noErrors = true;
-        if(admin != null){
+        if (admin != null) {
             model.addAttribute("adminDto", adminDto);
             model.addAttribute("emailError", "This email already registered!");
             noErrors = false;
-        }else if(!adminDto.getPassword().equals(adminDto.getRepeatPassword())){
+        } else if (!adminDto.getPassword().equals(adminDto.getRepeatPassword())) {
             model.addAttribute("adminDto", adminDto);
             model.addAttribute("passwordError", "Wrong repeat password!");
             noErrors = false;
-        }else{
+        } else {
             adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
             adminService.save(adminDto);
             model.addAttribute("success", "Register successfully!");
