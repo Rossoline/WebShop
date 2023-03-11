@@ -19,13 +19,13 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerService customerService;
     private final OrderRepository orderRepository;
 
-    public OrderServiceImpl(CustomerService customerService, OrderRepository orderRepository){
+    public OrderServiceImpl(CustomerService customerService, OrderRepository orderRepository) {
         this.customerService = customerService;
         this.orderRepository = orderRepository;
     }
 
     @Override
-    public void save(ShoppingCart cart){
+    public void save(ShoppingCart cart) {
         Order order = new Order();
         Set<CartItem> cartItemSet = new HashSet<>(cart.getCartItems());
         order.setOrderDate(new Date());
@@ -36,27 +36,26 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAll(){
+    public List<Order> findAll() {
         return orderRepository.findAll();
     }
 
     @Override
-    public BigDecimal totalPrice(Order order){
-        return  order.getCartItems().stream()
-                .map(c -> c.getProduct().getCostPrice()
+    public BigDecimal totalPrice(Order order) {
+        return order.getCartItems().stream().map(c -> c.getProduct().getCostPrice()
                         .multiply(BigDecimal.valueOf(c.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
-    public void acceptOrder(Long id){
+    public void acceptOrder(Long id) {
         Order order = orderRepository.getById(id);
         order.setOrderStatus(OrderStatus.DELIVERY);
         orderRepository.save(order);
     }
 
     @Override
-    public void cancelOrder(Long id){
+    public void cancelOrder(Long id) {
         orderRepository.deleteById(id);
     }
 }

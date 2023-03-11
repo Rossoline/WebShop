@@ -18,11 +18,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "shopping_cart")
+@Table (name = "shopping_cart")
 public class ShoppingCart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "shopping_cart_id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "shopping_cart_id")
     private Long id;
     @OneToMany
     private Set<CartItem> cartItems;

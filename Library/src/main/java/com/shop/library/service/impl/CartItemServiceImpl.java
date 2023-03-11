@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 public class CartItemServiceImpl implements CartItemService {
     private final CartItemRepository cartItemRepository;
 
-    public CartItemServiceImpl(CartItemRepository cartItemRepository){
+    public CartItemServiceImpl(CartItemRepository cartItemRepository) {
         this.cartItemRepository = cartItemRepository;
     }
 
     @Override
-    public CartItem save(CartItem cartItem){
+    public CartItem save(CartItem cartItem) {
         return cartItemRepository.save(cartItem);
     }
 
     @Override
-    public void delete(CartItem cartItem){
+    public void delete(CartItem cartItem) {
         cartItemRepository.delete(cartItem);
     }
 }

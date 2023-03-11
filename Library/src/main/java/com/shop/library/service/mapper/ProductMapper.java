@@ -6,19 +6,17 @@ import com.shop.library.model.enums.ActivationStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductMapper implements
-        RequestDtoMapper<ProductDto, Product>,
-        ResponseDtoMapper<ProductDto, Product> {
+public class ProductMapper
+        implements RequestDtoMapper<ProductDto, Product>, ResponseDtoMapper<ProductDto, Product> {
 
-private final CategoryMapper categoryMapper;
+    private final CategoryMapper categoryMapper;
 
-    public ProductMapper(CategoryMapper categoryMapper){
+    public ProductMapper(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;
     }
 
-
     @Override
-    public Product mapToModel(ProductDto productDto){
+    public Product mapToModel(ProductDto productDto) {
         Product product = new Product();
         product.setId(productDto.getId());
         product.setName(productDto.getName());
@@ -30,7 +28,8 @@ private final CategoryMapper categoryMapper;
         return product;
     }
 
-    @Override public ProductDto mapToDto(Product product){
+    @Override
+    public ProductDto mapToDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
         productDto.setName(product.getName());

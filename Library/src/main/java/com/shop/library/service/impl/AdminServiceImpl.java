@@ -12,19 +12,18 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
     private final AdminMapper adminMapper;
 
-    public AdminServiceImpl(AdminRepository adminRepository,
-                            AdminMapper adminMapper){
+    public AdminServiceImpl(AdminRepository adminRepository, AdminMapper adminMapper) {
         this.adminRepository = adminRepository;
         this.adminMapper = adminMapper;
     }
 
     @Override
-    public Admin save(AdminDto adminDto){
+    public Admin save(AdminDto adminDto) {
         return adminRepository.save(adminMapper.mapToModel(adminDto));
     }
 
     @Override
-    public Admin findByUsername(String userName){
+    public Admin findByUsername(String userName) {
         return adminRepository.findByUserName(userName);
     }
 }

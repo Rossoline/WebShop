@@ -12,9 +12,9 @@ import lombok.Data;
 public class User {
     private String firstName;
     private String lastName;
-    @Column(name = "user_name")
+    @Column (name = "user_name")
     private String userName;
     private String password;
-    @Enumerated(EnumType.STRING)
+    @Enumerated (EnumType.STRING)
     private Role role;
 }

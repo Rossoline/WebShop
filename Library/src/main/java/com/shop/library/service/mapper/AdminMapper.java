@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdminMapper implements RequestDtoMapper<AdminDto, Admin> {
     @Override
-    public Admin mapToModel(AdminDto adminDto){
+    public Admin mapToModel(AdminDto adminDto) {
         Admin admin = new Admin();
         admin.setFirstName(adminDto.getFirstName());
         admin.setLastName(adminDto.getLastName());

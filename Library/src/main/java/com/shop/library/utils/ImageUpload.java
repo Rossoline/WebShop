@@ -1,6 +1,7 @@
 package com.shop.library.utils;
 
 import static java.io.File.separator;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,17 +12,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ImageUpload {
-    private final static String UPLOAD_FOLDER = "admin" + separator + "src" + separator + "main"
-        + separator + "resources" + separator + "static" + separator + "img"
-        + separator + "image-product";
-
+    private static final String UPLOAD_FOLDER = "admin" + separator + "src" + separator + "main"
+            + separator + "resources" + separator + "static" + separator + "img" + separator
+            + "image-product";
 
     public boolean uploadImage(MultipartFile imageProduct) {
         boolean isUpload = false;
         try {
             Files.copy(imageProduct.getInputStream(),
-                    Paths.get(Path.of(UPLOAD_FOLDER).toAbsolutePath()
-                            + File.separator, imageProduct.getOriginalFilename()),
+                    Paths.get(Path.of(UPLOAD_FOLDER).toAbsolutePath() + File.separator,
+                            imageProduct.getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
             isUpload = true;
         } catch (Exception e) {

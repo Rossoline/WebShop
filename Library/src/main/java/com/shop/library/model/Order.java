@@ -23,18 +23,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "orders")
+@Table (name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "order_id")
     private Long id;
     private Date orderDate;
     private String notes;
-    @Enumerated(EnumType.STRING)
+    @Enumerated (EnumType.STRING)
     private OrderStatus orderStatus;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn (name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
     @OneToMany
     private Set<CartItem> cartItems;

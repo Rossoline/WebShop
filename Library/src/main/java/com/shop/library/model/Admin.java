@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "admins")
-public class Admin extends User{
+@Table (name = "admins")
+public class Admin extends User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "admin_id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "admin_id")
     private Long id;
     @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
+    @Column (columnDefinition = "MEDIUMBLOB")
     private String image;
 
 }

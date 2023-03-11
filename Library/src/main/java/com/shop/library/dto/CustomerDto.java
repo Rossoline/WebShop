@@ -13,14 +13,14 @@ public class CustomerDto {
     private static final int NAME_MAX_LENGTH = 15;
     private static final int PASSWORD_MIN_LENGTH = 5;
     private static final int PASSWORD_MAX_LENGTH = 20;
-    @Size(min = NAME_MIN_LENGTH, max = NAME_MAX_LENGTH,
+    @Size (min = NAME_MIN_LENGTH, max = NAME_MAX_LENGTH,
             message = "First name should have 3-15 characters")
     private String firstName;
-    @Size(min = NAME_MIN_LENGTH, max = NAME_MAX_LENGTH,
+    @Size (min = NAME_MIN_LENGTH, max = NAME_MAX_LENGTH,
             message = "Last name should have 3-15 characters")
     private String lastName;
     private String userName;
-    @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH,
+    @Size (min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH,
             message = "Password should have 5-20 characters")
     private String password;
     private String repeatPassword;

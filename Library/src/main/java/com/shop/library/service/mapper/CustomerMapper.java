@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerMapper implements RequestDtoMapper<CustomerDto, Customer> {
     @Override
-    public Customer mapToModel(CustomerDto customerDto){
+    public Customer mapToModel(CustomerDto customerDto) {
         Customer customer = new Customer();
         customer.setFirstName(customerDto.getFirstName());
         customer.setLastName(customerDto.getLastName());

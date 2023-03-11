@@ -25,87 +25,88 @@ public class ProductServiceImpl implements ProductService {
     private final ImageUpload imageUpload;
     private final ProductMapper productMapper;
 
-    public ProductServiceImpl(ProductRepository repository, ImageUpload imageUpload, ProductMapper productMapper){
+    public ProductServiceImpl(ProductRepository repository, ImageUpload imageUpload,
+                              ProductMapper productMapper) {
         this.repository = repository;
         this.imageUpload = imageUpload;
         this.productMapper = productMapper;
     }
 
     @Override
-    public List<ProductDto> findAll(){
+    public List<ProductDto> findAll() {
         List<Product> products = repository.findAll();
         return toDtoList(products);
     }
 
     @Override
-    public Product save(MultipartFile imageProduct, ProductDto productDto){
-        try{
+    public Product save(MultipartFile imageProduct, ProductDto productDto) {
+        try {
             Product product = productMapper.mapToModel(productDto);
-            if(imageProduct == null){
+            if (imageProduct == null) {
                 product.setImage(null);
-            }else{
+            } else {
                 product.setImage(Base64.getEncoder().encodeToString(imageProduct.getBytes()));
             }
             return repository.save(product);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Server error in save product: ", e);
         }
     }
 
     @Override
-    public Product update(MultipartFile imageProduct, ProductDto productDto){
-        try{
+    public Product update(MultipartFile imageProduct, ProductDto productDto) {
+        try {
             Product product = productMapper.mapToModel(productDto);
-            if(imageProduct == null){
+            if (imageProduct == null) {
                 product.setImage(product.getImage());
-            }else{
-                if(!imageUpload.checkExisted(imageProduct)){
+            } else {
+                if (!imageUpload.checkExisted(imageProduct)) {
                     imageUpload.uploadImage(imageProduct);
                 }
                 product.setImage(Base64.getEncoder().encodeToString(imageProduct.getBytes()));
             }
             return repository.save(product);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Server error in update product: ", e);
         }
     }
 
     @Override
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         Product product = repository.getById(id);
         product.setStatus(ActivationStatus.DELETED);
         repository.save(product);
     }
 
     @Override
-    public void enableById(Long id){
+    public void enableById(Long id) {
         Product product = repository.getById(id);
         product.setStatus(ActivationStatus.ACTIVATED);
         repository.save(product);
     }
 
     @Override
-    public ProductDto getById(Long id){
+    public ProductDto getById(Long id) {
         Product product = repository.getById(id);
         return productMapper.mapToDto(product);
     }
 
     @Override
-    public Page<ProductDto> pageProducts(int pageNo){
+    public Page<ProductDto> pageProducts(int pageNo) {
         Pageable pageable = PageRequest.of(pageNo, MAX_PAGES);
         List<ProductDto> products = toDtoList(repository.findAll());
         return toPage(products, pageable);
     }
 
     @Override
-    public Page<ProductDto> searchProducts(int pageNo, String keyword){
+    public Page<ProductDto> searchProducts(int pageNo, String keyword) {
         Pageable pageable = PageRequest.of(pageNo, MAX_PAGES);
         List<ProductDto> productDtoList = toDtoList(repository.searchProductsList(keyword));
         return toPage(productDtoList, pageable);
     }
 
-    private Page<ProductDto> toPage(List<ProductDto> list, Pageable pageable){
-        if(pageable.getOffset() >= list.size()){
+    private Page<ProductDto> toPage(List<ProductDto> list, Pageable pageable) {
+        if (pageable.getOffset() >= list.size()) {
             return Page.empty();
         }
         int startIndex = (int) pageable.getOffset();
@@ -116,51 +117,51 @@ public class ProductServiceImpl implements ProductService {
         return new PageImpl<>(subList, pageable, list.size());
     }
 
-    private List<ProductDto> toDtoList(List<Product> products){
+    private List<ProductDto> toDtoList(List<Product> products) {
         List<ProductDto> productDtoList = new ArrayList<>();
-        for(Product product : products){
+        for (Product product : products) {
             productDtoList.add(productMapper.mapToDto(product));
         }
         return productDtoList;
     }
 
     @Override
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts() {
         return repository.getAllProducts();
     }
 
     @Override
-    public List<Product> listViewProducts(){
+    public List<Product> listViewProducts() {
         return repository.listViewProducts();
     }
 
     @Override
-    public Product getProductById(Long id){
+    public Product getProductById(Long id) {
         return repository.getById(id);
     }
 
     @Override
-    public List<Product> getRelatedProducts(Long categoryId){
+    public List<Product> getRelatedProducts(Long categoryId) {
         return repository.getRelatedProducts(categoryId);
     }
 
     @Override
-    public List<Product> getProductsInCategory(Long categoryId){
+    public List<Product> getProductsInCategory(Long categoryId) {
         return repository.getProductsInCategory(categoryId);
     }
 
     @Override
-    public List<Product> filterHighPrice(){
+    public List<Product> filterHighPrice() {
         return repository.filterHighPrice();
     }
 
     @Override
-    public List<Product> filterLowPrice(){
+    public List<Product> filterLowPrice() {
         return repository.filterLowerPrice();
     }
 
     @Override
-    public List<Product> sort(Sort sort){
+    public List<Product> sort(Sort sort) {
         return repository.findAll(sort);
     }
 }

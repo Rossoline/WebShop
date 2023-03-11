@@ -15,16 +15,15 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerMapper customerMapper;
     private final ShoppingCartService shoppingCartService;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository,
-                               CustomerMapper customerMapper,
-                               ShoppingCartService shoppingCartService){
+    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper,
+                               ShoppingCartService shoppingCartService) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
         this.shoppingCartService = shoppingCartService;
     }
 
     @Override
-    public Customer save(CustomerDto customerDto){
+    public Customer save(CustomerDto customerDto) {
         ShoppingCart cart = new ShoppingCart();
         Customer customer = customerMapper.mapToModel(customerDto);
         customer.setShoppingCart(cart);
@@ -47,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer findCustomerByCart(ShoppingCart cart){
+    public Customer findCustomerByCart(ShoppingCart cart) {
         return customerRepository.findCustomerByShoppingCart(cart);
     }
 }

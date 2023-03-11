@@ -18,15 +18,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categories",
-        uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table (name = "categories", uniqueConstraints = @UniqueConstraint (columnNames = "name"))
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "category_id")
     private Long id;
     private String name;
-    @Enumerated(EnumType.STRING)
+    @Enumerated (EnumType.STRING)
     private ActivationStatus status;
 
     public Category(String name) {
