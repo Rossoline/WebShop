@@ -17,13 +17,12 @@ public class CustomerDetailsServiceImpl implements UserDetailsService {
     private CustomerRepository customerRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Customer customer = customerRepository.findByUserName(userName);
-        if(customer == null){
+        if (customer == null) {
             throw new UsernameNotFoundException("Could not find User Name");
         }
-        return new User(customer.getUserName(),
-                customer.getPassword(),
+        return new User(customer.getUserName(), customer.getPassword(),
                 List.of(new SimpleGrantedAuthority(customer.getRole().toString())));
     }
 }

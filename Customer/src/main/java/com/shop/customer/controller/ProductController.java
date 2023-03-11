@@ -17,14 +17,13 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
 
-    public ProductController(ProductService productService,
-                             CategoryService categoryService){
+    public ProductController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/products")
-    public String products(Model model){
+    @GetMapping ("/products")
+    public String products(Model model) {
         List<Category> categoryList = categoryService.getCategoryAndProduct();
         List<Product> products = productService.getAllProducts();
         List<Product> listViewProducts = productService.listViewProducts();
@@ -35,8 +34,8 @@ public class ProductController {
         return "shop";
     }
 
-    @GetMapping("/find-product/{id}")
-    public String findProductById(@PathVariable("id") Long id, Model model){
+    @GetMapping ("/find-product/{id}")
+    public String findProductById(@PathVariable ("id") Long id, Model model) {
         Product product = productService.getProductById(id);
         Long categoryId = product.getCategory().getId();
         List<Product> products = productService.getRelatedProducts(categoryId);
@@ -45,8 +44,8 @@ public class ProductController {
         return "product-detail";
     }
 
-    @GetMapping("/products-in-category/{id}")
-    public String getProductsInCategory(@PathVariable("id") Long categoryId, Model model){
+    @GetMapping ("/products-in-category/{id}")
+    public String getProductsInCategory(@PathVariable ("id") Long categoryId, Model model) {
         Category category = categoryService.findById(categoryId);
         List<Category> categories = categoryService.getCategoryAndProduct();
         List<Product> products = productService.getProductsInCategory(categoryId);
@@ -57,22 +56,22 @@ public class ProductController {
         return "products-in-category";
     }
 
-    @GetMapping("/sorted-high")
-    public String highPrice(@RequestParam(defaultValue = "desc") String sort, Model model){
+    @GetMapping ("/sorted-high")
+    public String highPrice(@RequestParam (defaultValue = "desc") String sort, Model model) {
         sortByPrice(sort, model);
         return "filter-high-price";
     }
 
-    @GetMapping("/sorted-low")
-    public String lowPrice(@RequestParam(defaultValue = "asc") String sort, Model model){
+    @GetMapping ("/sorted-low")
+    public String lowPrice(@RequestParam (defaultValue = "asc") String sort, Model model) {
         sortByPrice(sort, model);
         return "filter-low-price";
     }
 
-    private void sortByPrice(@RequestParam(defaultValue = "asc") String sort,
-                             Model model){
+    private void sortByPrice(@RequestParam (defaultValue = "asc") String sort, Model model) {
         Sort.Direction direction = sort.equalsIgnoreCase("asc")
-                ? Sort.Direction.ASC : Sort.Direction.DESC;
+                ? Sort.Direction.ASC
+                : Sort.Direction.DESC;
         List<Category> categories = categoryService.findAllByActivated();
         List<Category> categoryList = categoryService.getCategoryAndProduct();
         List<Product> products = productService.sort(Sort.by(direction, "costPrice"));
