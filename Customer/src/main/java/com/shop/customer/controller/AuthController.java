@@ -50,7 +50,7 @@ public class AuthController {
         }catch(Exception e){
             model.addAttribute("error", "Problem on server!");
             model.addAttribute("customerDto", customerDto);
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in register customer: ", e);
         }
         return "register";
     }
