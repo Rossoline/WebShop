@@ -77,7 +77,7 @@ public class LoginController {
             }
         }catch(Exception e){
             model.addAttribute("errors", "Server problem!");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Server error in register new admin: ", e);
         }
         return "register";
     }
