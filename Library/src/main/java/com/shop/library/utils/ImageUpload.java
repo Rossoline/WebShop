@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ImageUpload {
-    private final String UPLOAD_FOLDER = "admin" + separator + "src" + separator + "main"
+    private final static String UPLOAD_FOLDER = "admin" + separator + "src" + separator + "main"
         + separator + "resources" + separator + "static" + separator + "img"
         + separator + "image-product";
 
