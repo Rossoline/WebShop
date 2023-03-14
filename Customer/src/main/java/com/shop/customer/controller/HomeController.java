@@ -25,30 +25,29 @@ public class HomeController {
     private final CategoryService categoryService;
     private final CustomerService customerService;
 
-    public HomeController(ProductService productService,
-                          CategoryService categoryService,
-                          CustomerService customerService){
+    public HomeController(ProductService productService, CategoryService categoryService,
+                          CustomerService customerService) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.customerService = customerService;
     }
 
-    @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
-    public String home(Principal principal,
-                       HttpSession session){
-        if(principal != null){
+    @RequestMapping (value = {"/index", "/"}, method = RequestMethod.GET)
+    public String home(Principal principal, HttpSession session) {
+        if (principal != null) {
             session.setAttribute("username", principal.getName());
             Customer customer = customerService.findByUsername(principal.getName());
             ShoppingCart cart = customer.getShoppingCart();
-            session.setAttribute("totalItems", cart.getCartItems().stream().map(CartItem :: getQuantity).count());
-        }else{
+            session.setAttribute("totalItems",
+                    cart.getCartItems().stream().map(CartItem::getQuantity).count());
+        } else {
             session.removeAttribute("username");
         }
         return "home";
     }
 
-    @GetMapping("/home")
-    public String index(Model model){
+    @GetMapping ("/home")
+    public String index(Model model) {
         List<Category> categories = categoryService.findAll();
         List<ProductDto> productDtos = productService.findAll().stream()
                 .filter(p -> p.getStatus() == ActivationStatus.ACTIVATED)

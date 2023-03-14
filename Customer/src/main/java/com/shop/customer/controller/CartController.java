@@ -8,7 +8,6 @@ import com.shop.library.service.ProductService;
 import com.shop.library.service.ShoppingCartService;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,16 +22,15 @@ public class CartController {
     private final ShoppingCartService cartService;
     private final ProductService productService;
 
-    public CartController(CustomerService customerService,
-                          ShoppingCartService cartService,
-                          ProductService productService){
+    public CartController(CustomerService customerService, ShoppingCartService cartService,
+                          ProductService productService) {
         this.customerService = customerService;
         this.cartService = cartService;
         this.productService = productService;
     }
 
-    @GetMapping("/cart")
-    public String cart(Model model, Principal principal, HttpSession session) {
+    @GetMapping ("/cart")
+    public String cart(Model model, Principal principal) {
         if (principal == null) {
             return "redirect:/login";
         }
@@ -42,17 +40,16 @@ public class CartController {
         if (shoppingCart == null) {
             model.addAttribute("check", "No item in your cart");
         }
-        model.addAttribute("subTotal",cartService.totalPrice(shoppingCart));
+        model.addAttribute("subTotal", cartService.totalPrice(shoppingCart));
         model.addAttribute("shoppingCart", shoppingCart);
         return "cart";
     }
 
-    @PostMapping("/add-to-cart")
-    public String addItemCart(
-            @RequestParam("id") Long productId,
-            @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity,
-            Principal principal,
-            HttpServletRequest request) {
+    @PostMapping ("/add-to-cart")
+    public String addItemCart(@RequestParam ("id") Long productId,
+                              @RequestParam (value = "quantity", required = false,
+                                      defaultValue = "1") int quantity, Principal principal,
+                              HttpServletRequest request) {
         if (principal == null) {
             return "redirect:/login";
         }
@@ -63,11 +60,9 @@ public class CartController {
         return "redirect:" + request.getHeader("Referer");
     }
 
-    @RequestMapping(value = "/update-cart",
-            method = RequestMethod.POST, params = "action=update")
-    public String updateCart(@RequestParam("quantity") int quantity,
-                             @RequestParam("id") Long productId,
-                             Model model,
+    @RequestMapping (value = "/update-cart", method = RequestMethod.POST, params = "action=update")
+    public String updateCart(@RequestParam ("quantity") int quantity,
+                             @RequestParam ("id") Long productId, Model model,
                              Principal principal) {
         if (principal == null) {
             return "redirect:/login";
@@ -81,10 +76,8 @@ public class CartController {
         }
     }
 
-    @RequestMapping(value = "/update-cart",
-            method = RequestMethod.POST, params = "action=delete")
-    public String deleteItemFromCart(@RequestParam("id") Long productId,
-                                     Model model,
+    @RequestMapping (value = "/update-cart", method = RequestMethod.POST, params = "action=delete")
+    public String deleteItemFromCart(@RequestParam ("id") Long productId, Model model,
                                      Principal principal) {
         if (principal == null) {
             return "redirect:/login";
