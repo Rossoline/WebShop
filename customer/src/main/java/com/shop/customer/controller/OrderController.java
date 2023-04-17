@@ -59,7 +59,7 @@ public class OrderController {
     }
 
     @GetMapping ("/save-order")
-    public String saveOrder(Principal principal, Model model) {
+    public String saveOrder(Principal principal) {
         if (principal == null) {
             return "redirect:/login";
         }
