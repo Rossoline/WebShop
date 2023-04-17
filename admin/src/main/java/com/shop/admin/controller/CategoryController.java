@@ -66,7 +66,8 @@ public class CategoryController {
             categoryService.update(category);
             attributes.addFlashAttribute("success", "Update successfully!");
         } catch (DataIntegrityViolationException e) {
-            attributes.addFlashAttribute("failed", "Failed to update, because duplicate name!");
+            attributes.addFlashAttribute("failed", "Failed to update,"
+                    + " because duplicate name!");
             throw new DataIntegrityViolationException(
                     "Failed to update, because duplicate name!" + e);
         } catch (Exception e) {
