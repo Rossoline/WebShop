@@ -1,8 +1,8 @@
 package com.shop.admin.controller;
 
-import com.shop.library.dto.AdminDto;
-import com.shop.library.model.Admin;
-import com.shop.library.service.AdminService;
+import com.shop.admin.lib.dto.AdminDto;
+import com.shop.admin.lib.model.Admin;
+import com.shop.admin.lib.service.AdminService;
 import java.security.Principal;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;

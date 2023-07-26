@@ -1,7 +1,7 @@
 package com.shop.customer.config;
 
-import com.shop.library.model.Customer;
-import com.shop.library.repository.CustomerRepository;
+import com.shop.customer.library.model.Customer;
+import com.shop.customer.library.repository.CustomerRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

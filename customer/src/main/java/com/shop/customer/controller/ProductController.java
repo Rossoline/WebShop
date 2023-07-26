@@ -1,9 +1,9 @@
 package com.shop.customer.controller;
 
-import com.shop.library.model.Category;
-import com.shop.library.model.Product;
-import com.shop.library.service.CategoryService;
-import com.shop.library.service.ProductService;
+import com.shop.customer.library.model.Category;
+import com.shop.customer.library.model.Product;
+import com.shop.customer.library.service.CategoryService;
+import com.shop.customer.library.service.ProductService;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
