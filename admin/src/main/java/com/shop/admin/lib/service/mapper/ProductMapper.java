@@ -17,6 +17,7 @@ public class ProductMapper
     @Override
     public Product mapToModel(ProductDto productDto) {
         Product product = new Product();
+        product.setId(productDto.getId());
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setCostPrice(productDto.getCostPrice());

@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
 <head th:replace="fragments::header">
-
 </head>
 <body id="page-top">
 
@@ -74,12 +73,10 @@
     <!-- End of Content Wrapper -->
 </div>
 <!-- End of Page Wrapper -->
-
 <!-- Scroll to Top Button-->
 <a th:replace="fragments::scrollToTop">
 </a>
 <!-- End Scroll to Top Button-->
-
 <!-- Add Modal-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -104,7 +101,6 @@
     </form>
 </div>
 <!-- End add Modal-->
-
 <!-- Change Name Category Modal-->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalExample"
      aria-hidden="true">
@@ -119,12 +115,10 @@
                         <label for="idEdit" class="col-form-label">Id:</label>
                         <input type="text" class="form-control" id="idEdit" name="id" readonly>
                     </div>
-
                     <div class="form-group">
                         <label for="nameEdit" class="col-form-label">Name:</label>
                         <input type="text" class="form-control" id="nameEdit" name="name">
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -140,5 +134,4 @@
 <div th:replace="fragments::script"></div>
 <script th:src="@{/js/categories.js}"></script>
 </body>
-
 </html>

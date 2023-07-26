@@ -18,7 +18,7 @@
             <nav th:replace="fragments::topbar"></nav>
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
-            <div class="container-fluid">
+            <div class="container-fluid"> <title></title>
                 <!-- Begin Heading -->
                 <form class="form-horizontal" th:action="@{/save-product}" method="post" enctype="multipart/form-data"
                       th:object="${product}">
@@ -39,7 +39,8 @@
                                 <select id="categories" th:field="*{categoryDto.id}" name="categories"
                                         class="form-control">
                                     <option value="">-SELECT-</option>
-                                    <option th:each="category : ${categories}" th:text="${category.name}"
+                                    <option th:each="category : ${categories}"
+                                            th:text="${category.name}"
                                             th:value="${category.id}"></option>
                                 </select>
                             </div>
