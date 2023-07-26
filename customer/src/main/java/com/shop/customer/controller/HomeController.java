@@ -1,14 +1,14 @@
 package com.shop.customer.controller;
 
-import com.shop.library.dto.ProductDto;
-import com.shop.library.model.CartItem;
-import com.shop.library.model.Category;
-import com.shop.library.model.Customer;
-import com.shop.library.model.ShoppingCart;
-import com.shop.library.model.enums.ActivationStatus;
-import com.shop.library.service.CategoryService;
-import com.shop.library.service.CustomerService;
-import com.shop.library.service.ProductService;
+import com.shop.customer.library.dto.ProductDto;
+import com.shop.customer.library.model.CartItem;
+import com.shop.customer.library.model.Category;
+import com.shop.customer.library.model.Customer;
+import com.shop.customer.library.model.ShoppingCart;
+import com.shop.customer.library.model.enums.ActivationStatus;
+import com.shop.customer.library.service.CategoryService;
+import com.shop.customer.library.service.CustomerService;
+import com.shop.customer.library.service.ProductService;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;

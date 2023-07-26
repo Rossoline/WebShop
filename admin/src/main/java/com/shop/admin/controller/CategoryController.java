@@ -1,7 +1,7 @@
 package com.shop.admin.controller;
 
-import com.shop.library.model.Category;
-import com.shop.library.service.CategoryService;
+import com.shop.admin.lib.model.Category;
+import com.shop.admin.lib.service.CategoryService;
 import java.security.Principal;
 import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;

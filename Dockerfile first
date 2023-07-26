@@ -1,0 +1,30 @@
+## Используем образ с Maven для сборки приложения
+#FROM maven:3.8.4-jdk-11 AS builder
+#
+## Копируем все исходники проекта в образ
+#COPY . /shop
+#
+## Сборка модулей
+#RUN cd /app/admin && mvn clean package
+#RUN cd /app/customer && mvn clean package
+#
+## Создаем образ для запуска приложения
+#FROM openjdk:11-jre-slim
+#
+## Создаем директории для каждого модуля
+#RUN mkdir /app/admin
+#RUN mkdir /app/customer
+#
+## Копируем скомпилированные модули в их соответствующие директории
+#COPY --from=builder /app/admin/target/admin.jar /app/admin/
+#COPY --from=builder /app/customer/target/customer.jar /app/customer/
+#
+## Устанавливаем рабочую директорию в корневую директорию приложения
+#WORKDIR /app
+#
+## Запускаем каждый модуль в отдельном контейнере
+#CMD "java" -jar admin/admin.jar &
+#    java -jar customer/customer.jar
+#
+#// ARG JAR_FILE=admin/target/*.jar
+#   COPY ./admin/target/admin-0.0.1-SNAPSHOT.jar adminApp.jar

@@ -1,7 +1,7 @@
 package com.shop.customer.controller;
 
-import com.shop.library.model.Customer;
-import com.shop.library.service.CustomerService;
+import com.shop.customer.library.model.Customer;
+import com.shop.customer.library.service.CustomerService;
 import java.security.Principal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,10 +1,11 @@
 package com.shop.admin.controller;
 
-import com.shop.library.dto.ProductDto;
-import com.shop.library.model.Category;
-import com.shop.library.model.enums.ActivationStatus;
-import com.shop.library.service.CategoryService;
-import com.shop.library.service.ProductService;
+import com.shop.admin.lib.dto.ProductDto;
+import com.shop.admin.lib.model.Category;
+import com.shop.admin.lib.model.enums.ActivationStatus;
+import com.shop.admin.lib.service.CategoryService;
+import com.shop.admin.lib.service.ProductService;
+import com.shop.admin.lib.service.mapper.CategoryMapper;
 import java.security.Principal;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -25,12 +26,13 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
 
-    public ProductController(ProductService productService, CategoryService categoryService) {
+    public ProductController(ProductService productService,
+                             CategoryService categoryService, CategoryMapper categoryMapper) {
         this.productService = productService;
         this.categoryService = categoryService;
     }
 
-    @GetMapping ("/products")
+    @GetMapping("/products")
     public String products(Model model, Principal principal) {
         if (principal == null) {
             return "redirect:/login";
@@ -42,8 +44,9 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping ("/products/{pageNo}")
-    public String productsPage(@PathVariable ("pageNo") int pageNo, Model model,
+    @GetMapping("/products/{pageNo}")
+    public String productsPage(@PathVariable("pageNo") int pageNo,
+                               Model model,
                                Principal principal) {
         if (principal == null) {
             return "redirect:/login";
@@ -57,9 +60,10 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping ("/search-result/{pageNo}")
-    public String searchProducts(@PathVariable ("pageNo") int pageNo,
-                                 @RequestParam ("keyword") String keyword, Model model,
+    @GetMapping("/search-result/{pageNo}")
+    public String searchProducts(@PathVariable("pageNo") int pageNo,
+                                 @RequestParam("keyword") String keyword,
+                                 Model model,
                                  Principal principal) {
         if (principal == null) {
             return "redirect:/login";
@@ -73,7 +77,7 @@ public class ProductController {
         return "result-products";
     }
 
-    @GetMapping ("/add-product")
+    @GetMapping("/add-product")
     public String addProductForm(Model model, Principal principal) {
         if (principal == null) {
             return "redirect:/login";
@@ -84,9 +88,9 @@ public class ProductController {
         return "/add-product";
     }
 
-    @PostMapping ("/save-product")
-    public String saveProduct(@ModelAttribute ("product") ProductDto productDto,
-                              @RequestParam ("imageProduct") MultipartFile imageProduct,
+    @PostMapping("/save-product")
+    public String saveProduct(@ModelAttribute("product") ProductDto productDto,
+                              @RequestParam("imageProduct") MultipartFile imageProduct,
                               RedirectAttributes attributes) {
         try {
             productDto.setStatus(ActivationStatus.ACTIVATED);
@@ -99,8 +103,9 @@ public class ProductController {
         return "redirect:/products/0";
     }
 
-    @GetMapping ("/update-product/{id}")
-    public String updateProductForm(@PathVariable ("id") Long id, Model model,
+    @GetMapping("/update-product/{id}")
+    public String updateProductForm(@PathVariable("id") Long id,
+                                    Model model,
                                     Principal principal) {
         if (principal == null) {
             return "redirect:/login";
@@ -113,10 +118,10 @@ public class ProductController {
         return "update-product";
     }
 
-    @PostMapping ("/update-product/{id}")
-    public String processUpdate(@PathVariable ("id") Long id,
-                                @ModelAttribute ("productDto") ProductDto productDto,
-                                @RequestParam ("imageProduct") MultipartFile imageProduct,
+    @PostMapping("/update-product/{id}")
+    public String processUpdate(@PathVariable("id") Long id,
+                                @ModelAttribute("productDto") ProductDto productDto,
+                                @RequestParam("imageProduct") MultipartFile imageProduct,
                                 RedirectAttributes attributes) {
         try {
             productService.update(imageProduct, productDto);
@@ -128,9 +133,10 @@ public class ProductController {
         return "redirect:/products/0";
     }
 
-    @RequestMapping (value = "/enable-product/{id}",
+    @RequestMapping(value = "/enable-product/{id}",
             method = {RequestMethod.PUT, RequestMethod.GET})
-    public String enabledProduct(@PathVariable ("id") Long id, RedirectAttributes attributes) {
+    public String enabledProduct(@PathVariable("id") Long id,
+                                 RedirectAttributes attributes) {
         try {
             productService.enableById(id);
             attributes.addFlashAttribute("success", "Enabled successfully!");
@@ -141,9 +147,10 @@ public class ProductController {
         return "redirect:/products/0";
     }
 
-    @RequestMapping (value = "/delete-product/{id}",
+    @RequestMapping(value = "/delete-product/{id}",
             method = {RequestMethod.PUT, RequestMethod.GET})
-    public String deletedProduct(@PathVariable ("id") Long id, RedirectAttributes attributes) {
+    public String deletedProduct(@PathVariable("id") Long id,
+                                 RedirectAttributes attributes) {
         try {
             productService.deleteById(id);
             attributes.addFlashAttribute("success", "Deleted successfully!");

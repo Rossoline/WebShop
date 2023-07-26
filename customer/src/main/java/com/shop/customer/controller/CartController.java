@@ -1,11 +1,11 @@
 package com.shop.customer.controller;
 
-import com.shop.library.model.Customer;
-import com.shop.library.model.Product;
-import com.shop.library.model.ShoppingCart;
-import com.shop.library.service.CustomerService;
-import com.shop.library.service.ProductService;
-import com.shop.library.service.ShoppingCartService;
+import com.shop.customer.library.model.Customer;
+import com.shop.customer.library.model.Product;
+import com.shop.customer.library.model.ShoppingCart;
+import com.shop.customer.library.service.CustomerService;
+import com.shop.customer.library.service.ProductService;
+import com.shop.customer.library.service.ShoppingCartService;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;

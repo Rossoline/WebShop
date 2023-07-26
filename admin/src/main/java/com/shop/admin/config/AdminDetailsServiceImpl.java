@@ -1,8 +1,8 @@
 package com.shop.admin.config;
 
-import com.shop.library.model.Admin;
-import com.shop.library.model.enums.Role;
-import com.shop.library.repository.AdminRepository;
+import com.shop.admin.lib.model.Admin;
+import com.shop.admin.lib.model.enums.Role;
+import com.shop.admin.lib.repository.AdminRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

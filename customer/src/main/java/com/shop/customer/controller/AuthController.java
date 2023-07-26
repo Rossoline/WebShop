@@ -1,8 +1,8 @@
 package com.shop.customer.controller;
 
-import com.shop.library.dto.CustomerDto;
-import com.shop.library.model.Customer;
-import com.shop.library.service.CustomerService;
+import com.shop.customer.library.dto.CustomerDto;
+import com.shop.customer.library.model.Customer;
+import com.shop.customer.library.service.CustomerService;
 import javax.validation.Valid;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
