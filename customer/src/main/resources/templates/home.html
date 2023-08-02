@@ -9,7 +9,8 @@
 </div>
 
 <!-- Start Main Top -->
-<header th:replace="fragments::main-header">
+<header class="main-top">
+    <div th:replace="fragments::main-header"></div>
 </header>
 <!-- End Main Top -->
 
@@ -18,20 +19,14 @@
 </div>
 <!-- End Top Search -->
 
-<!-- Start Slider -->
-<div th:replace="fragments::slider">
-</div>
-<!-- End Slider -->
-
 <!-- Start About Page  -->
 <div class="about-box-main">
+    <div class="banner-frame">
+        <div class="img-container" style="background-image: url('images/Intro.png');"></div>
+    </div>
+</div>
+<div class="about-box-main">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="banner-frame"><img class="img-fluid" src="images/Intro.png" alt=""/>
-                </div>
-            </div>
-        </div>
         <div class="row my-5">
             <div class="col-sm-6 col-lg-4">
                 <div class="service-block-inner">
@@ -51,8 +46,10 @@
                     <p>It's our mission to provide you with the most innovative and trendiest looks for your workouts
                         and everyday life. We design all of our women's activewear pieces in-house in the US, each of
                         which is engineered to give you the support, functionality, and style you expect from Bombshell.
-                        Whether you're into yoga, HIIT, spinning, or weight training, our gym-ready designs are built for
-                        women like you. You'll fall in love with the fine details, like how our designs easily sculpt and
+                        Whether you're into yoga, HIIT, spinning, or weight training, our gym-ready designs are built
+                        for
+                        women like you. You'll fall in love with the fine details, like how our designs easily sculpt
+                        and
                         shape your silhouette. Gone are the days of feeling uncomfortable in your workout outfits.
                     </p>
                 </div>
@@ -63,7 +60,8 @@
                     <p>From light weight options to heavy weight compression, you can find the right fabrics for
                         your workout needs. In our huge selection of women's active apparel, you'll find one-of-a-kind
                         sports bras, tank tops, high waist leggings, hoodies, bodysuits, pullovers, and so much more.
-                        Once you've finished up in the gym our athleisure wear doubles as your everyday and weekend attire!
+                        Once you've finished up in the gym our athleisure wear doubles as your everyday and weekend
+                        attire!
                         Head off to lunch, run errands, and more in these soft and trendy designs.</p>
                     <p>Designed & Manufactured in Ukraine.</p>
                 </div>
@@ -72,10 +70,10 @@
     </div>
 </div>
 
-<!-- Start Feed  -->
-<div th:replace="fragments::instagram-box">
-</div>
-<!-- End Feed  -->
+<!--&lt;!&ndash; Start Feed  &ndash;&gt;-->
+<!--<div th:replace="fragments::instagram-box">-->
+<!--</div>-->
+<!--&lt;!&ndash; End Feed  &ndash;&gt;-->
 
 <!-- Start Footer  -->
 <footer th:replace="fragments::footer">

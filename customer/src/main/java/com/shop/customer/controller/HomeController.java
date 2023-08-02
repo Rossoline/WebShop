@@ -46,7 +46,7 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping ("/home")
+    @GetMapping ("/main-in-store")
     public String index(Model model) {
         List<Category> categories = categoryService.findAll();
         List<ProductDto> productDtos = productService.findAll().stream()
@@ -54,6 +54,12 @@ public class HomeController {
                 .collect(Collectors.toList());
         model.addAttribute("categories", categories);
         model.addAttribute("products", productDtos);
-        return "index";
+        return "main-in-store";
     }
+
+    @GetMapping("/contact-us")
+    public String contact(){
+        return "contact-us";
+    }
+
 }

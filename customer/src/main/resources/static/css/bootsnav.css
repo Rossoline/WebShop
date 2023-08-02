@@ -144,15 +144,15 @@ nav.bootsnav.navbar-full .navbar-collapse .nav-full::-webkit-scrollbar {
     width: 0;
 }
 
-nav.bootsnav.navbar-full .navbar-collapse .nav-full::-moz-scrollbar {
+nav.bootsnav.navbar-full .navbar-collapse .nav-full::-webkit-scrollbar {
     width: 0;
 }
 
-nav.bootsnav.navbar-full .navbar-collapse .nav-full::-ms-scrollbar {
+nav.bootsnav.navbar-full .navbar-collapse .nav-full::-webkit-scrollbar {
     width: 0;
 }
 
-nav.bootsnav.navbar-full .navbar-collapse .nav-full::-o-scrollbar {
+nav.bootsnav.navbar-full .navbar-collapse .nav-full::-webkit-scrollbar {
     width: 0;
 }
 
