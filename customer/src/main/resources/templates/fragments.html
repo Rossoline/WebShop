@@ -105,7 +105,7 @@
                             <li><a th:href="@{/order}">My orders</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{contact-us}">Contact Us</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -170,11 +170,11 @@
     <div class="col-12 col-sm-8 text-center text-sm-left">
         <div class="toolbar-sorter-right">
             <span>Sort by </span>
-            <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD"
-                    onchange="location = this.value;">
+            <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
                 <option data-display="Select">Nothing</option>
-                <option value="http://localhost:8024/shop/sorted-high">High Price → Low Price</option>
-                <option value="http://localhost:8024/shop/sorted-low">Low Price → High Price</option>
+                <option value="">Select an option</option>
+                <option value="sorted-high">High Price → Low Price</option>
+                <option value="sorted-low">Low Price → High Price</option>
                 <option value="4">Best Selling</option>
             </select>
         </div>
@@ -294,6 +294,22 @@
 
 <!-- ALL JS FILES -->
 <div th:fragment="script">
+    <script th:inline="javascript">
+        // Отримуємо поточну адресу сторінки без параметрів запиту
+        var baseUrl = window.location.href.split('/')[0];
+
+        // Функція для перенаправлення після вибору опції зі списку
+        function redirectToOption() {
+            var selectElement = document.getElementById("basic");
+            var selectedValue = selectElement.value;
+            if (selectedValue !== "") {
+                window.location.href = baseUrl + "/shop/products/" + selectedValue;
+            }
+        }
+
+        // Додаємо подію onchange до списку
+        document.getElementById("basic").addEventListener("change", redirectToOption);
+    </script>
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/js/popper.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
