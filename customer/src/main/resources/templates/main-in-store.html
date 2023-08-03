@@ -7,7 +7,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
@@ -26,11 +25,6 @@
 </div>
 <!-- End Top Search -->
 
-<!-- Start Slider -->
-<div th:replace="fragments::slider">
-</div>
-<!-- End Slider -->
-
 <!-- Start Products  -->
 <div class="products-box">
     <div class="container" th:each="category : ${categories}">
@@ -38,20 +32,24 @@
             <div class="col-lg-12">
                 <div class="title-all text-center">
                     <h1 th:text="${category.name}">Fish</h1>
-                    <p>Have you a really good meal!</p>
+                    <p>Fit yourself!</p>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="special-menu text-center">
-                    <div class="button-group filter-button-group">
-                        <button class="active" data-filter="*">All</button>
-                        <button data-filter=".best-seller">Best seller</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <!--   begin  Best seller block    -->
+        <!--        <div class="row">-->
+        <!--            <div class="col-lg-12">-->
+        <!--                <div class="special-menu text-center">-->
+        <!--                    <div class="button-group filter-button-group">-->
+        <!--                        <button class="active" data-filter="*">All</button>-->
+        <!--                        <button data-filter=".best-seller">Best seller</button>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--     end  Best seller block      -->
+
         <div class="row special-list">
             <!--            <div class="col-lg-3 col-md-6 special-grid best-seller">-->
             <!--                <div class="products-single fix">-->
@@ -85,7 +83,7 @@
                                            title="View"><i class="fas fa-eye"></i></a></li>
                                 </ul>
                                 <input type="hidden" th:value="${product.id}" name="id">
-                                <input  type="submit" class="cart" value="Add to Cart">
+                                <input type="submit" class="cart" value="Add to Cart">
                             </div>
                         </div>
                         <div class="why-text">
@@ -100,10 +98,10 @@
 </div>
 <!-- End Products  -->
 
-<!-- Start Feed  -->
-<div th:replace="fragments::instagram-box">
-</div>
-<!-- End Feed  -->
+<!--&lt;!&ndash; Start Feed  &ndash;&gt;-->
+<!--<div th:replace="fragments::instagram-box">-->
+<!--</div>-->
+<!--&lt;!&ndash; End Feed  &ndash;&gt;-->
 
 <!-- Start Footer  -->
 <footer th:replace="fragments::footer">

@@ -32,8 +32,8 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="our-link">
                     <ul>
-                        <li><a href="#"> Call US : +380-97-631-00-93</a></li>
-                        <li><a href="#"><i class="fas fa-location-arrow"></i> Address: Kyiv, Darnitca</a></li>
+                        <li><a th:href="@{/contact-us}"> Call US : +380-97-631-00-93</a></li>
+                        <li><a th:href="@{/contact-us}"><i class="fas fa-location-arrow"></i> Address: Kyiv, Ukraine</a></li>
                     </ul>
                 </div>
             </div>
@@ -42,6 +42,7 @@
                     <select id="" class="selectpicker show-tick form-control" data-placeholder="Sign In"
                             onchange="location = this.value;">
                         <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
+
                         <option th:if="${session.username == null}" value="http://localhost:8024/shop/login">Sign In
                         </option>
                         <option th:if="${session.username != null}" value="http://localhost:8024/shop/logout">Log out
@@ -72,7 +73,7 @@
 <!-- Start header -->
 <header class="main-header" th:fragment="main-header">
     <!-- Start Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav" style="height:auto">
         <div class="container">
             <!-- Start Header Navigation -->
             <div class="navbar-header">
@@ -87,10 +88,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
-                    <li class="nav-item active"><a class="nav-link" th:href="@{/home}">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">We are</a></li>
+                    <li class="nav-item active"><a class="nav-link" th:href="@{/main-in-store}">Hottest</a></li>
                     <li class="dropdown">
-                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Shop</a>
+                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown" >Our category </a>
                         <ul class="dropdown-menu">
                             <li><a th:href="@{/products}">All products</a></li>
                             <li><a href="product-detail.html">Product Detail</a></li>
@@ -105,7 +106,7 @@
                             <li><a th:href="@{/order}">My orders</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{contact-us}">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/contact-us}">Contact Us</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -127,39 +128,39 @@
             </div>
             <!-- End Atribute Navigation -->
         </div>
-        <!-- Start Side Menu -->
-        <div class="side">
-            <a href="#" class="close-side"><i class="fa fa-times"></i></a>
-            <li class="cart-box">
-                <ul class="cart-list">
-                    <li>
-                        <a href="#" class="photo"><img th:src="@{/images/Lobster 02 - Lobster rolls.jpg}"
-                                                       class="cart-thumb"
-                                                       alt=""/></a>
-                        <h6><a href="#">Lobster rolls </a></h6>
-                        <p>1 - <span class="price">$80.00</span></p>
-                    </li>
-                    <li>
-                        <a href="#" class="photo"><img
-                                th:src="@{/images/Octopus 05 - Octopus with Black Bean Pear Sauce.jpg}"
-                                class="cart-thumb" alt=""/></a>
-                        <h6><a href="#">Octopus with Black Bean</a></h6>
-                        <p>1 - <span class="price">$60.00</span></p>
-                    </li>
-                    <li>
-                        <a href="#" class="photo"><img th:src="@{/images/Crab 02 - Crab Toast.jpg}" class="cart-thumb"
-                                                       alt=""/></a>
-                        <h6><a href="#">Crab Toast</a></h6>
-                        <p>1 - <span class="price">$40.00</span></p>
-                    </li>
-                    <li class="total">
-                        <a href="cart.html" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                        <span class="float-right"><strong>Total</strong>: $180.00</span>
-                    </li>
-                </ul>
-            </li>
-        </div>
-        <!-- End Side Menu -->
+<!--        &lt;!&ndash; Start Side Menu &ndash;&gt;-->
+<!--        <div class="side">-->
+<!--            <a href="#" class="close-side"><i class="fa fa-times"></i></a>-->
+<!--            <li class="cart-box">-->
+<!--                <ul class="cart-list">-->
+<!--                    <li>-->
+<!--                        <a href="#" class="photo"><img th:src="@{/images/Lobster 02 - Lobster rolls.jpg}"-->
+<!--                                                       class="cart-thumb"-->
+<!--                                                       alt=""/></a>-->
+<!--                        <h6><a href="#">Lobster rolls </a></h6>-->
+<!--                        <p>1 - <span class="price">$80.00</span></p>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#" class="photo"><img-->
+<!--                                th:src="@{/images/Octopus 05 - Octopus with Black Bean Pear Sauce.jpg}"-->
+<!--                                class="cart-thumb" alt=""/></a>-->
+<!--                        <h6><a href="#">Octopus with Black Bean</a></h6>-->
+<!--                        <p>1 - <span class="price">$60.00</span></p>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#" class="photo"><img th:src="@{/images/Crab 02 - Crab Toast.jpg}" class="cart-thumb"-->
+<!--                                                       alt=""/></a>-->
+<!--                        <h6><a href="#">Crab Toast</a></h6>-->
+<!--                        <p>1 - <span class="price">$40.00</span></p>-->
+<!--                    </li>-->
+<!--                    <li class="total">-->
+<!--                        <a href="cart.html" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>-->
+<!--                        <span class="float-right"><strong>Total</strong>: $180.00</span>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; End Side Menu &ndash;&gt;-->
     </nav>
     <!-- End Navigation -->
 </header>
@@ -210,8 +211,8 @@
 <!-- End Top Search -->
 
 <!-- Start Slider -->
-<div class="all-title-box" th:fragment="slider">
-    <div class="container">
+<div class="all-title-box" th:fragment="slider" th:height="70px" >
+    <div class="container" >
         <div class="row">
             <div class="col-lg-12">
                 <h2>Sport Peach</h2>
@@ -265,16 +266,16 @@
                     <div class="footer-top-box">
                         <h3>Contact Us</h3>
                         <ul class="list-time">
-                            <li><i class="fas fa-phone-square"></i> Phone number: +84967631186</li>
-                            <li><i class="fas fa-envelope"></i> Email: abc@gmail.com</li>
-                            <li><i class="fas fa-map-marker-alt"></i> Address: Km9, Nguyen Trai, Thanh Xuan</li>
+                            <li><i class="fas fa-phone-square"></i> Phone number: +380-97-631-00-93</li>
+                            <li><i class="fas fa-envelope"></i> Email: Nekrit99@gmail.com</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Address: Kyiv, Ukraine</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
                         <h3>Social Media</h3>
-                        <p>Come with Ocean Prime shop - Only Fresh </p>
+                        <p>Come with PeachShop - Only Best</p>
                         <ul>
                             <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>

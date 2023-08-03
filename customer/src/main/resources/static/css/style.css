@@ -530,7 +530,7 @@
     }
 }
  .arrow::before{
-     font-family: 'FontAwesome', serif;
+     font-family: 'Font Awesome 5 Free', serif;
      content: "\f0d7";
      margin-left: 5px;
      margin-top: 2px;
@@ -1500,7 +1500,7 @@ button[disabled] {
      background-size: cover;
      text-align: center;
      background-attachment: fixed;
-     padding: 70px 0px;
+     padding: 10px 0px;
      position: relative;
 }
  .all-title-box::before{
@@ -1540,7 +1540,7 @@ button[disabled] {
      color: #000000;
 }
  .about-box-main{
-     padding: 70px 0px;
+     padding: 2vw 0px;
 }
  .noo-sh-title{
      font-size: 28px;
@@ -2611,6 +2611,22 @@ width: 100%;
 	font-weight: 700;
 	padding: 12px 25px;
 	border: none;
+}
+
+.img-container {
+    width: 100vw; /* Контейнер буде займати 90% ширини вікна */
+    height: 400px; /* Встановлюємо висоту контейнера зображення */
+    background-size: contain; /* Масштабуємо зображення, щоб зберегти його відношення сторін */
+    background-position: center center; /* Вирівнюємо зображення по центру */
+    background-repeat: no-repeat; /* Забороняємо повторення зображення */
+}
+
+/* Стилі для самої картинки (необхідно встановити, якщо зображення не відображається усередині контейнера) */
+.img-container img {
+    display: block; /* Робимо зображення блочним елементом */
+    max-width: 100%; /* Забезпечуємо, що зображення не виходить за межі контейнера */
+    max-height: 100%; /* Забезпечуємо, що зображення не виходить за межі контейнера */
+    margin: auto; /* Центруємо зображення усередині контейнера */
 }
 
 
