@@ -28,12 +28,12 @@
                 <div th:if="${size == 0}">
                     <p>No products in shop</p>
                 </div>
-                <div th:if="${success}" class="text-center alert alert-success">
-                    <p th:text="${success}"></p>
-                </div>
-                <div th:if="${error}" class="text-center alert alert-danger">
-                    <p th:text="${error}"></p>
-                </div>
+<!--                <div th:if="${success}" class="text-center alert alert-success">-->
+<!--                    <p th:text="${success}"></p>-->
+<!--                </div>-->
+<!--                <div th:if="${error}" class="text-center alert alert-danger">-->
+<!--                    <p th:text="${error}"></p>-->
+<!--                </div>-->
                 <a class="btn btn-primary" th:href="@{/add-product}">Add new product</a>
                 <table class="table table-striped" th:if="${size > 0}">
                     <thead>

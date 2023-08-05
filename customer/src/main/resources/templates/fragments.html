@@ -93,10 +93,18 @@
                     <li class="dropdown">
                         <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown" >Our category </a>
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/products}">All products</a></li>
-                            <li><a href="product-detail.html">Product Detail</a></li>
+                            <li><a th:href="@{/products-in-category/1}">Leggings</a></li>
+                            <li><a th:href="@{/products-in-category/2}">Tops</a></li>
+                            <li><a th:href="@{/products-in-category/3}">Suits</a></li>
                         </ul>
                     </li>
+<!--                    <li class="dropdown">-->
+<!--                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Our category</a>-->
+<!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                            &lt;!&ndash; Виведення категорій &ndash;&gt;-->
+<!--                            <a th:each="category : ${categories}" th:href="@{'/products-in-category/' + ${category.id}}" class="dropdown-item" th:text="${category.name}"></a>-->
+<!--                        </div>-->
+<!--                    </li>-->
                     <li class="dropdown">
                         <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">User info</a>
                         <ul class="dropdown-menu">

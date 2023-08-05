@@ -32,8 +32,8 @@ public class HomeController {
         this.customerService = customerService;
     }
 
-    @RequestMapping (value = {"/index", "/"}, method = RequestMethod.GET)
-    public String home(Principal principal, HttpSession session) {
+    @RequestMapping (value = {"/home", "/"}, method = RequestMethod.GET)
+    public String home(Principal principal, Model model, HttpSession session) {
         if (principal != null) {
             session.setAttribute("username", principal.getName());
             Customer customer = customerService.findByUsername(principal.getName());
@@ -58,7 +58,7 @@ public class HomeController {
     }
 
     @GetMapping("/contact-us")
-    public String contact(){
+    public String contact() {
         return "contact-us";
     }
 
